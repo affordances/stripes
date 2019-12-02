@@ -22,6 +22,13 @@ const SelectHeader = styled.h5``;
 
 const StripesContainer = styled.div``;
 
+const Results = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 const Stripe = styled.div`
   background: ${props => props.color};
   height: 38px;
@@ -62,7 +69,7 @@ function App() {
     let options = [];
 
     if (start % 2 === 0) {
-      for (let i = start; i <= end; i += 2) {
+      for (let i = Number(start); i <= end; i += 2) {
         options.push({ value: i, label: i });
       }
     } else {
@@ -73,7 +80,7 @@ function App() {
     return options;
   };
 
-  const [stripeCount, setStripeCount] = useState(maxStripeCount);
+  const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
 
@@ -95,8 +102,11 @@ function App() {
         <Select
           options={magnitudeOptions}
           value={magnitude}
-          onChange={option => setMagnitude(option)}
+          onChange={option => setMagnitude(option.value)}
         />
+        <Results>
+          {stripeCount} {magnitude}
+        </Results>
       </SelectContainer>
       <StripesContainer>
         {stripeBox.map((_, i) => (
