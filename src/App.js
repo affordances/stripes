@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
+import { colors, maxStripeCount, stripeOptions } from "./config.js";
 import "./index.css";
 
 const Container = styled.div`
@@ -25,6 +26,10 @@ const StripesContainer = styled.div`
   flex-direction: column;
 `;
 
+const Pattern = styled.div`
+  margin-bottom: 20px;
+`;
+
 const Button = styled.button``;
 
 const Results = styled.div`
@@ -34,40 +39,13 @@ const Results = styled.div`
   justify-content: center;
 `;
 
-// const Stripe = styled.div`
-//   background: ${props => props.color};
-//   height: 38px;
-//   width: 600px;
-// `;
+const Stripe = styled.div`
+  background: ${props => props.color};
+  height: 5px;
+  width: 200px;
+`;
 
-// const colors = {
-//   "1": "#367da2",
-//   "2": "#e93f36",
-//   "3": "black"
-// };
-
-const maxStripeCount = 16;
-
-const stripeOptions = [
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
-  { value: "6", label: "6" },
-  { value: "7", label: "7" },
-  { value: "8", label: "8" },
-  { value: "9", label: "9" },
-  { value: "10", label: "10" },
-  { value: "11", label: "11" },
-  { value: "12", label: "12" },
-  { value: "13", label: "13" },
-  { value: "14", label: "14" },
-  { value: "15", label: "15" },
-  { value: "16", label: "16" }
-];
-
-function App() {
+const App = () => {
   const createMagnitudeOptions = (start, end) => {
     let options = [];
 
@@ -97,6 +75,20 @@ function App() {
       }
     }
     return results;
+  };
+
+  const createPattern = sequence => {
+    let pattern = [];
+
+    for (let i = 0; i < sequence.length; i++) {
+      for (let j = 1; j <= sequence[i]; j++) {
+        pattern.push(
+          <Stripe key={Math.random()} color={colors[sequence[i]]} />
+        );
+      }
+    }
+
+    return <Pattern>{pattern}</Pattern>;
   };
 
   const [stripeCount, setStripeCount] = useState(null);
@@ -141,12 +133,10 @@ function App() {
         </Results>
       </SelectContainer>
       <StripesContainer>
-        {palindromicArrays.map(sequence => (
-          <div>[{sequence.toString()}]</div>
-        ))}
+        {palindromicArrays.map(sequence => createPattern(sequence))}
       </StripesContainer>
     </Container>
   );
-}
+};
 
 export default App;
