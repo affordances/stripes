@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
-import { colors, maxStripeCount, stripeOptions } from "./config.js";
+import { colors, maxMagnitude, stripeOptions } from "./config.js";
 import "./index.css";
 
 const Container = styled.div`
@@ -46,15 +46,16 @@ const Stripe = styled.div`
 `;
 
 const App = () => {
-  const createMagnitudeOptions = (start, end) => {
+  const createMagnitudeOptions = start => {
     let options = [];
+    start = Number(start);
 
     if (start % 2 === 0) {
-      for (let i = Number(start); i <= end; i += 2) {
+      for (let i = start; i <= maxMagnitude; i += 2) {
         options.push({ value: i, label: i });
       }
     } else {
-      for (let i = start; i <= end; i++) {
+      for (let i = start; i <= maxMagnitude; i++) {
         options.push({ value: i, label: i });
       }
     }
@@ -65,7 +66,7 @@ const App = () => {
     let results = [];
 
     if (length === 1 && total > 0) {
-      results.push(total);
+      results.push([total]);
     } else if (length === 2 && total % 2 === 0 && total > 0) {
       results.push([total / 2, total / 2]);
     } else if (2 < length && length <= total) {
@@ -76,6 +77,11 @@ const App = () => {
     }
     return results;
   };
+
+  const [stripeCount, setStripeCount] = useState(null);
+  const [magnitude, setMagnitude] = useState(null);
+  const [magnitudeOptions, setMagnitudeOptions] = useState(null);
+  const [palindromicArrays, setPalindromicArrays] = useState([]);
 
   const createPattern = sequence => {
     let pattern = [];
@@ -91,11 +97,6 @@ const App = () => {
     return <Pattern>{pattern}</Pattern>;
   };
 
-  const [stripeCount, setStripeCount] = useState(null);
-  const [magnitude, setMagnitude] = useState(null);
-  const [magnitudeOptions, setMagnitudeOptions] = useState(null);
-  const [palindromicArrays, setPalindromicArrays] = useState([]);
-
   return (
     <Container>
       <SelectContainer>
@@ -103,11 +104,9 @@ const App = () => {
         <Select
           options={stripeOptions}
           onChange={option => {
-            setStripeCount(option.value);
+            setStripeCount(Number(option.value));
             setMagnitude(null);
-            setMagnitudeOptions(
-              createMagnitudeOptions(option.value, maxStripeCount)
-            );
+            setMagnitudeOptions(createMagnitudeOptions(option.value));
           }}
         />
         <SelectHeader>Select magnitude</SelectHeader>
@@ -115,7 +114,7 @@ const App = () => {
           options={magnitudeOptions}
           value={magnitude && { value: magnitude, label: magnitude }}
           onChange={option => {
-            setMagnitude(option.value);
+            setMagnitude(Number(option.value));
           }}
         />
         <Results>
