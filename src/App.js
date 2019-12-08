@@ -28,6 +28,9 @@ const StripesContainer = styled.div`
 
 const Pattern = styled.div`
   margin-bottom: 20px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 `;
 
 const Button = styled.button``;
@@ -43,6 +46,7 @@ const Stripe = styled.div`
   background: ${props => props.color};
   height: 5px;
   width: 200px;
+  border-bottom: 1px solid black;
 `;
 
 const App = () => {
