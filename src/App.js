@@ -35,6 +35,12 @@ const SwatchContainer = styled.div`
   height: 60px;
 `;
 
+const PickedColors = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+`;
+
 const StripesContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,39 +69,39 @@ const Stripe = styled.div`
   border-bottom: 1px solid black;
 `;
 
+const createMagnitudeOptions = start => {
+  let options = [];
+  start = Number(start);
+
+  if (start % 2 === 0) {
+    for (let i = start; i <= maxMagnitude; i += 2) {
+      options.push({ value: i, label: i });
+    }
+  } else {
+    for (let i = start; i <= maxMagnitude; i++) {
+      options.push({ value: i, label: i });
+    }
+  }
+  return options;
+};
+
+const createPalindromicArrays = (length, total) => {
+  let results = [];
+
+  if (length === 1 && total > 0) {
+    results.push([total]);
+  } else if (length === 2 && total % 2 === 0 && total > 0) {
+    results.push([total / 2, total / 2]);
+  } else if (2 < length && length <= total) {
+    for (let i = 1; i <= total / 2; i++) {
+      const middles = createPalindromicArrays(length - 2, total - 2 * i);
+      middles.forEach(middle => results.push([i].concat(middle, [i])));
+    }
+  }
+  return results;
+};
+
 const App = () => {
-  const createMagnitudeOptions = start => {
-    let options = [];
-    start = Number(start);
-
-    if (start % 2 === 0) {
-      for (let i = start; i <= maxMagnitude; i += 2) {
-        options.push({ value: i, label: i });
-      }
-    } else {
-      for (let i = start; i <= maxMagnitude; i++) {
-        options.push({ value: i, label: i });
-      }
-    }
-    return options;
-  };
-
-  const createPalindromicArrays = (length, total) => {
-    let results = [];
-
-    if (length === 1 && total > 0) {
-      results.push([total]);
-    } else if (length === 2 && total % 2 === 0 && total > 0) {
-      results.push([total / 2, total / 2]);
-    } else if (2 < length && length <= total) {
-      for (let i = 1; i <= total / 2; i++) {
-        const middles = createPalindromicArrays(length - 2, total - 2 * i);
-        middles.forEach(middle => results.push([i].concat(middle, [i])));
-      }
-    }
-    return results;
-  };
-
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
@@ -104,7 +110,25 @@ const App = () => {
 
   useEffect(() => {
     console.log("useEffect", pickedColors);
+    console.log(pickedColors.length > 0 && pickedColors[0].value);
   });
+
+  const createPattern = sequence => {
+    let pattern = [];
+
+    for (let i = 0; i < sequence.length; i++) {
+      for (let j = 1; j <= sequence[i]; j++) {
+        pattern.push(
+          <Stripe
+            key={Math.random()}
+            color={pickedColors.length > 0 && pickedColors[0].value}
+          />
+        );
+      }
+    }
+
+    return <Pattern>{pattern}</Pattern>;
+  };
 
   const updatePickedColors = newColor => {
     let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
@@ -120,20 +144,6 @@ const App = () => {
       );
       setPickedColors(filteredColors);
     }
-  };
-
-  const createPattern = sequence => {
-    let pattern = [];
-
-    for (let i = 0; i < sequence.length; i++) {
-      for (let j = 1; j <= sequence[i]; j++) {
-        pattern.push(
-          <Stripe key={Math.random()} color={colors[sequence[i]]} />
-        );
-      }
-    }
-
-    return <Pattern>{pattern}</Pattern>;
   };
 
   return (
@@ -156,7 +166,7 @@ const App = () => {
             setMagnitude(Number(option.value));
           }}
         />
-        <SwatchContainer>
+        <PickedColors>
           {pickedColors.length > 0 &&
             pickedColors.map(color => (
               <Swatch
@@ -164,7 +174,7 @@ const App = () => {
                 onClick={() => updatePickedColors(color)}
               />
             ))}
-        </SwatchContainer>
+        </PickedColors>
         <SwatchContainer>
           {colors.map(color => (
             <Swatch
@@ -174,7 +184,7 @@ const App = () => {
           ))}
         </SwatchContainer>
         <ButtonContainer>
-          {stripeCount && magnitude && (
+          {stripeCount && magnitude && pickedColors.length > 0 && (
             <Button
               onClick={() =>
                 setPalindromicArrays(
@@ -188,7 +198,8 @@ const App = () => {
         </ButtonContainer>
       </SelectContainer>
       <StripesContainer>
-        {palindromicArrays.map(sequence => createPattern(sequence))}
+        {pickedColors.length > 0 &&
+          palindromicArrays.map(sequence => createPattern(sequence))}
       </StripesContainer>
     </Container>
   );
