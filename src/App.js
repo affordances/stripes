@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import { colors, maxMagnitude, stripeOptions } from "./config.js";
@@ -21,6 +21,20 @@ const SelectContainer = styled.div`
 
 const SelectHeader = styled.h5``;
 
+const Swatch = styled.div`
+  background: ${props => props.color};
+  width: 20px;
+  height: 20px;
+`;
+
+const SwatchContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 100px;
+  height: 60px;
+`;
+
 const StripesContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,7 +49,7 @@ const Pattern = styled.div`
 
 const Button = styled.button``;
 
-const Results = styled.div`
+const ButtonContainer = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -86,6 +100,27 @@ const App = () => {
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
   const [palindromicArrays, setPalindromicArrays] = useState([]);
+  const [pickedColors, setPickedColors] = useState([]);
+
+  useEffect(() => {
+    console.log("useEffect", pickedColors);
+  });
+
+  const updatePickedColors = newColor => {
+    let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
+    if (
+      pickedColors.length < 3 &&
+      pickedColors.find(color => color.value === newColor.value) === undefined
+    ) {
+      newPickedColors.push(newColor);
+      setPickedColors(newPickedColors);
+    } else if (pickedColors.find(color => color.value === newColor.value)) {
+      const filteredColors = pickedColors.filter(
+        color => color.value !== newColor.value
+      );
+      setPickedColors(filteredColors);
+    }
+  };
 
   const createPattern = sequence => {
     let pattern = [];
@@ -121,7 +156,24 @@ const App = () => {
             setMagnitude(Number(option.value));
           }}
         />
-        <Results>
+        <SwatchContainer>
+          {pickedColors.length > 0 &&
+            pickedColors.map(color => (
+              <Swatch
+                color={color.value}
+                onClick={() => updatePickedColors(color)}
+              />
+            ))}
+        </SwatchContainer>
+        <SwatchContainer>
+          {colors.map(color => (
+            <Swatch
+              color={color.value}
+              onClick={() => updatePickedColors(color)}
+            />
+          ))}
+        </SwatchContainer>
+        <ButtonContainer>
           {stripeCount && magnitude && (
             <Button
               onClick={() =>
@@ -133,7 +185,7 @@ const App = () => {
               Make arrays
             </Button>
           )}
-        </Results>
+        </ButtonContainer>
       </SelectContainer>
       <StripesContainer>
         {palindromicArrays.map(sequence => createPattern(sequence))}
