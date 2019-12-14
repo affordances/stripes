@@ -48,9 +48,9 @@ const StripesContainer = styled.div`
 
 const Pattern = styled.div`
   margin-bottom: 20px;
-  border-top: 1px solid black;
+  /* border-top: 1px solid black;
   border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-right: 1px solid black; */
 `;
 
 const Button = styled.button``;
@@ -66,7 +66,7 @@ const Stripe = styled.div`
   background: ${props => props.color};
   height: 5px;
   width: 200px;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 `;
 
 const createMagnitudeOptions = start => {
@@ -85,22 +85,6 @@ const createMagnitudeOptions = start => {
   return options;
 };
 
-const createPalindromicArrays = (length, total) => {
-  let results = [];
-
-  if (length === 1 && total > 0) {
-    results.push([total]);
-  } else if (length === 2 && total % 2 === 0 && total > 0) {
-    results.push([total / 2, total / 2]);
-  } else if (2 < length && length <= total) {
-    for (let i = 1; i <= total / 2; i++) {
-      const middles = createPalindromicArrays(length - 2, total - 2 * i);
-      middles.forEach(middle => results.push([i].concat(middle, [i])));
-    }
-  }
-  return results;
-};
-
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
@@ -109,19 +93,50 @@ const App = () => {
   const [pickedColors, setPickedColors] = useState([]);
 
   useEffect(() => {
+    console.log(palindromicArrays);
     console.log("useEffect", pickedColors);
     console.log(pickedColors.length > 0 && pickedColors[0].value);
   });
 
+  const createPalindromicArrays = (length, total) => {
+    let results = [];
+
+    if (length === 1 && total > 0) {
+      results.push([{ count: total, color: pickedColors[0] }]);
+    } else if (length === 2 && total % 2 === 0 && total > 0) {
+      results.push([
+        { count: total / 2, color: pickedColors[0] },
+        { count: total / 2, color: pickedColors[1] }
+      ]);
+      results.push([
+        { count: total / 2, color: pickedColors[1] },
+        { count: total / 2, color: pickedColors[0] }
+      ]);
+    } else if (2 < length && length <= total) {
+      for (let i = 1; i <= total / 2; i++) {
+        const middles = createPalindromicArrays(length - 2, total - 2 * i);
+        middles.forEach(middle => results.push([i].concat(middle, [i])));
+      }
+    }
+    return results;
+  };
+
   const createPattern = sequence => {
     let pattern = [];
 
+    console.log("in createPattern");
+
     for (let i = 0; i < sequence.length; i++) {
-      for (let j = 1; j <= sequence[i]; j++) {
+      console.log("in outer loop");
+
+      console.log("sequence[i].count", sequence[i].count);
+
+      for (let j = 1; j <= sequence[i].count; j++) {
+        console.log("current stripe color", sequence[i].color.value);
         pattern.push(
           <Stripe
             key={Math.random()}
-            color={pickedColors.length > 0 && pickedColors[0].value}
+            color={pickedColors.length > 0 && sequence[i].color.value}
           />
         );
       }
