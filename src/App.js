@@ -48,9 +48,9 @@ const StripesContainer = styled.div`
 
 const Pattern = styled.div`
   margin-bottom: 20px;
-  /* border-top: 1px solid black;
+  border-top: 1px solid black;
   border-left: 1px solid black;
-  border-right: 1px solid black; */
+  border-right: 1px solid black;
 `;
 
 const Button = styled.button``;
@@ -66,7 +66,7 @@ const Stripe = styled.div`
   background: ${props => props.color};
   height: 5px;
   width: 200px;
-  /* border-bottom: 1px solid black; */
+  border-bottom: 1px solid black;
 `;
 
 const createMagnitudeOptions = start => {
@@ -85,64 +85,59 @@ const createMagnitudeOptions = start => {
   return options;
 };
 
+const createStripe = (count, color) => {
+  let stripe = [];
+
+  for (let i = 1; i <= count; i++) {
+    stripe.push(<Stripe key={Math.random()} color={color} />);
+  }
+
+  return stripe;
+};
+
+const createPattern = sequence => {
+  let pattern = [];
+
+  for (let i = 0; i < sequence.length; i++) {
+    const { count, color } = sequence[i];
+    pattern.push(createStripe(count, color.value));
+  }
+
+  return <Pattern>{pattern}</Pattern>;
+};
+
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
-  const [palindromicArrays, setPalindromicArrays] = useState([]);
+  const [numberPalindromes, setNumberPalindromes] = useState([]);
   const [pickedColors, setPickedColors] = useState([]);
+  const [colorSequences, setColorSequences] = useState([]);
 
   useEffect(() => {
-    console.log(palindromicArrays);
-    console.log("useEffect", pickedColors);
-    console.log(pickedColors.length > 0 && pickedColors[0].value);
+    // console.log(numberPalindromes);
+    // console.log(colorSequences);
   });
 
-  const createPalindromicArrays = (length, total) => {
+  const makeArrays = () => {
+    setNumberPalindromes(createNumberPalindromes(stripeCount, magnitude));
+    setColorSequences(createColorPatterns(stripeCount, pickedColors.length));
+  };
+
+  const createNumberPalindromes = (length, total) => {
     let results = [];
 
     if (length === 1 && total > 0) {
-      results.push([{ count: total, color: pickedColors[0] }]);
+      results.push([total]);
     } else if (length === 2 && total % 2 === 0 && total > 0) {
-      results.push([
-        { count: total / 2, color: pickedColors[0] },
-        { count: total / 2, color: pickedColors[1] }
-      ]);
-      results.push([
-        { count: total / 2, color: pickedColors[1] },
-        { count: total / 2, color: pickedColors[0] }
-      ]);
+      results.push([total / 2, total / 2]);
     } else if (2 < length && length <= total) {
       for (let i = 1; i <= total / 2; i++) {
-        const middles = createPalindromicArrays(length - 2, total - 2 * i);
+        const middles = createNumberPalindromes(length - 2, total - 2 * i);
         middles.forEach(middle => results.push([i].concat(middle, [i])));
       }
     }
     return results;
-  };
-
-  const createPattern = sequence => {
-    let pattern = [];
-
-    console.log("in createPattern");
-
-    for (let i = 0; i < sequence.length; i++) {
-      console.log("in outer loop");
-
-      console.log("sequence[i].count", sequence[i].count);
-
-      for (let j = 1; j <= sequence[i].count; j++) {
-        console.log("current stripe color", sequence[i].color.value);
-        pattern.push(
-          <Stripe
-            key={Math.random()}
-            color={pickedColors.length > 0 && sequence[i].color.value}
-          />
-        );
-      }
-    }
-
-    return <Pattern>{pattern}</Pattern>;
   };
 
   const updatePickedColors = newColor => {
@@ -160,6 +155,61 @@ const App = () => {
       setPickedColors(filteredColors);
     }
   };
+
+  const range = n => {
+    let output = [];
+    for (let i = 0; i < n; i++) {
+      output.push(i);
+    }
+    return output;
+  };
+
+  const allPatterns = (length, n) => {
+    if (length === 1) {
+      return range(n).map(x => [x]);
+    } else {
+      return allPatterns(length - 1, n).flatMap(pattern => {
+        return range(n).map(x => pattern.concat([x]));
+      });
+    }
+  };
+
+  const createColorPatterns = (length, count) => {
+    let results = [];
+
+    if (length % 2 === 0) {
+      const all = allPatterns(count, length / 2);
+      console.log("all patterns before mirrorEvenArrays", all);
+      results.push(mirrorEvenArrays(all));
+    } else if (length % 2 !== 0) {
+      results.push(allPatterns(count, (length + 1) / 2));
+    }
+
+    return results;
+  };
+
+  const mirrorEvenArrays = arrays => {
+    return arrays.map(arr => {
+      console.log("arr before anything", arr);
+      let newArr = arr.slice();
+      console.log("newArr", newArr);
+      newArr.reverse();
+      console.log("reversed newArr", newArr);
+      arr = arr.concat(newArr);
+      console.log("arr concatted with newArr", arr);
+      return arr;
+    });
+  };
+
+  // const createPatternObjects = () => {
+  //   const results = [];
+
+  //   for (let i = 0; i < numberPalindromes.length; i++) {
+  //     for (let j = 0; j < colorSequences.length; j++) {
+  //       results.push();
+  //     }
+  //   }
+  // };
 
   return (
     <Container>
@@ -185,6 +235,7 @@ const App = () => {
           {pickedColors.length > 0 &&
             pickedColors.map(color => (
               <Swatch
+                key={Math.random()}
                 color={color.value}
                 onClick={() => updatePickedColors(color)}
               />
@@ -193,28 +244,21 @@ const App = () => {
         <SwatchContainer>
           {colors.map(color => (
             <Swatch
+              key={Math.random()}
               color={color.value}
               onClick={() => updatePickedColors(color)}
             />
           ))}
         </SwatchContainer>
         <ButtonContainer>
-          {stripeCount && magnitude && pickedColors.length > 0 && (
-            <Button
-              onClick={() =>
-                setPalindromicArrays(
-                  createPalindromicArrays(stripeCount, magnitude)
-                )
-              }
-            >
-              Make arrays
-            </Button>
+          {stripeCount && magnitude && colorSequences && (
+            <Button onClick={makeArrays}>Make arrays</Button>
           )}
         </ButtonContainer>
       </SelectContainer>
       <StripesContainer>
-        {pickedColors.length > 0 &&
-          palindromicArrays.map(sequence => createPattern(sequence))}
+        {/* {pickedColors.length > 0 &&
+          setNumberPalindromes.map(sequence => createPattern(sequence))} */}
       </StripesContainer>
     </Container>
   );
