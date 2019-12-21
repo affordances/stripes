@@ -115,8 +115,8 @@ const App = () => {
   const [colorSequences, setColorSequences] = useState([]);
 
   useEffect(() => {
-    // console.log(numberPalindromes);
-    // console.log(colorSequences);
+    console.log("numberPalindromes", numberPalindromes);
+    console.log("colorSequences", colorSequences);
   });
 
   const makeArrays = () => {
@@ -124,16 +124,16 @@ const App = () => {
     setColorSequences(createColorPatterns(stripeCount, pickedColors.length));
   };
 
-  const createNumberPalindromes = (length, total) => {
+  const createNumberPalindromes = (stripes, magnitude) => {
     let results = [];
 
-    if (length === 1 && total > 0) {
-      results.push([total]);
-    } else if (length === 2 && total % 2 === 0 && total > 0) {
-      results.push([total / 2, total / 2]);
-    } else if (2 < length && length <= total) {
-      for (let i = 1; i <= total / 2; i++) {
-        const middles = createNumberPalindromes(length - 2, total - 2 * i);
+    if (stripes === 1 && magnitude > 0) {
+      results.push([magnitude]);
+    } else if (stripes === 2 && magnitude % 2 === 0 && magnitude > 0) {
+      results.push([magnitude / 2, magnitude / 2]);
+    } else if (2 < stripes && stripes <= magnitude) {
+      for (let i = 1; i <= magnitude / 2; i++) {
+        const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
         middles.forEach(middle => results.push([i].concat(middle, [i])));
       }
     }
@@ -158,31 +158,33 @@ const App = () => {
 
   const range = n => {
     let output = [];
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i <= n; i++) {
       output.push(i);
     }
     return output;
   };
 
-  const allPatterns = (length, n) => {
-    if (length === 1) {
-      return range(n).map(x => [x]);
+  const allPatterns = (colors, stripes) => {
+    if (stripes === 1) {
+      return range(colors).map(x => [x]);
     } else {
-      return allPatterns(length - 1, n).flatMap(pattern => {
-        return range(n).map(x => pattern.concat([x]));
+      return allPatterns(colors, stripes - 1).flatMap(pattern => {
+        return range(colors).map(x => pattern.concat([x]));
       });
     }
   };
 
-  const createColorPatterns = (length, count) => {
+  const createColorPatterns = (stripes, colors) => {
     let results = [];
 
-    if (length % 2 === 0) {
-      const all = allPatterns(count, length / 2);
-      console.log("all patterns before mirrorEvenArrays", all);
+    if (stripes === 1) {
+      return [0];
+    } else if (stripes % 2 === 0) {
+      const all = allPatterns(colors, stripes / 2);
       results.push(mirrorEvenArrays(all));
-    } else if (length % 2 !== 0) {
-      results.push(allPatterns(count, (length + 1) / 2));
+    } else if (stripes % 2 !== 0) {
+      const all = allPatterns(colors, (stripes + 1) / 2);
+      results.push(mirrorOddArrays(all));
     }
 
     return results;
@@ -190,13 +192,19 @@ const App = () => {
 
   const mirrorEvenArrays = arrays => {
     return arrays.map(arr => {
-      console.log("arr before anything", arr);
       let newArr = arr.slice();
-      console.log("newArr", newArr);
       newArr.reverse();
-      console.log("reversed newArr", newArr);
       arr = arr.concat(newArr);
-      console.log("arr concatted with newArr", arr);
+      return arr;
+    });
+  };
+
+  const mirrorOddArrays = arrays => {
+    return arrays.map(arr => {
+      const middle = arr.pop();
+      let newArr = arr.slice();
+      newArr.reverse();
+      arr = arr.concat(middle, newArr);
       return arr;
     });
   };
