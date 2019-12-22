@@ -29,3 +29,301 @@ export const stripeOptions = [
   { value: "8", label: "8" },
   { value: "9", label: "9" }
 ];
+
+export const colorSequences = {
+  1: { 1: [[1]] },
+  2: {
+    2: [
+      [1, 2],
+      [2, 1]
+    ]
+  },
+  3: {
+    1: [[1, 0, 1]],
+    2: [
+      [1, 2, 1],
+      [2, 1, 2],
+      [1, 0, 2],
+      [2, 0, 1]
+    ],
+    3: [
+      [1, 2, 3],
+      [1, 3, 2],
+      [2, 1, 3],
+      [2, 3, 1],
+      [3, 1, 2],
+      [3, 2, 1]
+    ]
+  }
+};
+
+// FOUR STRIPES
+// COLORS	2	ABAB
+// 			BABA
+
+// 		3	ABCA
+// 			ACBA
+// 			BACB
+// 			BCAB
+// 			CABC
+// 			CBAC
+
+// FIVE STRIPES
+// COLORS	1	AXAXA
+
+// 		2	AXBXA
+// 			BXAXB
+
+// 			ABXBA
+// 			BAXAB
+
+// 			ABABA
+// 			BABAB
+
+// 		3	ABCBA
+// 			ACBCA
+// 			BACAB
+// 			BCACB
+// 			CABAC
+// 			CBABC
+
+// 		3	AXBXC
+// 			AXCXB
+// 			BXAXC
+// 			BXCXA
+// 			CXAXB
+// 			CXBXA
+
+// SIX STRIPES
+// COLORS	2	AXABXB
+// 			AXBAXB
+// 			BXABXA
+// 			BXBAXA
+
+// 			ABABAB
+// 			BABABA
+
+// 		3	AXBCXA
+// 			AXCBXA
+// 			BXACXB
+// 			BXCAXB
+// 			CXABXC
+// 			CXBAXC
+
+// 			ABCABC
+// 			ACBACB
+// 			BACBAC
+// 			BCABCA
+// 			CABCAB
+// 			CBACBA
+
+// SEVEN STRIPES
+// COLORS	1	AXAXAXA
+
+// 		2	AXBXBXA
+// 			BXAXAXB
+
+// 			AXABAXA
+// 			AXBABXA
+// 			BXABAXB
+// 			BXBABXB
+
+// 			ABXAXBA
+// 			ABXBXBA
+// 			BAXAXAB
+// 			BAXBXAB
+
+// 			ABAXABA
+// 			BABXBAB
+
+// 			ABABABA
+// 			BABABAB
+
+// 		2	AXBXAXB
+// 			BXAXBXA
+
+// 		3	AXBCBXA
+// 			AXCBCXA
+// 			BXACAXB
+// 			BXCACXB
+// 			CXABAXC
+// 			CXBABXC
+
+// 			ABXCXBA
+// 			ACXBXCA
+// 			BAXCXAB
+// 			BCXAXCB
+// 			CAXBXAC
+// 			CBXAXBC
+
+// 			ABCXCBA
+// 			ACBXBCA
+// 			BACXCAB
+// 			BCAXACB
+// 			CABXBAC
+// 			CBAXABC
+
+// 			ABACABA
+// 			ACABACA
+// 			BABCBAB
+// 			BCBABCB
+// 			CACBCAC
+// 			CBCACBC
+
+// 			ABCACBA
+// 			ABCBCBA
+// 			ACBABCA
+// 			ACBCBCA
+// 			BACACAB
+// 			BACBCAB
+// 			BCABACB
+// 			BCACACB
+// 			CABABAC
+// 			CABCBAC
+// 			CBABABC
+// 			CBACABC
+
+// EIGHT STRIPES
+// COLORS	2	ABXABXAB
+// 			BAXBAXBA
+
+// 			ABABABAB
+// 			BABABABA
+
+// 		3	AXBCBCXA
+// 			AXCBCBXA
+// 			BXACACXB
+// 			BXCACAXB
+// 			CXABABXC
+// 			CXBABAXC
+
+// NINE STRIPES
+// COLORS	1	AXAXAXAXA
+
+// 		2	AXAXBXAXA
+// 			AXBXAXBXA
+// 			AXBXBXBXA
+// 			BXAXAXAXB
+// 			BXAXBXAXB
+// 			BXBXAXBXB
+
+// 			AXABXBAXA
+// 			AXBAXABXA
+// 			BXABXBAXB
+// 			BXBAXABXB
+
+// 			AXABABAXA
+// 			AXBABABXA
+// 			BXABABAXA
+// 			BXBABABXA
+
+// 			ABXAXAXBA
+// 			ABXBXBXBA
+// 			BAXAXAXAB
+// 			BAXBXBXAB
+
+// 			ABXABAXBA
+// 			ABXBABXBA
+// 			BAXABAXAB
+// 			BAXBABXAB
+
+// 			ABAXAXABA
+// 			ABAXBXABA
+// 			BABXAXBAB
+// 			BABXBXBAB
+
+// 			ABABXBABA
+// 			BABAXABAB
+
+// 			ABABABABA
+// 			BABABABAB
+
+// 		2	AXBAXBAXB
+// 			BXABXABXA
+
+// 			ABXAXBXAB
+// 			BAXBXAXBA
+
+// 		3	AXBXCXBXA
+// 			AXCXBXCXA
+// 			BXAXCXAXB
+// 			BXCXAXCXB
+// 			CXAXBXAXC
+// 			CXBXAXBXC
+
+// 			AXBCXCBXA
+// 			AXCBXBCXA
+// 			BXACXCAXB
+// 			BXCAXACXB
+// 			CXABXBAXC
+// 			CXBAXABXC
+
+// 			AXBCACBXA
+// 			AXBCBCBXA
+// 			AXCBABCXA
+// 			AXCBCBCXA
+// 			BXACACAXB
+// 			BXACBCAXB
+// 			BXCABACXB
+// 			BXCACACXB
+// 			CXABABAXC
+// 			CXABCBAXC
+// 			CXBABABXC
+// 			CXBACABXC
+
+// 			ABXACAXBA
+// 			ABXBCBXBA
+// 			ABXCACXBA
+// 			ABXCBCXBA
+// 			ACXABAXCA
+// 			ACXBABXCA
+// 			ACXBCBXCA
+// 			ACXCBCXCA
+// 			BAXACAXAB
+// 			BAXBCBXAB
+// 			BAXCACXAB
+// 			BAXCBCXAB
+// 			BCXABAXCB
+// 			BCXACAXCB
+// 			BCXBABXCB
+// 			BCXCACXCB
+// 			CAXABAXAC
+// 			CAXBABXAC
+// 			CAXBCBXAC
+// 			CAXCBCXAC
+// 			CBXABAXBC
+// 			CBXACAXBC
+// 			CBXBABXBC
+// 			CBXCACXBC
+
+// 			ABAXCXABA
+// 			ACAXBXACA
+// 			BABXCXBAB
+// 			BCBXAXBCB
+// 			CACXBXCAC
+// 			CBCXAXCBC
+
+// 			ABCABACBA
+// 			ABCACACBA
+// 			ABCBABCBA
+// 			ABCBCBCBA
+// 			ACBABABCA
+// 			ACBACABCA
+// 			ACBCACBCA
+// 			ACBCBCBCA
+// 			BACABACAB
+// 			BACACACAB
+// 			BACBABCAB
+// 			BACBCBCAB
+// 			BCABABACB
+// 			BCABCBACB
+// 			BCACACACB
+// 			BCACBCACB
+// 			CABABABAC
+// 			CABACABAC
+// 			CABCACBAC
+// 			CABCBCBAC
+// 			CBABABABC
+// 			CBABCBABC
+// 			CBACACABC
+// 			CBACBCABC

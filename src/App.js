@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
-import { colors, maxMagnitude, stripeOptions } from "./config.js";
+import {
+  colors,
+  maxMagnitude,
+  stripeOptions,
+  colorSequences
+} from "./config.js";
 import "./index.css";
 
 const Container = styled.div`
@@ -95,33 +100,23 @@ const createStripe = (count, color) => {
   return stripe;
 };
 
-const createPattern = sequence => {
-  let pattern = [];
-
-  for (let i = 0; i < sequence.length; i++) {
-    const { count, color } = sequence[i];
-    pattern.push(createStripe(count, color.value));
-  }
-
-  return <Pattern>{pattern}</Pattern>;
-};
-
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
   const [numberPalindromes, setNumberPalindromes] = useState([]);
   const [pickedColors, setPickedColors] = useState([]);
-  const [colorSequences, setColorSequences] = useState([]);
+  const [colorSequence, setColorSequence] = useState([]);
 
   useEffect(() => {
     console.log("numberPalindromes", numberPalindromes);
-    console.log("colorSequences", colorSequences);
+    console.log("colorSequences", colorSequence);
+    console.log("pickedColors", pickedColors);
   });
 
   const makeArrays = () => {
     setNumberPalindromes(createNumberPalindromes(stripeCount, magnitude));
-    setColorSequences(createColorPatterns(stripeCount, pickedColors.length));
+    setColorSequence(colorSequences[stripeCount][pickedColors.length]);
   };
 
   const createNumberPalindromes = (stripes, magnitude) => {
@@ -156,68 +151,26 @@ const App = () => {
     }
   };
 
-  const range = n => {
-    let output = [];
-    for (let i = 0; i <= n; i++) {
-      output.push(i);
-    }
-    return output;
-  };
+  const createPatternObjects = () => {
+    const results = [];
 
-  const allPatterns = (colors, stripes) => {
-    if (stripes === 1) {
-      return range(colors).map(x => [x]);
-    } else {
-      return allPatterns(colors, stripes - 1).flatMap(pattern => {
-        return range(colors).map(x => pattern.concat([x]));
-      });
-    }
-  };
-
-  const createColorPatterns = (stripes, colors) => {
-    let results = [];
-
-    if (stripes === 1) {
-      return [0];
-    } else if (stripes % 2 === 0) {
-      const all = allPatterns(colors, stripes / 2);
-      results.push(mirrorEvenArrays(all));
-    } else if (stripes % 2 !== 0) {
-      const all = allPatterns(colors, (stripes + 1) / 2);
-      results.push(mirrorOddArrays(all));
+    for (let i = 0; i < colorSequences.length; i++) {
+      // transform array of arrays of number into array of arrays of color/count objects
     }
 
     return results;
   };
 
-  const mirrorEvenArrays = arrays => {
-    return arrays.map(arr => {
-      let newArr = arr.slice();
-      newArr.reverse();
-      arr = arr.concat(newArr);
-      return arr;
-    });
+  const createPattern = sequence => {
+    let pattern = [];
+
+    for (let i = 0; i < sequence.length; i++) {
+      const { count, color } = sequence[i];
+      pattern.push(createStripe(count, color.value));
+    }
+
+    return <Pattern>{pattern}</Pattern>;
   };
-
-  const mirrorOddArrays = arrays => {
-    return arrays.map(arr => {
-      const middle = arr.pop();
-      let newArr = arr.slice();
-      newArr.reverse();
-      arr = arr.concat(middle, newArr);
-      return arr;
-    });
-  };
-
-  // const createPatternObjects = () => {
-  //   const results = [];
-
-  //   for (let i = 0; i < numberPalindromes.length; i++) {
-  //     for (let j = 0; j < colorSequences.length; j++) {
-  //       results.push();
-  //     }
-  //   }
-  // };
 
   return (
     <Container>
