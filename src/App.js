@@ -5,7 +5,8 @@ import {
   colors,
   maxMagnitude,
   stripeOptions,
-  colorSequences
+  colorSequences,
+  numbersToLetters
 } from "./config.js";
 import "./index.css";
 
@@ -102,25 +103,16 @@ const createNumberPalindromes = (stripes, magnitude) => {
   return results;
 };
 
-const createStripe = (count, color) => {
-  let stripe = [];
-
-  for (let i = 1; i <= count; i++) {
-    stripe.push(<Stripe key={Math.random()} color={color} />);
-  }
-
-  return stripe;
-};
-
-const createPattern = sequence => {
-  let pattern = [];
-
-  for (let i = 0; i < sequence.length; i++) {
-    const { count, color } = sequence[i];
-    pattern.push(createStripe(count, color.value));
-  }
-
-  return <Pattern>{pattern}</Pattern>;
+const displayPattern = pattern => {
+  const patternItems = pattern.pattern.flatMap(({ count, color }) =>
+    new Array(count).fill(<Stripe color={color.value} />)
+  );
+  return (
+    <>
+      {pattern.label}
+      <Pattern>{patternItems}</Pattern>
+    </>
+  );
 };
 
 const App = () => {
@@ -152,7 +144,14 @@ const App = () => {
         for (let k = 0; k < numberPalindromes[i].length; k++) {
           pattern[k]["count"] = numberPalindromes[i][k];
         }
-        results.push(pattern);
+        results.push({
+          label: `
+          ${stripeCount}m${magnitude}, 
+          ${numberPalindromes[i].join("/")}, ${sequences[j]
+            .map(num => numbersToLetters[num])
+            .join("")}`,
+          pattern
+        });
       }
     }
 
@@ -223,7 +222,7 @@ const App = () => {
       <StripesContainer>
         {pickedColors.length > 0 &&
           patterns.length > 0 &&
-          patterns.map(sequence => createPattern(sequence))}
+          patterns.map(pattern => displayPattern(pattern))}
       </StripesContainer>
     </Container>
   );

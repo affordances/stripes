@@ -30,6 +30,13 @@ export const stripeOptions = [
   { value: "9", label: "9" }
 ];
 
+export const numbersToLetters = {
+  0: "X",
+  1: "A",
+  2: "B",
+  3: "C"
+};
+
 export const colorSequences = {
   1: { 1: [[1]] },
   2: {
