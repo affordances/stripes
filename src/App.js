@@ -86,6 +86,22 @@ const createMagnitudeOptions = start => {
   return options;
 };
 
+const createNumberPalindromes = (stripes, magnitude) => {
+  let results = [];
+
+  if (stripes === 1 && magnitude > 0) {
+    results.push([magnitude]);
+  } else if (stripes === 2 && magnitude % 2 === 0 && magnitude > 0) {
+    results.push([magnitude / 2, magnitude / 2]);
+  } else if (2 < stripes && stripes <= magnitude) {
+    for (let i = 1; i <= magnitude / 2; i++) {
+      const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
+      middles.forEach(middle => results.push([i].concat(middle, [i])));
+    }
+  }
+  return results;
+};
+
 const createStripe = (count, color) => {
   let stripe = [];
 
@@ -94,6 +110,17 @@ const createStripe = (count, color) => {
   }
 
   return stripe;
+};
+
+const createPattern = sequence => {
+  let pattern = [];
+
+  for (let i = 0; i < sequence.length; i++) {
+    const { count, color } = sequence[i];
+    pattern.push(createStripe(count, color.value));
+  }
+
+  return <Pattern>{pattern}</Pattern>;
 };
 
 const App = () => {
@@ -105,11 +132,10 @@ const App = () => {
 
   useEffect(() => {
     // console.log("numberPalindromes", numberPalindromes);
-    // console.log("colorSequences", colorSequence);
     // console.log("pickedColors", pickedColors);
   });
 
-  const makeArrays = () => {
+  const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(stripeCount, magnitude);
     const sequences = colorSequences[stripeCount][pickedColors.length];
     const results = [];
@@ -131,33 +157,6 @@ const App = () => {
     }
 
     setPatterns(results);
-  };
-
-  const createPattern = sequence => {
-    let pattern = [];
-
-    for (let i = 0; i < sequence.length; i++) {
-      const { count, color } = sequence[i];
-      pattern.push(createStripe(count, color.value));
-    }
-
-    return <Pattern>{pattern}</Pattern>;
-  };
-
-  const createNumberPalindromes = (stripes, magnitude) => {
-    let results = [];
-
-    if (stripes === 1 && magnitude > 0) {
-      results.push([magnitude]);
-    } else if (stripes === 2 && magnitude % 2 === 0 && magnitude > 0) {
-      results.push([magnitude / 2, magnitude / 2]);
-    } else if (2 < stripes && stripes <= magnitude) {
-      for (let i = 1; i <= magnitude / 2; i++) {
-        const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
-        middles.forEach(middle => results.push([i].concat(middle, [i])));
-      }
-    }
-    return results;
   };
 
   const updatePickedColors = newColor => {
@@ -217,7 +216,7 @@ const App = () => {
         </SwatchContainer>
         <ButtonContainer>
           {stripeCount && magnitude && colorSequences && (
-            <Button onClick={makeArrays}>Make arrays</Button>
+            <Button onClick={createPatterns}>Create patterns</Button>
           )}
         </ButtonContainer>
       </SelectContainer>
