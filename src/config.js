@@ -37,6 +37,13 @@ export const numbersToLetters = {
   3: "C"
 };
 
+export const lettersToNumbers = {
+  X: 0,
+  A: 1,
+  B: 2,
+  C: 3
+};
+
 export const colorSequences = {
   1: { 1: [[1]] },
   2: {
@@ -61,45 +68,47 @@ export const colorSequences = {
       [3, 1, 2],
       [3, 2, 1]
     ]
+  },
+  4: {
+    2: [
+      [1, 2, 1, 2],
+      [2, 1, 2, 1]
+    ],
+    3: [
+      [1, 2, 3, 1],
+      [1, 3, 2, 1],
+      [2, 1, 3, 2],
+      [2, 3, 1, 2],
+      [3, 1, 2, 3],
+      [3, 2, 1, 3]
+    ]
+  },
+  5: {
+    1: [[1, 0, 1, 0, 1]],
+    2: [
+      [1, 0, 2, 0, 1],
+      [2, 0, 1, 0, 2],
+      [1, 2, 0, 2, 1],
+      [2, 1, 0, 1, 2],
+      [1, 2, 1, 2, 1],
+      [2, 1, 2, 1, 2]
+    ],
+    3: [
+      [1, 2, 3, 2, 1],
+      [1, 3, 2, 3, 1],
+      [2, 1, 3, 1, 2],
+      [2, 3, 1, 3, 2],
+      [3, 1, 2, 1, 3],
+      [3, 2, 1, 2, 3],
+      [1, 0, 2, 0, 3],
+      [1, 0, 3, 0, 2],
+      [2, 0, 1, 0, 3],
+      [2, 0, 3, 0, 1],
+      [3, 0, 1, 0, 2],
+      [3, 0, 2, 0, 1]
+    ]
   }
 };
-
-// FOUR STRIPES
-// COLORS	2	ABAB
-// 			BABA
-
-// 		3	ABCA
-// 			ACBA
-// 			BACB
-// 			BCAB
-// 			CABC
-// 			CBAC
-
-// FIVE STRIPES
-// COLORS	1	AXAXA
-
-// 		2	AXBXA
-// 			BXAXB
-
-// 			ABXBA
-// 			BAXAB
-
-// 			ABABA
-// 			BABAB
-
-// 		3	ABCBA
-// 			ACBCA
-// 			BACAB
-// 			BCACB
-// 			CABAC
-// 			CBABC
-
-// 		3	AXBXC
-// 			AXCXB
-// 			BXAXC
-// 			BXCXA
-// 			CXAXB
-// 			CXBXA
 
 // SIX STRIPES
 // COLORS	2	AXABXB

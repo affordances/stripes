@@ -6,7 +6,8 @@ import {
   maxMagnitude,
   stripeOptions,
   colorSequences,
-  numbersToLetters
+  numbersToLetters,
+  lettersToNumbers
 } from "./config.js";
 import "./index.css";
 
@@ -115,6 +116,14 @@ const displayPattern = pattern => {
   );
 };
 
+const splitter = arr => {
+  return arr.map(arr2 =>
+    arr2.split("").map(letter => lettersToNumbers[letter])
+  );
+};
+
+// console.log(splitter());
+
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
@@ -125,7 +134,16 @@ const App = () => {
   useEffect(() => {
     // console.log("numberPalindromes", numberPalindromes);
     // console.log("pickedColors", pickedColors);
+    console.log(colorCountValidator());
   });
+
+  const colorCountValidator = () => {
+    if (stripeCount % 2 === 0) {
+      return stripeCount >= pickedColors.length && pickedColors.length > 1;
+    } else {
+      return stripeCount >= pickedColors.length;
+    }
+  };
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(stripeCount, magnitude);
@@ -147,9 +165,9 @@ const App = () => {
         results.push({
           label: `
           ${stripeCount}m${magnitude}, 
-          ${numberPalindromes[i].join("/")}, ${sequences[j]
-            .map(num => numbersToLetters[num])
-            .join("")}`,
+          ${numberPalindromes[i].join("/")}, 
+          ${sequences[j].map(num => numbersToLetters[num]).join("")}
+            `,
           pattern
         });
       }
@@ -161,6 +179,7 @@ const App = () => {
   const updatePickedColors = newColor => {
     let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
     if (
+      pickedColors.length < stripeCount &&
       pickedColors.length < 3 &&
       pickedColors.find(color => color.value === newColor.value) === undefined
     ) {
@@ -214,9 +233,12 @@ const App = () => {
           ))}
         </SwatchContainer>
         <ButtonContainer>
-          {stripeCount && magnitude && colorSequences && (
-            <Button onClick={createPatterns}>Create patterns</Button>
-          )}
+          <Button
+            disabled={!(stripeCount && magnitude && pickedColors.length > 0)}
+            onClick={createPatterns}
+          >
+            Create patterns
+          </Button>
         </ButtonContainer>
       </SelectContainer>
       <StripesContainer>
