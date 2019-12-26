@@ -134,16 +134,12 @@ const App = () => {
   useEffect(() => {
     // console.log("numberPalindromes", numberPalindromes);
     // console.log("pickedColors", pickedColors);
-    console.log(colorCountValidator());
   });
 
-  const colorCountValidator = () => {
-    if (stripeCount % 2 === 0) {
-      return stripeCount >= pickedColors.length && pickedColors.length > 1;
-    } else {
-      return stripeCount >= pickedColors.length;
-    }
-  };
+  const isColorCountValid =
+    stripeCount % 2 === 0
+      ? stripeCount >= pickedColors.length && pickedColors.length > 1
+      : stripeCount >= pickedColors.length;
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(stripeCount, magnitude);
@@ -234,7 +230,7 @@ const App = () => {
         </SwatchContainer>
         <ButtonContainer>
           <Button
-            disabled={!(stripeCount && magnitude && pickedColors.length > 0)}
+            disabled={!(stripeCount && magnitude && isColorCountValid)}
             onClick={createPatterns}
           >
             Create patterns
@@ -242,8 +238,7 @@ const App = () => {
         </ButtonContainer>
       </SelectContainer>
       <StripesContainer>
-        {pickedColors.length > 0 &&
-          patterns.length > 0 &&
+        {patterns.length > 0 &&
           patterns.map(pattern => displayPattern(pattern))}
       </StripesContainer>
     </Container>
