@@ -54,10 +54,23 @@ const SwatchContainer = styled.div`
   height: 60px;
 `;
 
+const PickedColorsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PickedColorsLabel = styled.h5`
+  font-weight: 500;
+  margin: 0 0 5px 0;
+  padding: 0;
+`;
+
 const PickedColors = styled.div`
   display: flex;
   flex-direction: row;
   height: 20px;
+  width: 60px;
+  border: 1px solid black;
 `;
 
 const StripesContainer = styled.div`
@@ -236,16 +249,19 @@ const App = () => {
             }}
           />
         </SelectContainer>
-        <PickedColors>
-          {pickedColors.length > 0 &&
-            pickedColors.map(color => (
-              <Swatch
-                key={Math.random()}
-                color={color.value}
-                onClick={() => updatePickedColors(color)}
-              />
-            ))}
-        </PickedColors>
+        <PickedColorsContainer>
+          <PickedColorsLabel>Colors</PickedColorsLabel>
+          <PickedColors>
+            {pickedColors.length > 0 &&
+              pickedColors.map(color => (
+                <Swatch
+                  key={Math.random()}
+                  color={color.value}
+                  onClick={() => updatePickedColors(color)}
+                />
+              ))}
+          </PickedColors>
+        </PickedColorsContainer>
         <SwatchContainer>
           {colors.map(color => (
             <Swatch
