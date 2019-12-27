@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import {
@@ -16,17 +16,29 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   margin-top: 20px;
 `;
 
-const SelectContainer = styled.div`
-  width: 150px;
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-right: 20px;
+  width: 120px;
 `;
 
-const SelectHeader = styled.h5``;
+const SelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
+const SelectHeader = styled.h5`
+  font-weight: 500;
+  margin: 0 0 5px 0;
+  padding: 0;
+`;
 
 const Swatch = styled.div`
   background: ${props => props.color};
@@ -45,7 +57,7 @@ const SwatchContainer = styled.div`
 const PickedColors = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
+  height: 20px;
 `;
 
 const StripesContainer = styled.div`
@@ -53,8 +65,20 @@ const StripesContainer = styled.div`
   flex-direction: column;
 `;
 
-const Pattern = styled.div`
+const PatternContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
+`;
+
+const PatternLabel = styled.h6`
+  font-weight: 400;
+  margin: 0 0 5px 0;
+  padding: 0;
+`;
+
+const Pattern = styled.div`
+  width: 200px;
 `;
 
 const Button = styled.button``;
@@ -69,7 +93,6 @@ const ButtonContainer = styled.div`
 const Stripe = styled.div`
   background: ${props => props.color};
   height: 5px;
-  width: 200px;
 `;
 
 const createMagnitudeOptions = start => {
@@ -109,10 +132,10 @@ const displayPattern = pattern => {
     new Array(count).fill(<Stripe color={color.value} />)
   );
   return (
-    <>
-      {pattern.label}
+    <PatternContainer>
+      <PatternLabel>{pattern.label}</PatternLabel>
       <Pattern>{patternItems}</Pattern>
-    </>
+    </PatternContainer>
   );
 };
 
@@ -131,15 +154,10 @@ const App = () => {
   const [pickedColors, setPickedColors] = useState([]);
   const [patterns, setPatterns] = useState([]);
 
-  useEffect(() => {
-    // console.log("numberPalindromes", numberPalindromes);
-    // console.log("pickedColors", pickedColors);
-  });
-
   const isColorCountValid =
     stripeCount % 2 === 0
-      ? stripeCount >= pickedColors.length && pickedColors.length > 1
-      : stripeCount >= pickedColors.length;
+      ? pickedColors.length > 1 && stripeCount >= pickedColors.length
+      : pickedColors.length > 0 && stripeCount >= pickedColors.length;
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(stripeCount, magnitude);
@@ -176,11 +194,16 @@ const App = () => {
     let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
     if (
       pickedColors.length < stripeCount &&
-      pickedColors.length < 3 &&
       pickedColors.find(color => color.value === newColor.value) === undefined
     ) {
-      newPickedColors.push(newColor);
-      setPickedColors(newPickedColors);
+      if (pickedColors.length < 3) {
+        newPickedColors.push(newColor);
+        setPickedColors(newPickedColors);
+      } else if (pickedColors.length === 3) {
+        newPickedColors.pop();
+        newPickedColors.push(newColor);
+        setPickedColors(newPickedColors);
+      }
     } else if (pickedColors.find(color => color.value === newColor.value)) {
       const filteredColors = pickedColors.filter(
         color => color.value !== newColor.value
@@ -191,24 +214,28 @@ const App = () => {
 
   return (
     <Container>
-      <SelectContainer>
-        <SelectHeader>Select stripe count</SelectHeader>
-        <Select
-          options={stripeOptions}
-          onChange={option => {
-            setStripeCount(Number(option.value));
-            setMagnitude(null);
-            setMagnitudeOptions(createMagnitudeOptions(option.value));
-          }}
-        />
-        <SelectHeader>Select magnitude</SelectHeader>
-        <Select
-          options={magnitudeOptions}
-          value={magnitude && { value: magnitude, label: magnitude }}
-          onChange={option => {
-            setMagnitude(Number(option.value));
-          }}
-        />
+      <MenuContainer>
+        <SelectContainer>
+          <SelectHeader>Select stripe count</SelectHeader>
+          <Select
+            options={stripeOptions}
+            onChange={option => {
+              setStripeCount(Number(option.value));
+              setMagnitude(null);
+              setMagnitudeOptions(createMagnitudeOptions(option.value));
+            }}
+          />
+        </SelectContainer>
+        <SelectContainer>
+          <SelectHeader>Select magnitude</SelectHeader>
+          <Select
+            options={magnitudeOptions}
+            value={magnitude && { value: magnitude, label: magnitude }}
+            onChange={option => {
+              setMagnitude(Number(option.value));
+            }}
+          />
+        </SelectContainer>
         <PickedColors>
           {pickedColors.length > 0 &&
             pickedColors.map(color => (
@@ -236,7 +263,7 @@ const App = () => {
             Create patterns
           </Button>
         </ButtonContainer>
-      </SelectContainer>
+      </MenuContainer>
       <StripesContainer>
         {patterns.length > 0 &&
           patterns.map(pattern => displayPattern(pattern))}
