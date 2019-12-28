@@ -75,13 +75,19 @@ const PickedColors = styled.div`
 
 const StripesContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 550px;
+  width: 1100px;
+  border: 1px solid black;
+  overflow-y: auto;
+  padding: 20px;
 `;
 
 const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin: 0 20px 20px 0;
 `;
 
 const PatternLabel = styled.h6`
@@ -152,13 +158,13 @@ const displayPattern = pattern => {
   );
 };
 
-const splitter = arr => {
-  return arr.map(arr2 =>
-    arr2.split("").map(letter => lettersToNumbers[letter])
-  );
-};
+// const splitter = arr => {
+//   return arr.map(arr2 =>
+//     arr2.split("").map(letter => lettersToNumbers[letter])
+//   );
+// };
 
-// console.log(splitter());
+// splitter([]);
 
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
