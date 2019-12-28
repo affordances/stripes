@@ -73,7 +73,7 @@ const PickedColors = styled.div`
   border: 1px solid black;
 `;
 
-const StripesContainer = styled.div`
+const PatternsContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -173,14 +173,19 @@ const App = () => {
   const [pickedColors, setPickedColors] = useState([]);
   const [patterns, setPatterns] = useState([]);
 
+  const stripeCountValue = stripeCount ? Number(stripeCount.value) : null;
   const isColorCountValid =
-    stripeCount % 2 === 0
-      ? pickedColors.length > 1 && stripeCount >= pickedColors.length
-      : pickedColors.length > 0 && stripeCount >= pickedColors.length;
+    stripeCountValue % 2 === 0
+      ? pickedColors.length > 1 && stripeCountValue >= pickedColors.length
+      : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
+  const allChoicesMade = !(stripeCountValue && magnitude && isColorCountValid);
 
   const createPatterns = () => {
-    const numberPalindromes = createNumberPalindromes(stripeCount, magnitude);
-    const sequences = colorSequences[stripeCount][pickedColors.length];
+    const numberPalindromes = createNumberPalindromes(
+      stripeCountValue,
+      magnitude
+    );
+    const sequences = colorSequences[stripeCountValue][pickedColors.length];
     const results = [];
 
     for (let i = 0; i < numberPalindromes.length; i++) {
@@ -197,7 +202,7 @@ const App = () => {
         }
         results.push({
           label: `
-          ${stripeCount}m${magnitude}, 
+          ${stripeCountValue}m${magnitude}, 
           ${numberPalindromes[i].join("/")}, 
           ${sequences[j].map(num => numbersToLetters[num]).join("")}
             `,
@@ -212,7 +217,7 @@ const App = () => {
   const updatePickedColors = newColor => {
     let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
     if (
-      pickedColors.length < stripeCount &&
+      pickedColors.length < stripeCountValue &&
       pickedColors.find(color => color.value === newColor.value) === undefined
     ) {
       if (pickedColors.length < 3) {
@@ -231,15 +236,24 @@ const App = () => {
     }
   };
 
+  const reset = () => {
+    setStripeCount(null);
+    setMagnitude(null);
+    setMagnitudeOptions(null);
+    setPickedColors([]);
+    setPatterns([]);
+  };
+
   return (
     <Container>
       <MenuContainer>
         <SelectContainer>
           <SelectHeader>Select stripe count</SelectHeader>
           <Select
+            value={stripeCount}
             options={stripeOptions}
             onChange={option => {
-              setStripeCount(Number(option.value));
+              setStripeCount(option);
               setMagnitude(null);
               setMagnitudeOptions(createMagnitudeOptions(option.value));
             }}
@@ -248,6 +262,7 @@ const App = () => {
         <SelectContainer>
           <SelectHeader>Select magnitude</SelectHeader>
           <Select
+            isDisabled={!magnitudeOptions}
             options={magnitudeOptions}
             value={magnitude && { value: magnitude, label: magnitude }}
             onChange={option => {
@@ -278,18 +293,20 @@ const App = () => {
           ))}
         </SwatchContainer>
         <ButtonContainer>
-          <Button
-            disabled={!(stripeCount && magnitude && isColorCountValid)}
-            onClick={createPatterns}
-          >
+          <Button onClick={createPatterns} disabled={allChoicesMade}>
             Create patterns
           </Button>
         </ButtonContainer>
+        <ButtonContainer>
+          <Button onClick={reset} disabled={allChoicesMade}>
+            Reset
+          </Button>
+        </ButtonContainer>
       </MenuContainer>
-      <StripesContainer>
+      <PatternsContainer>
         {patterns.length > 0 &&
           patterns.map(pattern => displayPattern(pattern))}
-      </StripesContainer>
+      </PatternsContainer>
     </Container>
   );
 };
