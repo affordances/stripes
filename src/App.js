@@ -191,7 +191,7 @@ const App = () => {
     stripeCountValue % 2 === 0
       ? pickedColors.length > 1 && stripeCountValue >= pickedColors.length
       : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
-  const allChoicesMade = !(stripeCountValue && magnitude && isColorCountValid);
+  const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
@@ -235,18 +235,16 @@ const App = () => {
     ) {
       if (pickedColors.length < 3) {
         newPickedColors.push(newColor);
-        setPickedColors(newPickedColors);
       } else if (pickedColors.length === 3) {
         newPickedColors.pop();
         newPickedColors.push(newColor);
-        setPickedColors(newPickedColors);
       }
     } else if (pickedColors.find(color => color.value === newColor.value)) {
-      const filteredColors = pickedColors.filter(
+      newPickedColors = pickedColors.filter(
         color => color.value !== newColor.value
       );
-      setPickedColors(filteredColors);
     }
+    setPickedColors(newPickedColors);
   };
 
   const reset = () => {
@@ -308,12 +306,12 @@ const App = () => {
           </SwatchContainer>
         </ColorsContainer>
         <ButtonContainer>
-          <Button onClick={createPatterns} disabled={allChoicesMade}>
+          <Button onClick={createPatterns} disabled={!allChoicesMade}>
             Create patterns
           </Button>
         </ButtonContainer>
         <ButtonContainer>
-          <Button onClick={reset} disabled={allChoicesMade}>
+          <Button onClick={reset} disabled={!allChoicesMade}>
             Reset
           </Button>
         </ButtonContainer>
