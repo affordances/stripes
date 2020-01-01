@@ -179,6 +179,17 @@ const displayPattern = pattern => {
 
 // splitter([]);
 
+const Patterns = props => {
+  const { patterns } = props;
+  return (
+    <PatternsContainer>
+      {patterns.length > 0 && patterns.map(pattern => displayPattern(pattern))}
+    </PatternsContainer>
+  );
+};
+
+const MemoizedPatterns = React.memo(Patterns);
+
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
@@ -316,10 +327,7 @@ const App = () => {
           </Button>
         </ButtonContainer>
       </MenuContainer>
-      <PatternsContainer>
-        {patterns.length > 0 &&
-          patterns.map(pattern => displayPattern(pattern))}
-      </PatternsContainer>
+      <MemoizedPatterns patterns={patterns} />
     </Container>
   );
 };
