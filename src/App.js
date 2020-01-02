@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import {
@@ -179,16 +179,14 @@ const displayPattern = pattern => {
 
 // splitter([]);
 
-const Patterns = props => {
+const Patterns = memo(props => {
   const { patterns } = props;
   return (
     <PatternsContainer>
       {patterns.length > 0 && patterns.map(pattern => displayPattern(pattern))}
     </PatternsContainer>
   );
-};
-
-const MemoizedPatterns = React.memo(Patterns);
+});
 
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
@@ -327,7 +325,7 @@ const App = () => {
           </Button>
         </ButtonContainer>
       </MenuContainer>
-      <MemoizedPatterns patterns={patterns} />
+      <Patterns patterns={patterns} />
     </Container>
   );
 };
