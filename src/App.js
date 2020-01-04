@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import {
@@ -92,7 +92,7 @@ const PatternsContainer = styled.div`
   flex-wrap: wrap;
   height: 550px;
   width: 1100px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   overflow-y: auto;
   padding: 20px;
 `;
@@ -201,6 +201,7 @@ const App = () => {
       ? pickedColors.length > 1 && stripeCountValue >= pickedColors.length
       : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
   const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
+  const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
@@ -264,11 +265,30 @@ const App = () => {
     setPatterns([]);
   };
 
+  const randomPattern = () => {
+    const randomStripeCount = Math.floor(Math.random() * 8) + 1; // 8 stripes for now
+    setStripeCount({ value: randomStripeCount, label: randomStripeCount });
+    const options = createMagnitudeOptions(randomStripeCount);
+    setMagnitudeOptions(options);
+    setMagnitude(
+      Number(options[Math.floor(Math.random() * options.length)].value)
+    );
+    // establish whether color count is set n or random n from range
+    // if random from range, get random n from that range, otherwise use set n
+    // add random colors to array n times, making sure to avoid dupes
+    // setPickedColors(array)
+  };
+
+  useEffect(() => {
+    console.log(magnitudeOptions);
+    console.log(magnitude);
+  });
+
   return (
     <Container>
       <MenuContainer>
         <SelectContainer>
-          <SelectHeader>Select stripe count</SelectHeader>
+          <SelectHeader>Stripes</SelectHeader>
           <Select
             value={stripeCount}
             options={stripeOptions}
@@ -280,7 +300,7 @@ const App = () => {
           />
         </SelectContainer>
         <SelectContainer>
-          <SelectHeader>Select magnitude</SelectHeader>
+          <SelectHeader>Magnitude</SelectHeader>
           <Select
             isDisabled={!magnitudeOptions}
             options={magnitudeOptions}
@@ -320,7 +340,10 @@ const App = () => {
           </Button>
         </ButtonContainer>
         <ButtonContainer>
-          <Button onClick={reset} disabled={!allChoicesMade}>
+          <Button onClick={randomPattern}>Random</Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button onClick={reset} disabled={!anyChoicesMade}>
             Reset
           </Button>
         </ButtonContainer>
