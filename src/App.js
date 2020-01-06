@@ -265,24 +265,29 @@ const App = () => {
     setPatterns([]);
   };
 
-  const randomPattern = () => {
+  const random = () => {
     const randomStripeCount = Math.floor(Math.random() * 8) + 1; // 8 stripes for now
-    setStripeCount({ value: randomStripeCount, label: randomStripeCount });
     const options = createMagnitudeOptions(randomStripeCount);
+    const colorCount =
+      randomStripeCount % 2 === 0
+        ? 2
+        : Math.floor(Math.random() * Math.min(randomStripeCount, 3)) + 1;
+    let results = [];
+    let i = 0;
+    while (i < colorCount) {
+      const colorIdx = Math.floor(Math.random() * colors.length);
+      if (!results.includes(colors[colorIdx])) {
+        results.push(colors[colorIdx]);
+        i++;
+      }
+    }
+    setStripeCount({ value: randomStripeCount, label: randomStripeCount });
     setMagnitudeOptions(options);
     setMagnitude(
       Number(options[Math.floor(Math.random() * options.length)].value)
     );
-    // establish whether color count is set n or random n from range
-    // if random from range, get random n from that range, otherwise use set n
-    // add random colors to array n times, making sure to avoid dupes
-    // setPickedColors(array)
+    setPickedColors(results);
   };
-
-  useEffect(() => {
-    console.log(magnitudeOptions);
-    console.log(magnitude);
-  });
 
   return (
     <Container>
@@ -340,7 +345,7 @@ const App = () => {
           </Button>
         </ButtonContainer>
         <ButtonContainer>
-          <Button onClick={randomPattern}>Random</Button>
+          <Button onClick={random}>Random</Button>
         </ButtonContainer>
         <ButtonContainer>
           <Button onClick={reset} disabled={!anyChoicesMade}>
