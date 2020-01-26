@@ -252,7 +252,7 @@ const App = () => {
   const updatePickedColors = newColor => {
     let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
     if (
-      pickedColors.length < stripeCountValue &&
+      pickedColors.length <= stripeCountValue &&
       pickedColors.find(color => color.value === newColor.value) === undefined
     ) {
       if (pickedColors.length < 3) {
