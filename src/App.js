@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import {
@@ -195,6 +195,15 @@ const App = () => {
   const [pickedColors, setPickedColors] = useState([]);
   const [patterns, setPatterns] = useState([]);
 
+  const randomMode = useRef(false);
+
+  useEffect(() => {
+    if (randomMode.current) {
+      createPatterns();
+      randomMode.current = false;
+    }
+  });
+
   const stripeCountValue = stripeCount ? Number(stripeCount.value) : null;
   const isColorCountValid =
     stripeCountValue % 2 === 0
@@ -233,8 +242,11 @@ const App = () => {
         });
       }
     }
-
-    setPatterns(results);
+    if (randomMode.current) {
+      setPatterns([results[Math.floor(Math.random() * results.length)]]);
+    } else {
+      setPatterns(results);
+    }
   };
 
   const updatePickedColors = newColor => {
@@ -287,6 +299,7 @@ const App = () => {
       Number(options[Math.floor(Math.random() * options.length)].value)
     );
     setPickedColors(results);
+    randomMode.current = true;
   };
 
   return (
@@ -345,7 +358,7 @@ const App = () => {
           </Button>
         </ButtonContainer>
         <ButtonContainer>
-          <Button onClick={random}>Random</Button>
+          <Button onClick={random}>Random pattern</Button>
         </ButtonContainer>
         <ButtonContainer>
           <Button onClick={reset} disabled={!anyChoicesMade}>
