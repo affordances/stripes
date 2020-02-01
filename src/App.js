@@ -40,50 +40,26 @@ const SelectHeader = styled.h5`
   padding: 0;
 `;
 
-const ColorsContainer = styled.div`
+const SwatchContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 
   ${props =>
     props.disabled &&
     `
   pointer-events: none;
   opacity: 0.5;
-  `};
+  `}
 `;
 
 const Swatch = styled.div`
+  box-sizing: border-box;
   background: ${props => props.color};
+  border: 2px solid ${props => (props.isPicked ? `limegreen` : `white`)};
   width: 20px;
   height: 20px;
   cursor: pointer;
-`;
-
-const SwatchContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  width: 100px;
-  height: 60px;
-`;
-
-const PickedColorsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const PickedColorsLabel = styled.h5`
-  font-weight: 500;
-  margin: 0 0 5px 0;
-  padding: 0;
-`;
-
-const PickedColors = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 20px;
-  width: 60px;
-  border: 1px solid lightgray;
 `;
 
 const PatternsContainer = styled.div`
@@ -92,7 +68,6 @@ const PatternsContainer = styled.div`
   flex-wrap: wrap;
   height: 550px;
   width: 1100px;
-  /* border: 1px solid black; */
   overflow-y: auto;
   padding: 20px;
 `;
@@ -328,30 +303,23 @@ const App = () => {
             }}
           />
         </SelectContainer>
-        <ColorsContainer disabled={!(stripeCountValue && magnitude)}>
-          <PickedColorsContainer>
-            <PickedColorsLabel>Colors</PickedColorsLabel>
-            <PickedColors>
-              {pickedColors.length > 0 &&
-                pickedColors.map(color => (
-                  <Swatch
-                    key={Math.random()}
-                    color={color.value}
-                    onClick={() => updatePickedColors(color)}
-                  />
-                ))}
-            </PickedColors>
-          </PickedColorsContainer>
-          <SwatchContainer>
-            {colors.map(color => (
+        <SwatchContainer disabled={!(stripeCountValue && magnitude)}>
+          {colors.map(color => {
+            return (
               <Swatch
                 key={Math.random()}
                 color={color.value}
                 onClick={() => updatePickedColors(color)}
+                isPicked={
+                  color ===
+                  pickedColors.find(
+                    pickedColor => pickedColor.value === color.value
+                  )
+                }
               />
-            ))}
-          </SwatchContainer>
-        </ColorsContainer>
+            );
+          })}
+        </SwatchContainer>
         <ButtonContainer>
           <Button onClick={createPatterns} disabled={!allChoicesMade}>
             Create patterns
