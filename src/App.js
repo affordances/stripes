@@ -225,7 +225,7 @@ const App = () => {
   };
 
   const updatePickedColors = newColor => {
-    let newPickedColors = JSON.parse(JSON.stringify(pickedColors));
+    let newPickedColors = pickedColors.map(color => ({ ...color }));
     if (
       pickedColors.length <= stripeCountValue &&
       pickedColors.find(color => color.value === newColor.value) === undefined
@@ -311,8 +311,7 @@ const App = () => {
                 color={color.value}
                 onClick={() => updatePickedColors(color)}
                 isPicked={
-                  color ===
-                  pickedColors.find(
+                  !!pickedColors.find(
                     pickedColor => pickedColor.value === color.value
                   )
                 }
