@@ -200,8 +200,8 @@ const App = () => {
     stripeCountValue % 2 === 0
       ? pickedColors.length > 1 && stripeCountValue >= pickedColors.length
       : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
-  const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
   const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
+  const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
@@ -242,20 +242,21 @@ const App = () => {
 
   const updatePickedColors = newColor => {
     let newPickedColors = pickedColors.map(color => ({ ...color }));
-    if (
-      pickedColors.find(color => color.value === newColor.value) === undefined
-    ) {
-      if (pickedColors.length < stripeCountValue && pickedColors.length < 3) {
-        newPickedColors.push(newColor);
-      } else {
-        newPickedColors.pop();
-        newPickedColors.push(newColor);
-      }
-    } else {
+
+    if (pickedColors.find(color => color.value === newColor.value)) {
       newPickedColors = pickedColors.filter(
         color => color.value !== newColor.value
       );
+    } else {
+      if (
+        pickedColors.length === stripeCountValue ||
+        pickedColors.length === 3
+      ) {
+        newPickedColors.pop();
+      }
+      newPickedColors.push(newColor);
     }
+
     setPickedColors(newPickedColors);
   };
 
