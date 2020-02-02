@@ -34,7 +34,7 @@ const SelectContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const SelectHeader = styled.h5`
+const Header = styled.h5`
   font-weight: 500;
   margin: 0 0 5px 0;
   padding: 0;
@@ -54,7 +54,7 @@ const SwatchContainer = styled.div`
 `;
 
 const Swatch = styled.div`
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   background: ${props => props.color};
   border: 2px solid ${props => (props.isPicked ? `limegreen` : `white`)};
   width: 20px;
@@ -100,6 +100,22 @@ const ButtonContainer = styled.div`
 const Stripe = styled.div`
   background: ${props => props.color};
   height: 5px;
+`;
+
+const PatternCountContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+`;
+
+const PatternCount = styled.p`
+  font-weight: 500;
+  font-size: 24px;
+  margin: 0 0 5px 0;
+  padding: 0;
 `;
 
 const createMagnitudeOptions = start => {
@@ -227,16 +243,15 @@ const App = () => {
   const updatePickedColors = newColor => {
     let newPickedColors = pickedColors.map(color => ({ ...color }));
     if (
-      pickedColors.length <= stripeCountValue &&
       pickedColors.find(color => color.value === newColor.value) === undefined
     ) {
-      if (pickedColors.length < 3) {
+      if (pickedColors.length < stripeCountValue && pickedColors.length < 3) {
         newPickedColors.push(newColor);
-      } else if (pickedColors.length === 3) {
+      } else {
         newPickedColors.pop();
         newPickedColors.push(newColor);
       }
-    } else if (pickedColors.find(color => color.value === newColor.value)) {
+    } else {
       newPickedColors = pickedColors.filter(
         color => color.value !== newColor.value
       );
@@ -281,19 +296,20 @@ const App = () => {
     <Container>
       <MenuContainer>
         <SelectContainer>
-          <SelectHeader>Stripes</SelectHeader>
+          <Header>Stripes</Header>
           <Select
             value={stripeCount}
             options={stripeOptions}
             onChange={option => {
               setStripeCount(option);
               setMagnitude(null);
+              setPickedColors([]);
               setMagnitudeOptions(createMagnitudeOptions(option.value));
             }}
           />
         </SelectContainer>
         <SelectContainer>
-          <SelectHeader>Magnitude</SelectHeader>
+          <Header>Magnitude</Header>
           <Select
             isDisabled={!magnitudeOptions}
             options={magnitudeOptions}
@@ -332,6 +348,10 @@ const App = () => {
             Reset
           </Button>
         </ButtonContainer>
+        <PatternCountContainer>
+          <Header>Patterns generated</Header>
+          <PatternCount>{patterns.length}</PatternCount>
+        </PatternCountContainer>
       </MenuContainer>
       <Patterns patterns={patterns} />
     </Container>
