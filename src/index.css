@@ -15,6 +15,7 @@ body {
   /* background: #f6f7f4; */
   background: beige;
   font-family: Helvetica, sans-serif;
+  overflow: hidden;
 }
 
 #root {

@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Select from "react-select";
+import { AutoSizer, Collection } from "react-virtualized";
 import {
   colors,
   maxMagnitude,
@@ -54,7 +55,6 @@ const SwatchContainer = styled.div`
 `;
 
 const Swatch = styled.div`
-  /* box-sizing: border-box; */
   background: ${props => props.color};
   border: 2px solid ${props => (props.isPicked ? `limegreen` : `white`)};
   width: 20px;
@@ -65,6 +65,7 @@ const Swatch = styled.div`
 const PatternsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-content: flex-start;
   flex-wrap: wrap;
   height: 550px;
   width: 1100px;
@@ -72,10 +73,22 @@ const PatternsContainer = styled.div`
   padding: 20px;
 `;
 
+const Pattern = styled.div`
+  width: 200px;
+  /* transition: transform 0.2s; */
+`;
+
 const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 20px 20px 0;
+  /* margin: 0 20px 20px 0; */
+  margin: 1px;
+  height: fit-content;
+
+  /* &:hover ${Pattern} {
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s;
+  } */
 `;
 
 const PatternLabel = styled.h6`
@@ -84,11 +97,13 @@ const PatternLabel = styled.h6`
   padding: 0;
 `;
 
-const Pattern = styled.div`
-  width: 200px;
+const Button = styled.button`
+  ${props =>
+    !props.disabled &&
+    `
+    cursor: pointer;
+  `}
 `;
-
-const Button = styled.button``;
 
 const ButtonContainer = styled.div`
   margin-top: 20px;
@@ -117,6 +132,17 @@ const PatternCount = styled.p`
   margin: 0 0 5px 0;
   padding: 0;
 `;
+
+const selectStyles = {
+  control: (provided, _) => ({
+    ...provided,
+    cursor: "pointer"
+  }),
+  option: (provided, _) => ({
+    ...provided,
+    cursor: "pointer"
+  })
+};
 
 const createMagnitudeOptions = start => {
   let options = [];
@@ -150,6 +176,14 @@ const createNumberPalindromes = (stripes, magnitude) => {
   return results;
 };
 
+// const splitter = arr => {
+//   return arr.map(arr2 =>
+//     arr2.split("").map(letter => lettersToNumbers[letter])
+//   );
+// };
+
+// splitter([]);
+
 const displayPattern = pattern => {
   const patternItems = pattern.pattern.flatMap(({ count, color }) =>
     new Array(count).fill(<Stripe color={color.value} />)
@@ -161,14 +195,6 @@ const displayPattern = pattern => {
     </PatternContainer>
   );
 };
-
-// const splitter = arr => {
-//   return arr.map(arr2 =>
-//     arr2.split("").map(letter => lettersToNumbers[letter])
-//   );
-// };
-
-// splitter([]);
 
 const Patterns = memo(props => {
   const { patterns } = props;
@@ -299,6 +325,7 @@ const App = () => {
         <SelectContainer>
           <Header>Stripes</Header>
           <Select
+            styles={selectStyles}
             value={stripeCount}
             options={stripeOptions}
             onChange={option => {
@@ -312,6 +339,7 @@ const App = () => {
         <SelectContainer>
           <Header>Magnitude</Header>
           <Select
+            styles={selectStyles}
             isDisabled={!magnitudeOptions}
             options={magnitudeOptions}
             value={magnitude && { value: magnitude, label: magnitude }}
