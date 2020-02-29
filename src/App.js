@@ -1,209 +1,51 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import styled from "styled-components";
 import Select from "react-select";
 import { FixedSizeGrid as Grid } from "react-window";
 import {
+  SelectContainer,
+  Stripe,
+  Swatch,
+  SwatchContainer,
+  Header,
+  Pattern,
+  PatternContainer,
+  PatternCount,
+  PatternLabel,
+  Button,
+  ButtonContainer,
+  PatternCountContainer,
+  Container,
+  MenuContainer,
+  selectStyles
+} from "./styles.js";
+import {
   colors,
-  maxMagnitude,
   stripeOptions,
   colorSequences,
-  numbersToLetters,
-  lettersToNumbers
+  numbersToLetters
 } from "./config.js";
+import {
+  createMagnitudeOptions,
+  createNumberPalindromes,
+  convertTo2D
+} from "./helpers.js";
 import "./index.css";
 
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 20px;
-`;
+const PatternRenderer = memo(props => {
+  const { columnIndex, data, rowIndex, ...otherProps } = props;
+  const currentPattern = data[rowIndex][columnIndex];
 
-const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-  width: 120px;
-`;
-
-const SelectContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const Header = styled.h5`
-  font-weight: 500;
-  margin: 0 0 5px 0;
-  padding: 0;
-`;
-
-const SwatchContainer = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-
-  ${props =>
-    props.disabled &&
-    `
-  pointer-events: none;
-  opacity: 0.5;
-  `}
-`;
-
-const Swatch = styled.div`
-  background: ${props => props.color};
-  border: 2px solid ${props => (props.isPicked ? `limegreen` : `white`)};
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-`;
-
-// const PatternsContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-content: flex-start;
-//   flex-wrap: wrap;
-//   height: 550px;
-//   width: 1100px;
-//   overflow-y: auto;
-//   padding: 20px;
-// `;
-
-const Pattern = styled.div`
-  width: 200px;
-  /* transition: transform 0.2s; */
-`;
-
-const PatternContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* margin: 0 20px 20px 0; */
-  margin: 1px;
-  height: fit-content;
-
-  /* &:hover ${Pattern} {
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s;
-  } */
-`;
-
-const PatternLabel = styled.h6`
-  font-weight: 400;
-  margin: 0 0 5px 0;
-  padding: 0;
-`;
-
-const Button = styled.button`
-  ${props =>
-    !props.disabled &&
-    `
-    cursor: pointer;
-  `}
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-const Stripe = styled.div`
-  background: ${props => props.color};
-  height: 5px;
-`;
-
-const PatternCountContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-`;
-
-const PatternCount = styled.p`
-  font-weight: 500;
-  font-size: 24px;
-  margin: 0 0 5px 0;
-  padding: 0;
-`;
-
-const selectStyles = {
-  control: (provided, _) => ({
-    ...provided,
-    cursor: "pointer"
-  }),
-  option: (provided, _) => ({
-    ...provided,
-    cursor: "pointer"
-  })
-};
-
-const createMagnitudeOptions = start => {
-  let options = [];
-  start = Number(start);
-
-  if (start % 2 === 0) {
-    for (let i = start; i <= maxMagnitude; i += 2) {
-      options.push({ value: i, label: i });
-    }
-  } else {
-    for (let i = start; i <= maxMagnitude; i++) {
-      options.push({ value: i, label: i });
-    }
-  }
-  return options;
-};
-
-const createNumberPalindromes = (stripes, magnitude) => {
-  let results = [];
-
-  if (stripes === 1 && magnitude > 0) {
-    results.push([magnitude]);
-  } else if (stripes === 2 && magnitude % 2 === 0 && magnitude > 0) {
-    results.push([magnitude / 2, magnitude / 2]);
-  } else if (2 < stripes && stripes <= magnitude) {
-    for (let i = 1; i <= magnitude / 2; i++) {
-      const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
-      middles.forEach(middle => results.push([i].concat(middle, [i])));
-    }
-  }
-  return results;
-};
-
-// const splitter = arr => {
-//   return arr.map(arr2 =>
-//     arr2.split("").map(letter => lettersToNumbers[letter])
-//   );
-// };
-
-// splitter([]);
-
-const displayPattern = pattern => {
-  const patternItems = pattern.pattern.flatMap(({ count, color }) =>
-    new Array(count).fill(<Stripe color={color.value} />)
-  );
-  return (
-    <PatternContainer>
-      <PatternLabel>{pattern.label}</PatternLabel>
-      <Pattern>{patternItems}</Pattern>
+  return currentPattern ? (
+    <PatternContainer {...otherProps}>
+      <PatternLabel>{currentPattern.label}</PatternLabel>
+      <Pattern>
+        {currentPattern.pattern.flatMap(({ count, color }) =>
+          new Array(count).fill(<Stripe color={color.value} />)
+        )}
+      </Pattern>
     </PatternContainer>
-  );
-};
-
-class ItemRenderer extends React.PureComponent {
-  render() {
-    const { columnIndex, data, rowIndex } = this.props;
-    // console.log(data[rowIndex][columnIndex]);
-    console.log(data);
-    return displayPattern(data[rowIndex][columnIndex]);
-  }
-}
+  ) : null;
+});
 
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
@@ -211,6 +53,7 @@ const App = () => {
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
   const [pickedColors, setPickedColors] = useState([]);
   const [patterns, setPatterns] = useState([]);
+  const [patternCount, setPatternCount] = useState(0);
 
   const randomMode = useRef(false);
 
@@ -228,17 +71,6 @@ const App = () => {
       : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
   const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
   const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
-
-  const convertTo2D = array => {
-    let result = [];
-    let i = 0;
-
-    while (i < array.length) {
-      result.push(array.slice(i, i + 4));
-      i += 4;
-    }
-    return result;
-  };
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
@@ -272,8 +104,10 @@ const App = () => {
     const converted = convertTo2D(results);
 
     if (randomMode.current) {
+      setPatternCount(1);
       setPatterns([[results[Math.floor(Math.random() * results.length)]]]);
     } else {
+      setPatternCount(results.length);
       setPatterns(converted);
     }
   };
@@ -391,10 +225,9 @@ const App = () => {
         </ButtonContainer>
         <PatternCountContainer>
           <Header>Patterns generated</Header>
-          <PatternCount>{patterns.length}</PatternCount>
+          <PatternCount>{patternCount}</PatternCount>
         </PatternCountContainer>
       </MenuContainer>
-      {/* <Patterns patterns={patterns} /> */}
       {patterns.length > 0 && (
         <Grid
           itemData={patterns}
@@ -405,7 +238,7 @@ const App = () => {
           rowHeight={200}
           width={800}
         >
-          {ItemRenderer}
+          {PatternRenderer}
         </Grid>
       )}
     </Container>
