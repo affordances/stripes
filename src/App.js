@@ -199,27 +199,8 @@ const displayPattern = pattern => {
 class ItemRenderer extends React.PureComponent {
   render() {
     const { columnIndex, data, rowIndex } = this.props;
+    console.log(data[rowIndex][columnIndex]);
     return displayPattern(data[rowIndex][columnIndex]);
-  }
-}
-
-class ComponentThatRendersAGridOfItems extends React.PureComponent {
-  render() {
-    const { itemsArray, otherGridProps } = this.props;
-    return (
-      <Grid
-        itemData={itemsArray}
-        columnCount={itemsArray[0].length}
-        rowCount={itemsArray.length}
-        columnWidth={200}
-        height={550}
-        rowHeight={35}
-        width={800}
-        {...otherGridProps}
-      >
-        {ItemRenderer}
-      </Grid>
-    );
   }
 }
 
@@ -237,7 +218,6 @@ const App = () => {
       createPatterns();
       randomMode.current = false;
     }
-    console.log(patterns);
   });
 
   const stripeCountValue = stripeCount ? Number(stripeCount.value) : null;
@@ -417,7 +397,17 @@ const App = () => {
       </MenuContainer>
       {/* <Patterns patterns={patterns} /> */}
       {patterns.length > 0 && (
-        <ComponentThatRendersAGridOfItems itemsArray={patterns} />
+        <Grid
+          itemData={patterns}
+          columnCount={patterns[0].length}
+          rowCount={patterns.length}
+          columnWidth={200}
+          height={550}
+          rowHeight={200}
+          width={800}
+        >
+          {ItemRenderer}
+        </Grid>
       )}
     </Container>
   );
