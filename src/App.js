@@ -199,7 +199,8 @@ const displayPattern = pattern => {
 class ItemRenderer extends React.PureComponent {
   render() {
     const { columnIndex, data, rowIndex } = this.props;
-    console.log(data[rowIndex][columnIndex]);
+    // console.log(data[rowIndex][columnIndex]);
+    console.log(data);
     return displayPattern(data[rowIndex][columnIndex]);
   }
 }
@@ -260,11 +261,9 @@ const App = () => {
           pattern[k]["count"] = numberPalindromes[i][k];
         }
         results.push({
-          label: `
-          ${stripeCountValue}m${magnitude}, 
-          ${numberPalindromes[i].join("/")}, 
-          ${sequences[j].map(num => numbersToLetters[num]).join("")}
-            `,
+          label: `${stripeCountValue}m${magnitude}, ${numberPalindromes[i].join(
+            "/"
+          )}, ${sequences[j].map(num => numbersToLetters[num]).join("")}`,
           pattern
         });
       }
