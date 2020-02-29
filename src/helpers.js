@@ -1,4 +1,4 @@
-import maxMagnitude, { lettersToNumbers } from "./config.js";
+import { maxMagnitude, lettersToNumbers } from "./config.js";
 
 export const createMagnitudeOptions = start => {
   let options = [];
