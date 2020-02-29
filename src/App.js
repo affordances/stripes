@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Select from "react-select";
-import { AutoSizer, Collection } from "react-virtualized";
+import { FixedSizeGrid as Grid } from "react-window";
 import {
   colors,
   maxMagnitude,
@@ -62,16 +62,16 @@ const Swatch = styled.div`
   cursor: pointer;
 `;
 
-const PatternsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  height: 550px;
-  width: 1100px;
-  overflow-y: auto;
-  padding: 20px;
-`;
+// const PatternsContainer = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-content: flex-start;
+//   flex-wrap: wrap;
+//   height: 550px;
+//   width: 1100px;
+//   overflow-y: auto;
+//   padding: 20px;
+// `;
 
 const Pattern = styled.div`
   width: 200px;
@@ -196,14 +196,32 @@ const displayPattern = pattern => {
   );
 };
 
-const Patterns = memo(props => {
-  const { patterns } = props;
-  return (
-    <PatternsContainer>
-      {patterns.length > 0 && patterns.map(pattern => displayPattern(pattern))}
-    </PatternsContainer>
-  );
-});
+class ItemRenderer extends React.PureComponent {
+  render() {
+    const { columnIndex, data, rowIndex } = this.props;
+    return displayPattern(data[rowIndex][columnIndex]);
+  }
+}
+
+class ComponentThatRendersAGridOfItems extends React.PureComponent {
+  render() {
+    const { itemsArray, otherGridProps } = this.props;
+    return (
+      <Grid
+        itemData={itemsArray}
+        columnCount={itemsArray[0].length}
+        rowCount={itemsArray.length}
+        columnWidth={200}
+        height={550}
+        rowHeight={35}
+        width={800}
+        {...otherGridProps}
+      >
+        {ItemRenderer}
+      </Grid>
+    );
+  }
+}
 
 const App = () => {
   const [stripeCount, setStripeCount] = useState(null);
@@ -219,6 +237,7 @@ const App = () => {
       createPatterns();
       randomMode.current = false;
     }
+    console.log(patterns);
   });
 
   const stripeCountValue = stripeCount ? Number(stripeCount.value) : null;
@@ -228,6 +247,17 @@ const App = () => {
       : pickedColors.length > 0 && stripeCountValue >= pickedColors.length;
   const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
   const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
+
+  const convertTo2D = array => {
+    let result = [];
+    let i = 0;
+
+    while (i < array.length) {
+      result.push(array.slice(i, i + 4));
+      i += 4;
+    }
+    return result;
+  };
 
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
@@ -259,10 +289,13 @@ const App = () => {
         });
       }
     }
+
+    const converted = convertTo2D(results);
+
     if (randomMode.current) {
-      setPatterns([results[Math.floor(Math.random() * results.length)]]);
+      setPatterns([[results[Math.floor(Math.random() * results.length)]]]);
     } else {
-      setPatterns(results);
+      setPatterns(converted);
     }
   };
 
@@ -382,7 +415,10 @@ const App = () => {
           <PatternCount>{patterns.length}</PatternCount>
         </PatternCountContainer>
       </MenuContainer>
-      <Patterns patterns={patterns} />
+      {/* <Patterns patterns={patterns} /> */}
+      {patterns.length > 0 && (
+        <ComponentThatRendersAGridOfItems itemsArray={patterns} />
+      )}
     </Container>
   );
 };
