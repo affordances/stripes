@@ -50,33 +50,15 @@ export const Swatch = styled.div`
   cursor: pointer;
 `;
 
-// export const PatternsContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-content: flex-start;
-//   flex-wrap: wrap;
-//   height: 550px;
-//   width: 1100px;
-//   overflow-y: auto;
-//   padding: 20px;
-// `;
-
 export const Pattern = styled.div`
   width: 200px;
-  /* transition: transform 0.2s; */
 `;
 
 export const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* margin: 0 20px 20px 0; */
-  margin: 1px;
+  margin: 10px;
   height: fit-content;
-
-  /* &:hover ${Pattern} {
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s;
-  } */
 `;
 
 export const PatternLabel = styled.h6`

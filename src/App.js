@@ -234,10 +234,10 @@ const App = () => {
           itemData={patterns}
           columnCount={patterns[0].length}
           rowCount={patterns.length}
-          columnWidth={200}
+          columnWidth={220}
           height={550}
-          rowHeight={200}
-          width={800}
+          rowHeight={120}
+          width={900}
         >
           {PatternRenderer}
         </Grid>
