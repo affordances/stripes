@@ -142,7 +142,7 @@ const App = () => {
   };
 
   const random = () => {
-    const randomStripeCount = Math.floor(Math.random() * 8) + 1; // 8 stripes for now
+    const randomStripeCount = Math.floor(Math.random() * 9) + 1;
     const options = createMagnitudeOptions(randomStripeCount);
     const colorCount =
       randomStripeCount % 2 === 0
