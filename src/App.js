@@ -138,6 +138,7 @@ const App = () => {
     setMagnitudeOptions(null);
     setPickedColors([]);
     setPatterns([]);
+    setPatternCount(0);
   };
 
   const random = () => {
