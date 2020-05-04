@@ -34,7 +34,7 @@ export const SwatchContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  ${props =>
+  ${(props) =>
     props.disabled &&
     `
   pointer-events: none;
@@ -43,8 +43,8 @@ export const SwatchContainer = styled.div`
 `;
 
 export const Swatch = styled.div`
-  background: ${props => props.color};
-  border: 2px solid ${props => (props.isPicked ? `limegreen` : `white`)};
+  background: ${(props) => props.color};
+  border: 2px solid ${(props) => (props.isPicked ? `limegreen` : `white`)};
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -68,7 +68,7 @@ export const PatternLabel = styled.h6`
 `;
 
 export const Button = styled.button`
-  ${props =>
+  ${(props) =>
     !props.disabled &&
     `
     cursor: pointer;
@@ -83,7 +83,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Stripe = styled.div`
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   height: 5px;
 `;
 
@@ -106,10 +106,10 @@ export const PatternCount = styled.p`
 export const selectStyles = {
   control: (provided, _) => ({
     ...provided,
-    cursor: "pointer"
+    cursor: "pointer",
   }),
   option: (provided, _) => ({
     ...provided,
-    cursor: "pointer"
-  })
+    cursor: "pointer",
+  }),
 };
