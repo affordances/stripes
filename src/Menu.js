@@ -7,16 +7,15 @@ import {
   Header,
   PatternCount,
   Button,
-  ButtonContainer,
   PatternCountContainer,
   MenuContainer,
+  MenuRow,
   selectStyles,
 } from "./styles.js";
 import { colors, stripeOptions } from "./config.js";
 import { createMagnitudeOptions } from "./helpers.js";
-import { useStripes } from "./hooks.js";
 
-export const Menu = () => {
+export const Menu = (props) => {
   const {
     magnitude,
     setMagnitude,
@@ -34,36 +33,38 @@ export const Menu = () => {
     stripeCountValue,
     pickedColors,
     createPatterns,
-  } = useStripes();
+  } = props;
 
   return (
     <MenuContainer>
-      <SelectContainer>
-        <Header>Stripes</Header>
-        <Select
-          styles={selectStyles}
-          value={stripeCount}
-          options={stripeOptions}
-          onChange={(option) => {
-            setStripeCount(option);
-            setMagnitude(null);
-            setPickedColors([]);
-            setMagnitudeOptions(createMagnitudeOptions(option.value));
-          }}
-        />
-      </SelectContainer>
-      <SelectContainer>
-        <Header>Magnitude</Header>
-        <Select
-          styles={selectStyles}
-          isDisabled={!magnitudeOptions}
-          options={magnitudeOptions}
-          value={magnitude && { value: magnitude, label: magnitude }}
-          onChange={(option) => {
-            setMagnitude(Number(option.value));
-          }}
-        />
-      </SelectContainer>
+      <MenuRow>
+        <SelectContainer>
+          <Header>Stripes</Header>
+          <Select
+            styles={selectStyles}
+            value={stripeCount}
+            options={stripeOptions}
+            onChange={(option) => {
+              setStripeCount(option);
+              setMagnitude(null);
+              setPickedColors([]);
+              setMagnitudeOptions(createMagnitudeOptions(option.value));
+            }}
+          />
+        </SelectContainer>
+        <SelectContainer>
+          <Header>Magnitude</Header>
+          <Select
+            styles={selectStyles}
+            isDisabled={!magnitudeOptions}
+            options={magnitudeOptions}
+            value={magnitude && { value: magnitude, label: magnitude }}
+            onChange={(option) => {
+              setMagnitude(Number(option.value));
+            }}
+          />
+        </SelectContainer>
+      </MenuRow>
       <SwatchContainer disabled={!(stripeCountValue && magnitude)}>
         {colors.map((color) => {
           return (
@@ -80,19 +81,15 @@ export const Menu = () => {
           );
         })}
       </SwatchContainer>
-      <ButtonContainer>
+      <MenuRow>
         <Button onClick={createPatterns} disabled={!allChoicesMade}>
           Create patterns
         </Button>
-      </ButtonContainer>
-      <ButtonContainer>
         <Button onClick={random}>Random pattern</Button>
-      </ButtonContainer>
-      <ButtonContainer>
         <Button onClick={reset} disabled={!anyChoicesMade}>
           Reset
         </Button>
-      </ButtonContainer>
+      </MenuRow>
       <PatternCountContainer>
         <Header>Patterns generated</Header>
         <PatternCount>{patternCount}</PatternCount>

@@ -10,7 +10,7 @@ import {
   Container,
 } from "./styles.js";
 import { useStripes } from "./hooks.js";
-import { Menu } from "./Menu.tsx";
+import { Menu } from "./Menu.js";
 
 const PatternRenderer = memo((props) => {
   const { columnIndex, data, rowIndex, ...otherProps } = props;
@@ -29,13 +29,11 @@ const PatternRenderer = memo((props) => {
 });
 
 const App = () => {
-  const { patterns } = useStripes();
-
-  console.log(patterns);
+  const { patterns, ...props } = useStripes();
 
   return (
     <Container>
-      <Menu />
+      <Menu {...props} />
       {patterns.length > 0 && (
         <AutoSizer>
           {({ height, width }) => (

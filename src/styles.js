@@ -4,23 +4,30 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 20px;
-  width: 120px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const MenuRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const SelectContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  flex: 1;
 `;
 
 export const Header = styled.h5`
@@ -30,9 +37,10 @@ export const Header = styled.h5`
 `;
 
 export const SwatchContainer = styled.div`
-  box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 
   ${(props) =>
     props.disabled &&
@@ -48,6 +56,16 @@ export const Swatch = styled.div`
   width: 20px;
   height: 20px;
   cursor: pointer;
+`;
+
+export const Button = styled.button`
+  flex: 1;
+
+  ${(props) =>
+    !props.disabled &&
+    `
+    cursor: pointer;
+  `}
 `;
 
 export const PatternContainer = styled.div`
@@ -72,28 +90,12 @@ export const Stripe = styled.div`
   height: 10px;
 `;
 
-export const Button = styled.button`
-  ${(props) =>
-    !props.disabled &&
-    `
-    cursor: pointer;
-  `}
-`;
-
-export const ButtonContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
 export const PatternCountContainer = styled.div`
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  flex: 1;
 `;
 
 export const PatternCount = styled.p`
