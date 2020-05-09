@@ -50,22 +50,26 @@ export const Swatch = styled.div`
   cursor: pointer;
 `;
 
-export const Pattern = styled.div`
-  border: 1px solid black;
-  width: 200px;
-`;
-
 export const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  height: fit-content;
 `;
 
 export const PatternLabel = styled.h6`
   font-weight: 400;
   margin: 0 0 5px 0;
   padding: 0;
+`;
+
+export const Pattern = styled.div`
+  border: 1px solid black;
+  margin-right: 20px;
+  width: 260px;
+`;
+
+export const Stripe = styled.div`
+  background: ${(props) => props.color};
+  height: 10px;
 `;
 
 export const Button = styled.button`
@@ -81,11 +85,6 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-`;
-
-export const Stripe = styled.div`
-  background: ${(props) => props.color};
-  height: 5px;
 `;
 
 export const PatternCountContainer = styled.div`
