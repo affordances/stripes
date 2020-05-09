@@ -1,4 +1,5 @@
 * {
+  box-sizing: border-box;
   /* border: 1px solid black; */
 }
 
@@ -12,11 +13,9 @@ body {
   padding: 0 20px;
   height: 100%;
   width: 100%;
-  /* background: #f6f7f4; */
-  background: beige;
+  background: #f6f7f4;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
-  text-transform: uppercase;
 }
 
 #root {

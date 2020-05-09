@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react";
 import Select from "react-select";
 import { FixedSizeGrid as Grid } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import {
   SelectContainer,
   Stripe,
@@ -16,22 +17,22 @@ import {
   PatternCountContainer,
   Container,
   MenuContainer,
-  selectStyles
+  selectStyles,
 } from "./styles.js";
 import {
   colors,
   stripeOptions,
   colorSequences,
-  numbersToLetters
+  numbersToLetters,
 } from "./config.js";
 import {
   createMagnitudeOptions,
   createNumberPalindromes,
-  convertTo2D
+  convertTo2D,
 } from "./helpers.js";
 import "./index.css";
 
-const PatternRenderer = memo(props => {
+const PatternRenderer = memo((props) => {
   const { columnIndex, data, rowIndex, ...otherProps } = props;
   const currentPattern = data[rowIndex][columnIndex];
 
@@ -82,7 +83,7 @@ const App = () => {
 
     for (let i = 0; i < numberPalindromes.length; i++) {
       for (let j = 0; j < sequences.length; j++) {
-        let pattern = sequences[j].map(color => {
+        let pattern = sequences[j].map((color) => {
           if (color === 0) {
             return { color: { label: "white", value: "#f6f7f4" } };
           } else {
@@ -95,8 +96,8 @@ const App = () => {
         results.push({
           label: `${stripeCountValue}m${magnitude}, ${numberPalindromes[i].join(
             "/"
-          )}, ${sequences[j].map(num => numbersToLetters[num]).join("")}`,
-          pattern
+          )}, ${sequences[j].map((num) => numbersToLetters[num]).join("")}`,
+          pattern,
         });
       }
     }
@@ -112,12 +113,12 @@ const App = () => {
     }
   };
 
-  const updatePickedColors = newColor => {
-    let newPickedColors = pickedColors.map(color => ({ ...color }));
+  const updatePickedColors = (newColor) => {
+    let newPickedColors = pickedColors.map((color) => ({ ...color }));
 
-    if (pickedColors.find(color => color.value === newColor.value)) {
+    if (pickedColors.find((color) => color.value === newColor.value)) {
       newPickedColors = pickedColors.filter(
-        color => color.value !== newColor.value
+        (color) => color.value !== newColor.value
       );
     } else {
       if (
@@ -175,7 +176,7 @@ const App = () => {
             styles={selectStyles}
             value={stripeCount}
             options={stripeOptions}
-            onChange={option => {
+            onChange={(option) => {
               setStripeCount(option);
               setMagnitude(null);
               setPickedColors([]);
@@ -190,13 +191,13 @@ const App = () => {
             isDisabled={!magnitudeOptions}
             options={magnitudeOptions}
             value={magnitude && { value: magnitude, label: magnitude }}
-            onChange={option => {
+            onChange={(option) => {
               setMagnitude(Number(option.value));
             }}
           />
         </SelectContainer>
         <SwatchContainer disabled={!(stripeCountValue && magnitude)}>
-          {colors.map(color => {
+          {colors.map((color) => {
             return (
               <Swatch
                 key={Math.random()}
@@ -204,7 +205,7 @@ const App = () => {
                 onClick={() => updatePickedColors(color)}
                 isPicked={
                   !!pickedColors.find(
-                    pickedColor => pickedColor.value === color.value
+                    (pickedColor) => pickedColor.value === color.value
                   )
                 }
               />
@@ -230,17 +231,21 @@ const App = () => {
         </PatternCountContainer>
       </MenuContainer>
       {patterns.length > 0 && (
-        <Grid
-          itemData={patterns}
-          columnCount={patterns[0].length}
-          rowCount={patterns.length}
-          columnWidth={220}
-          height={550}
-          rowHeight={120}
-          width={900}
-        >
-          {PatternRenderer}
-        </Grid>
+        <AutoSizer>
+          {({ height, width }) => (
+            <Grid
+              itemData={patterns}
+              columnCount={patterns[0].length}
+              rowCount={patterns.length}
+              columnWidth={220}
+              height={height}
+              rowHeight={120}
+              width={width}
+            >
+              {PatternRenderer}
+            </Grid>
+          )}
+        </AutoSizer>
       )}
     </Container>
   );

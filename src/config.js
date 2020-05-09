@@ -5,7 +5,6 @@ export const colors = [
   { label: "red", value: "#d73931" },
   { label: "orange", value: "#ea4d38" },
   { label: "yellow", value: "#f3ad45" },
-  // { label: "yellow gold", value: "#f1bf48" },
   { label: "muted gold", value: "#cc8b37" },
   { label: "green", value: "#335526" },
   { label: "teal", value: "#489da7" },
@@ -13,7 +12,7 @@ export const colors = [
   { label: "royal blue", value: "#144ea8" },
   { label: "navy blue", value: "#13294b" },
   { label: "purple", value: "#523178" },
-  { label: "white", value: "#f6f7f4" },
+  // { label: "white", value: "#f6f7f4" },
   { label: "gray", value: "#999999" },
   { label: "black", value: "#212322" },
 ];

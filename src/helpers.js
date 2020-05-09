@@ -1,6 +1,6 @@
 import { maxMagnitude, lettersToNumbers } from "./config.js";
 
-export const createMagnitudeOptions = start => {
+export const createMagnitudeOptions = (start) => {
   let options = [];
   start = Number(start);
 
@@ -26,25 +26,25 @@ export const createNumberPalindromes = (stripes, magnitude) => {
   } else if (2 < stripes && stripes <= magnitude) {
     for (let i = 1; i <= magnitude / 2; i++) {
       const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
-      middles.forEach(middle => results.push([i].concat(middle, [i])));
+      middles.forEach((middle) => results.push([i].concat(middle, [i])));
     }
   }
   return results;
 };
 
-export const convertTo2D = array => {
+export const convertTo2D = (array) => {
   let result = [];
   let i = 0;
 
   while (i < array.length) {
-    result.push(array.slice(i, i + 4));
-    i += 4;
+    result.push(array.slice(i, i + 3));
+    i += 3;
   }
   return result;
 };
 
-export const splitter = arr => {
-  return arr.map(arr2 =>
-    arr2.split("").map(letter => lettersToNumbers[letter])
+export const splitter = (arr) => {
+  return arr.map((arr2) =>
+    arr2.split("").map((letter) => lettersToNumbers[letter])
   );
 };

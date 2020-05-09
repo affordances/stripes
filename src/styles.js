@@ -51,6 +51,7 @@ export const Swatch = styled.div`
 `;
 
 export const Pattern = styled.div`
+  border: 1px solid black;
   width: 200px;
 `;
 
