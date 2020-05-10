@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100%;
-  width: 100%;
+  max-width: 1275px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 20px;
+  margin: auto;
 `;
 
 export const MenuContainer = styled.div`
@@ -68,9 +68,27 @@ export const Button = styled.button`
   `}
 `;
 
+export const AutoSizerContainer = styled.div`
+  border: 1px solid black;
+  flex: 1;
+  overflow: hidden;
+  padding: 0 5px;
+`;
+
 export const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+
+  ${(props) => props}
+`;
+
+export const PatternAndLabel = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const PatternLabel = styled.h6`
@@ -81,8 +99,7 @@ export const PatternLabel = styled.h6`
 
 export const Pattern = styled.div`
   border: 1px solid black;
-  margin-right: 20px;
-  width: 260px;
+  width: 100%;
 `;
 
 export const Stripe = styled.div`
@@ -104,6 +121,16 @@ export const PatternCount = styled.p`
   margin: 0 0 5px 0;
   padding: 0;
 `;
+
+export const EmptyStateContainer = styled.div`
+  border: 1px solid black;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyStateText = styled.div``;
 
 export const selectStyles = {
   control: (provided, _) => ({
