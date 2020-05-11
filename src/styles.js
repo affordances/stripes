@@ -9,6 +9,14 @@ export const Container = styled.div`
   margin: auto;
 `;
 
+export const Title = styled.h1`
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 20px 0;
+  color: black;
+`;
+
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,6 +30,7 @@ export const MenuRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin: 0 0 20px 0;
 `;
 
 export const SelectContainer = styled.div`
@@ -30,10 +39,12 @@ export const SelectContainer = styled.div`
   flex: 1;
 `;
 
-export const Header = styled.h5`
-  font-weight: 500;
+export const Header = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
   margin: 0 0 5px 0;
   padding: 0;
+  color: black;
 `;
 
 export const SwatchContainer = styled.div`
@@ -41,6 +52,7 @@ export const SwatchContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin: 0 0 20px 0;
 
   ${(props) =>
     props.disabled &&
@@ -60,6 +72,15 @@ export const Swatch = styled.div`
 
 export const Button = styled.button`
   flex: 1;
+  color: black;
+  border: 4px solid black;
+  border-radius: 4px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  background: #f6f7f4;
+  font-size: 24px;
+  font-weight: 700;
 
   ${(props) =>
     !props.disabled &&
@@ -69,7 +90,8 @@ export const Button = styled.button`
 `;
 
 export const AutoSizerContainer = styled.div`
-  border: 1px solid black;
+  border: 4px solid black;
+  border-radius: 4px;
   flex: 1;
   overflow: hidden;
   padding: 0 5px;

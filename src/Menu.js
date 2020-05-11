@@ -39,7 +39,7 @@ export const Menu = (props) => {
     <MenuContainer>
       <MenuRow>
         <SelectContainer>
-          <Header>Stripes</Header>
+          <Header>STRIPES</Header>
           <Select
             styles={selectStyles}
             value={stripeCount}
@@ -53,7 +53,7 @@ export const Menu = (props) => {
           />
         </SelectContainer>
         <SelectContainer>
-          <Header>Magnitude</Header>
+          <Header>MAGNITUDE</Header>
           <Select
             styles={selectStyles}
             isDisabled={!magnitudeOptions}
@@ -83,11 +83,18 @@ export const Menu = (props) => {
       </SwatchContainer>
       <MenuRow>
         <Button onClick={createPatterns} disabled={!allChoicesMade}>
-          Create patterns
+          CREATE PATTERNS
         </Button>
-        <Button onClick={random}>Random pattern</Button>
+        <Button
+          onClick={random}
+          style={{
+            margin: "0 20px",
+          }}
+        >
+          RANDOM PATTERN
+        </Button>
         <Button onClick={reset} disabled={!anyChoicesMade}>
-          Reset
+          RESET
         </Button>
       </MenuRow>
       <PatternCountContainer>

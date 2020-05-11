@@ -12,6 +12,7 @@ import {
   AutoSizerContainer,
   EmptyStateText,
   EmptyStateContainer,
+  Title,
 } from "./styles.js";
 import { useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
@@ -39,6 +40,7 @@ const App = () => {
 
   return (
     <Container>
+      <Title>MATHIEU'S ATHLETIC PATTERN STRIPE GENERATOR</Title>
       <Menu {...props} />
       {patterns.length > 0 ? (
         <AutoSizerContainer>
@@ -51,7 +53,7 @@ const App = () => {
                 rowCount={patterns.length}
                 columnWidth={width / 3}
                 height={height}
-                rowHeight={200}
+                rowHeight={215}
                 width={width}
               >
                 {PatternRenderer}
