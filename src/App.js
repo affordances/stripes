@@ -36,29 +36,34 @@ const PatternRenderer = memo((props) => {
 });
 
 const App = () => {
-  const { patterns, ...props } = useStripes();
+  const { patterns, magnitude, ...props } = useStripes();
+
+  const rowHeight = magnitude ? magnitude * 10 + 47 : 0;
 
   return (
     <Container>
       <Title>MATHIEU'S ATHLETIC PATTERN STRIPE GENERATOR</Title>
-      <Menu {...props} />
+      <Menu magnitude={magnitude} {...props} />
       {patterns.length > 0 ? (
         <AutoSizerContainer>
           <AutoSizer>
-            {({ height, width }) => (
-              <Grid
-                key={Math.random()}
-                itemData={patterns}
-                columnCount={patterns[0].length}
-                rowCount={patterns.length}
-                columnWidth={width / 3}
-                height={height}
-                rowHeight={215}
-                width={width}
-              >
-                {PatternRenderer}
-              </Grid>
-            )}
+            {({ height, width }) => {
+              const columnWidth = width / 3;
+              return (
+                <Grid
+                  key={Math.random()}
+                  itemData={patterns}
+                  columnCount={patterns[0].length}
+                  rowCount={patterns.length}
+                  columnWidth={columnWidth}
+                  height={height}
+                  rowHeight={rowHeight}
+                  width={width}
+                >
+                  {PatternRenderer}
+                </Grid>
+              );
+            }}
           </AutoSizer>
         </AutoSizerContainer>
       ) : (

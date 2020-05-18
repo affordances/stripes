@@ -5,13 +5,13 @@ export const Container = styled.div`
   max-width: 1275px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   margin: auto;
 `;
 
 export const Title = styled.h1`
   font-size: 40px;
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
   margin: 0 0 20px 0;
   color: black;
@@ -36,12 +36,13 @@ export const MenuRow = styled.div`
 export const SelectContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex: 1;
 `;
 
 export const Header = styled.h2`
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0 0 5px 0;
   padding: 0;
   color: black;
@@ -64,37 +65,34 @@ export const SwatchContainer = styled.div`
 
 export const Swatch = styled.div`
   background: ${(props) => props.color};
-  border: 2px solid ${(props) => (props.isPicked ? `limegreen` : `white`)};
-  width: 20px;
-  height: 20px;
+  border: 5px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
+  width: 25px;
+  height: 25px;
   cursor: pointer;
 `;
 
 export const Button = styled.button`
   flex: 1;
   color: black;
+  background: #f6f7f4;
   border: 4px solid black;
   border-radius: 4px;
   padding: 15px;
   text-align: center;
   text-decoration: none;
-  background: #f6f7f4;
   font-size: 24px;
   font-weight: 700;
 
   ${(props) =>
     !props.disabled &&
     `
+    background: white;
     cursor: pointer;
   `}
 `;
 
 export const AutoSizerContainer = styled.div`
-  border: 4px solid black;
-  border-radius: 4px;
   flex: 1;
-  overflow: hidden;
-  padding: 0 5px;
 `;
 
 export const PatternContainer = styled.div`
@@ -145,22 +143,50 @@ export const PatternCount = styled.p`
 `;
 
 export const EmptyStateContainer = styled.div`
-  border: 1px solid black;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const EmptyStateText = styled.div``;
+export const EmptyStateText = styled.div`
+  font-weight: 500;
+  font-size: 24px;
+`;
 
 export const selectStyles = {
+  container: (provided, _) => ({
+    ...provided,
+    width: "100%",
+  }),
   control: (provided, _) => ({
     ...provided,
+    border: "4px solid black",
     cursor: "pointer",
+  }),
+  dropdownIndicator: (provided, _) => ({
+    ...provided,
+    color: "black",
+  }),
+  indicatorSeparator: (provided, _) => ({
+    ...provided,
+    width: "4px",
+    backgroundColor: "black",
   }),
   option: (provided, _) => ({
     ...provided,
     cursor: "pointer",
+    color: "black",
+    fontSize: "24px",
+  }),
+  placeholder: (provided, _) => ({
+    ...provided,
+    color: "black",
+    fontSize: "24px",
+  }),
+  singleValue: (provided, _) => ({
+    ...provided,
+    color: "black",
+    fontSize: "24px",
   }),
 };

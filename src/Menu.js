@@ -38,7 +38,7 @@ export const Menu = (props) => {
   return (
     <MenuContainer>
       <MenuRow>
-        <SelectContainer>
+        <SelectContainer style={{ marginRight: "20px" }}>
           <Header>STRIPES</Header>
           <Select
             styles={selectStyles}
