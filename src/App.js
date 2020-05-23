@@ -14,7 +14,6 @@ import {
   EmptyStateContainer,
   Title,
 } from "./styles.js";
-import { getCreatedMagnitude } from "./helpers.js";
 import { useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
 
@@ -23,12 +22,14 @@ const PatternRenderer = memo((props) => {
   const currentPattern = data[rowIndex][columnIndex];
 
   return currentPattern ? (
-    <PatternContainer style={style}>
+    <PatternContainer style={style} key={rowIndex}>
       <PatternAndLabel {...otherProps}>
         <PatternLabel>{currentPattern.label}</PatternLabel>
         <Pattern>
-          {currentPattern.pattern.flatMap(({ count, color }) =>
-            new Array(count).fill(<Stripe color={color.value} />)
+          {currentPattern.pattern.flatMap(({ count, color }, i) =>
+            new Array(count)
+              .fill(0)
+              .map((_, j) => <Stripe color={color.value} key={i + "," + j} />)
           )}
         </Pattern>
       </PatternAndLabel>
@@ -38,10 +39,10 @@ const PatternRenderer = memo((props) => {
 
 const App = () => {
   const { patterns, magnitude, ...props } = useStripes();
-  const currentMagnitude = patterns.length
-    ? getCreatedMagnitude(patterns[0][0].pattern)
+  const patternHeight = patterns.length
+    ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
     : 0;
-  const rowHeight = currentMagnitude > 0 ? magnitude * 10 + 47 : 0;
+  const rowHeight = patternHeight > 0 ? patternHeight * 10 + 47 : 0;
 
   return (
     <Container>
@@ -54,7 +55,6 @@ const App = () => {
               const columnWidth = width / 3;
               return (
                 <Grid
-                  key={Math.random()}
                   itemData={patterns}
                   columnCount={patterns[0].length}
                   rowCount={patterns.length}

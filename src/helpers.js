@@ -43,10 +43,6 @@ export const convertTo2D = (array) => {
   return result;
 };
 
-export const getCreatedMagnitude = (pattern) => {
-  return pattern.reduce((acc, p) => acc + p.count, 0);
-};
-
 export const splitter = (arr) => {
   return arr.map((arr2) =>
     arr2.split("").map((letter) => lettersToNumbers[letter])

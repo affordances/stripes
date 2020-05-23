@@ -66,10 +66,10 @@ export const Menu = (props) => {
         </SelectContainer>
       </MenuRow>
       <SwatchContainer disabled={!(stripeCountValue && magnitude)}>
-        {colors.map((color) => {
+        {colors.map((color, i) => {
           return (
             <Swatch
-              key={Math.random()}
+              key={i}
               color={color.value}
               onClick={() => updatePickedColors(color)}
               isPicked={
