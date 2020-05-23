@@ -14,6 +14,7 @@ import {
   EmptyStateContainer,
   Title,
 } from "./styles.js";
+import { getCreatedMagnitude } from "./helpers.js";
 import { useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
 
@@ -37,12 +38,14 @@ const PatternRenderer = memo((props) => {
 
 const App = () => {
   const { patterns, magnitude, ...props } = useStripes();
-
-  const rowHeight = magnitude ? magnitude * 10 + 47 : 0;
+  const currentMagnitude = patterns.length
+    ? getCreatedMagnitude(patterns[0][0].pattern)
+    : 0;
+  const rowHeight = currentMagnitude > 0 ? magnitude * 10 + 47 : 0;
 
   return (
     <Container>
-      <Title>MATHIEU'S ATHLETIC PATTERN STRIPE GENERATOR</Title>
+      <Title>MATHIEU'S ATHLETIC STRIPE PATTERN GENERATOR</Title>
       <Menu magnitude={magnitude} {...props} />
       {patterns.length > 0 ? (
         <AutoSizerContainer>

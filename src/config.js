@@ -12,7 +12,6 @@ export const colors = [
   { label: "royal blue", value: "#144ea8" },
   { label: "navy blue", value: "#13294b" },
   { label: "purple", value: "#523178" },
-  // { label: "white", value: "#f6f7f4" },
   { label: "gray", value: "#999999" },
   { label: "black", value: "#212322" },
 ];
