@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import "./index.css";
@@ -14,15 +14,18 @@ import {
   EmptyStateContainer,
   Title,
 } from "./styles.js";
-import { useStripes } from "./hooks.js";
+import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
 
-const PatternRenderer = memo((props) => {
+const PatternRenderer = (props) => {
   const { columnIndex, data, rowIndex, style, ...otherProps } = props;
-  const currentPattern = data[rowIndex][columnIndex];
-
+  const currentPattern = data.patterns[rowIndex][columnIndex];
   return currentPattern ? (
-    <PatternContainer style={style} key={rowIndex}>
+    <PatternContainer
+      style={style}
+      key={rowIndex}
+      onClick={() => data.onClick(currentPattern)}
+    >
       <PatternAndLabel {...otherProps}>
         <PatternLabel>{currentPattern.label}</PatternLabel>
         <Pattern>
@@ -35,10 +38,14 @@ const PatternRenderer = memo((props) => {
       </PatternAndLabel>
     </PatternContainer>
   ) : null;
-});
+};
 
 const App = () => {
   const { patterns, magnitude, ...props } = useStripes();
+  const [savedPatterns, setSavedPatterns] = useLocalStorage(
+    "Saved Patterns",
+    ""
+  );
   const patternHeight = patterns.length
     ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
     : 0;
@@ -55,7 +62,7 @@ const App = () => {
               const columnWidth = width / 3;
               return (
                 <Grid
-                  itemData={patterns}
+                  itemData={{ patterns, onClick: setSavedPatterns }}
                   columnCount={patterns[0].length}
                   rowCount={patterns.length}
                   columnWidth={columnWidth}
