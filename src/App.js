@@ -42,10 +42,12 @@ const PatternRenderer = (props) => {
 
 const App = () => {
   const { patterns, magnitude, ...props } = useStripes();
-  const [savedPatterns, setSavedPatterns] = useLocalStorage(
-    "Saved Patterns",
-    ""
-  );
+  const {
+    savedPatterns,
+    toggleSavedPattern,
+    clearSavedPatterns,
+  } = useLocalStorage();
+  console.log(savedPatterns);
   const patternHeight = patterns.length
     ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
     : 0;
@@ -62,7 +64,7 @@ const App = () => {
               const columnWidth = width / 3;
               return (
                 <Grid
-                  itemData={{ patterns, onClick: setSavedPatterns }}
+                  itemData={{ patterns, onClick: toggleSavedPattern }}
                   columnCount={patterns[0].length}
                   rowCount={patterns.length}
                   columnWidth={columnWidth}

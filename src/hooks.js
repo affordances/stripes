@@ -148,27 +148,22 @@ export const useStripes = () => {
   };
 };
 
-export const useLocalStorage = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.log(error);
-      return initialValue;
-    }
-  });
+export const useLocalStorage = () => {
+  const key = "Saved Patterns";
+  const [savedPatterns, setSavedPatterns] = useState([]);
 
-  const setValue = (value) => {
-    try {
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
-    } catch (error) {
-      console.log(error);
-    }
+  const toggleSavedPattern = (pattern) => {
+    console.log("toggleSavedPattern", pattern);
   };
 
-  return [storedValue, setValue];
+  const clearSavedPatterns = () => {
+    localStorage.clear();
+    setSavedPatterns([]);
+  };
+
+  useEffect(() => {
+    setSavedPatterns([JSON.parse(localStorage.getItem(key))]);
+  }, []);
+
+  return { savedPatterns, toggleSavedPattern, clearSavedPatterns };
 };
