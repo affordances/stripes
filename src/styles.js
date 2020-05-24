@@ -112,7 +112,14 @@ export const PatternAndLabel = styled.div`
   width: 100%;
 `;
 
-export const PatternLabel = styled.h6`
+export const PatternLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const PatternLabelText = styled.h6`
   font-weight: 400;
   margin: 0 0 5px 0;
   padding: 0;

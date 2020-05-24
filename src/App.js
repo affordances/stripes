@@ -13,6 +13,7 @@ import {
   EmptyStateText,
   EmptyStateContainer,
   Title,
+  PatternLabelText,
 } from "./styles.js";
 import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
@@ -20,14 +21,20 @@ import { Menu } from "./Menu.js";
 const PatternRenderer = (props) => {
   const { columnIndex, data, rowIndex, style, ...otherProps } = props;
   const currentPattern = data.patterns[rowIndex][columnIndex];
+
   return currentPattern ? (
     <PatternContainer
       style={style}
       key={rowIndex}
-      onClick={() => data.onClick(currentPattern)}
+      onClick={() => data.toggleSavedPattern(currentPattern)}
     >
       <PatternAndLabel {...otherProps}>
-        <PatternLabel>{currentPattern.label}</PatternLabel>
+        <PatternLabel>
+          <PatternLabelText>{currentPattern.label}</PatternLabelText>
+          <PatternLabelText>
+            {data.isPatternSaved(currentPattern) ? "UNSAVE" : "SAVE"}
+          </PatternLabelText>
+        </PatternLabel>
         <Pattern>
           {currentPattern.pattern.flatMap(({ count, color }, i) =>
             new Array(count)
@@ -46,8 +53,9 @@ const App = () => {
     savedPatterns,
     toggleSavedPattern,
     clearSavedPatterns,
+    isPatternSaved,
   } = useLocalStorage();
-  console.log(savedPatterns);
+
   const patternHeight = patterns.length
     ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
     : 0;
@@ -64,7 +72,11 @@ const App = () => {
               const columnWidth = width / 3;
               return (
                 <Grid
-                  itemData={{ patterns, onClick: toggleSavedPattern }}
+                  itemData={{
+                    patterns,
+                    toggleSavedPattern,
+                    isPatternSaved,
+                  }}
                   columnCount={patterns[0].length}
                   rowCount={patterns.length}
                   columnWidth={columnWidth}

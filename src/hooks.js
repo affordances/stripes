@@ -164,6 +164,12 @@ export const useLocalStorage = () => {
     setSavedPatterns(newSavedPatterns);
   };
 
+  const isPatternSaved = (pattern) => {
+    return (
+      savedPatterns.find((x) => x === JSON.stringify(pattern)) !== undefined
+    );
+  };
+
   const clearSavedPatterns = () => {
     localStorage.clear();
     setSavedPatterns([]);
@@ -174,5 +180,10 @@ export const useLocalStorage = () => {
     setSavedPatterns(retrievedStorage === null ? [] : retrievedStorage);
   }, []);
 
-  return { savedPatterns, toggleSavedPattern, clearSavedPatterns };
+  return {
+    savedPatterns,
+    toggleSavedPattern,
+    clearSavedPatterns,
+    isPatternSaved,
+  };
 };
