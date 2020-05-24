@@ -153,7 +153,15 @@ export const useLocalStorage = () => {
   const [savedPatterns, setSavedPatterns] = useState([]);
 
   const toggleSavedPattern = (pattern) => {
-    console.log("toggleSavedPattern", pattern);
+    const stringifiedPattern = JSON.stringify(pattern);
+
+    const newSavedPatterns = savedPatterns
+      .filter((x) => ![stringifiedPattern].includes(x))
+      .concat([stringifiedPattern].filter((x) => !savedPatterns.includes(x)));
+
+    localStorage.setItem(key, JSON.stringify(newSavedPatterns));
+
+    setSavedPatterns(newSavedPatterns);
   };
 
   const clearSavedPatterns = () => {
@@ -162,7 +170,8 @@ export const useLocalStorage = () => {
   };
 
   useEffect(() => {
-    setSavedPatterns([JSON.parse(localStorage.getItem(key))]);
+    const retrievedStorage = JSON.parse(localStorage.getItem(key));
+    setSavedPatterns(retrievedStorage === null ? [] : retrievedStorage);
   }, []);
 
   return { savedPatterns, toggleSavedPattern, clearSavedPatterns };
