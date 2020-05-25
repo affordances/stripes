@@ -33,6 +33,7 @@ export const Menu = (props) => {
     stripeCountValue,
     pickedColors,
     createPatterns,
+    openModal,
   } = props;
 
   return (
@@ -82,20 +83,33 @@ export const Menu = (props) => {
         })}
       </SwatchContainer>
       <MenuRow>
-        <Button onClick={createPatterns} disabled={!allChoicesMade}>
+        <Button
+          onClick={createPatterns}
+          disabled={!allChoicesMade}
+          style={{
+            margin: "0 20px 0 0",
+          }}
+        >
           CREATE PATTERNS
         </Button>
         <Button
           onClick={random}
           style={{
-            margin: "0 20px",
+            margin: "0 20px 0 0",
           }}
         >
           RANDOM PATTERN
         </Button>
-        <Button onClick={reset} disabled={!anyChoicesMade}>
+        <Button
+          onClick={reset}
+          disabled={!anyChoicesMade}
+          style={{
+            margin: "0 20px 0 0",
+          }}
+        >
           RESET
         </Button>
+        <Button onClick={openModal}>SAVED</Button>
       </MenuRow>
       <PatternCountContainer>
         <Header>Patterns generated</Header>

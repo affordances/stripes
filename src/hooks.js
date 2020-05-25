@@ -149,15 +149,20 @@ export const useStripes = () => {
 };
 
 export const useLocalStorage = () => {
-  const key = "Saved Patterns";
   const [savedPatterns, setSavedPatterns] = useState([]);
+  const key = "Saved Patterns";
 
   const toggleSavedPattern = (pattern) => {
-    const stringifiedPattern = JSON.stringify(pattern);
-
     const newSavedPatterns = savedPatterns
-      .filter((x) => ![stringifiedPattern].includes(x))
-      .concat([stringifiedPattern].filter((x) => !savedPatterns.includes(x)));
+      .filter((x) => JSON.stringify(pattern) !== JSON.stringify(x))
+      .concat(
+        [pattern].filter(
+          (x) =>
+            !savedPatterns
+              .map((x) => JSON.stringify(x))
+              .includes(JSON.stringify(x))
+        )
+      );
 
     localStorage.setItem(key, JSON.stringify(newSavedPatterns));
 
@@ -166,7 +171,9 @@ export const useLocalStorage = () => {
 
   const isPatternSaved = (pattern) => {
     return (
-      savedPatterns.find((x) => x === JSON.stringify(pattern)) !== undefined
+      savedPatterns.find(
+        (x) => JSON.stringify(x) === JSON.stringify(pattern)
+      ) !== undefined
     );
   };
 
