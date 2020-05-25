@@ -43,6 +43,13 @@ export const convertTo2D = (array) => {
   return result;
 };
 
+export const getRowHeight = (patterns) => {
+  const patternHeight = patterns.length
+    ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
+    : 0;
+  return patternHeight > 0 ? patternHeight * 10 + 47 : 0;
+};
+
 export const splitter = (arr) => {
   return arr.map((arr2) =>
     arr2.split("").map((letter) => lettersToNumbers[letter])

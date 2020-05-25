@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import Modal from "react-modal";
@@ -15,8 +15,9 @@ import {
   EmptyStateContainer,
   Title,
   PatternLabelText,
+  Button,
 } from "./styles.js";
-import { convertTo2D } from "./helpers.js";
+import { convertTo2D, getRowHeight } from "./helpers.js";
 import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./Menu.js";
 
@@ -47,6 +48,7 @@ const PatternRenderer = (props) => {
 };
 
 const App = () => {
+  const [modalIsOpen, setIsOpen] = useState(false);
   const { patterns, magnitude, ...props } = useStripes();
   const {
     savedPatterns,
@@ -55,7 +57,6 @@ const App = () => {
     isPatternSaved,
   } = useLocalStorage();
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -64,16 +65,15 @@ const App = () => {
     setIsOpen(false);
   };
 
-  const patternHeight = patterns.length
-    ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
-    : 0;
-  const rowHeight = patternHeight > 0 ? patternHeight * 10 + 47 : 0;
+  const rowHeight = getRowHeight(patterns);
   const convertedSavedPatterns = convertTo2D(savedPatterns);
+  const savedRowHeight = getRowHeight(convertedSavedPatterns);
 
   return (
     <Container>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-        <button onClick={closeModal}>close</button>
+        <Button onClick={closeModal}>CLOSE</Button>
+        <Button onClick={clearSavedPatterns}>CLEAR ALL</Button>
         {convertedSavedPatterns.length > 0 ? (
           <AutoSizerContainer style={{ height: "100%" }}>
             <AutoSizer>
@@ -90,7 +90,7 @@ const App = () => {
                     rowCount={convertedSavedPatterns.length}
                     columnWidth={columnWidth}
                     height={height}
-                    rowHeight={rowHeight}
+                    rowHeight={savedRowHeight}
                     width={width}
                   >
                     {PatternRenderer}
