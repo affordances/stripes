@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useEventListener } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import Modal from "react-modal";
+import styled from "styled-components";
 import "./index.css";
 import {
   Stripe,
@@ -47,6 +48,66 @@ const PatternRenderer = (props) => {
   ) : null;
 };
 
+const SavedPatternRenderer = (props) => {
+  const { pattern, toggleSavedPattern, isPatternSaved, ...otherProps } = props;
+  return pattern ? (
+    <PatternContainer {...otherProps}>
+      <PatternAndLabel>
+        <PatternLabel>
+          <PatternLabelText>{pattern.label}</PatternLabelText>
+          <PatternLabelText onClick={() => toggleSavedPattern(pattern)}>
+            {isPatternSaved(pattern) ? "UNSAVE" : "SAVE"}
+          </PatternLabelText>
+        </PatternLabel>
+        <Pattern>
+          {pattern.pattern.flatMap(({ count, color }, i) =>
+            new Array(count)
+              .fill(0)
+              .map((_, j) => <Stripe color={color.value} key={i + "," + j} />)
+          )}
+        </Pattern>
+      </PatternAndLabel>
+    </PatternContainer>
+  ) : null;
+};
+
+export const MasonryDiv = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: ${(props) => props.gap};
+`;
+
+export const Col = styled.div`
+  display: grid;
+  grid-gap: ${(props) => props.gap};
+`;
+
+const fillCols = (children, cols) => {
+  children.forEach((child, i) => cols[i % cols.length].push(child));
+};
+
+function Masonry({ children, gap, ...rest }) {
+  const ref = useRef();
+  const cols = [...Array(3)].map(() => []);
+
+  fillCols(children, cols);
+
+  // const resizeHandler = () =>
+  //   setNumCols(Math.ceil(ref.current.offsetWidth / minWidth));
+  // useEffect(resizeHandler, []);
+  // useEventListener(`resize`, resizeHandler);
+
+  return (
+    <MasonryDiv ref={ref} gap={gap} {...rest}>
+      {[...Array(3)].map((_, index) => (
+        <Col key={index} gap={gap}>
+          {cols[index]}
+        </Col>
+      ))}
+    </MasonryDiv>
+  );
+}
+
 const App = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const { patterns, magnitude, ...props } = useStripes();
@@ -69,35 +130,32 @@ const App = () => {
   const convertedSavedPatterns = convertTo2D(savedPatterns);
   const savedRowHeight = getRowHeight(convertedSavedPatterns);
 
+  Modal.setAppElement(document.getElementById("root"));
+
   return (
     <Container>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <Button onClick={closeModal}>CLOSE</Button>
         <Button onClick={clearSavedPatterns}>CLEAR ALL</Button>
-        {convertedSavedPatterns.length > 0 ? (
+        {savedPatterns.length > 0 ? (
           <AutoSizerContainer style={{ height: "100%" }}>
-            <AutoSizer>
+            {/* <AutoSizer>
               {({ height, width }) => {
                 const columnWidth = width / 3;
-                return (
-                  <Grid
-                    itemData={{
-                      patterns: convertedSavedPatterns,
-                      toggleSavedPattern,
-                      isPatternSaved,
-                    }}
-                    columnCount={convertedSavedPatterns[0].length}
-                    rowCount={convertedSavedPatterns.length}
-                    columnWidth={columnWidth}
-                    height={height}
-                    rowHeight={savedRowHeight}
-                    width={width}
-                  >
-                    {PatternRenderer}
-                  </Grid>
-                );
+                return ( */}
+            <Masonry>
+              {savedPatterns.map((pattern) => (
+                <SavedPatternRenderer
+                  style={{ minHeight: `${pattern.label.split("m")[1]}px` }}
+                  pattern={pattern}
+                  toggleSavedPattern={toggleSavedPattern}
+                  isPatternSaved={isPatternSaved}
+                />
+              ))}
+            </Masonry>
+            {/* );
               }}
-            </AutoSizer>
+            </AutoSizer> */}
           </AutoSizerContainer>
         ) : (
           <EmptyStateContainer>

@@ -153,20 +153,19 @@ export const useLocalStorage = () => {
   const key = "Saved Patterns";
 
   const toggleSavedPattern = (pattern) => {
-    const newSavedPatterns = savedPatterns
-      .filter((x) => JSON.stringify(pattern) !== JSON.stringify(x))
-      .concat(
-        [pattern].filter(
-          (x) =>
-            !savedPatterns
-              .map((x) => JSON.stringify(x))
-              .includes(JSON.stringify(x))
-        )
-      );
+    const savedPatternStrings = savedPatterns.map(JSON.stringify);
+    const idx = savedPatternStrings.indexOf(JSON.stringify(pattern));
+    const result = [...savedPatterns];
 
-    localStorage.setItem(key, JSON.stringify(newSavedPatterns));
+    if (idx === -1) {
+      result.push(pattern);
+    } else {
+      result.splice(idx, 1);
+    }
 
-    setSavedPatterns(newSavedPatterns);
+    localStorage.setItem(key, JSON.stringify(result));
+
+    setSavedPatterns(result);
   };
 
   const isPatternSaved = (pattern) => {
