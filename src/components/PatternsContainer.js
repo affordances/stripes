@@ -7,7 +7,7 @@ import {
   EmptyStateText,
   EmptyStateContainer,
 } from "../styles.js";
-import { PatternRenderer } from "./PatternRenderers.js";
+import { PatternRenderer } from "./PatternRenderer.js";
 import { getRowHeight } from "../helpers.js";
 
 export const PatternsContainer = (props) => {

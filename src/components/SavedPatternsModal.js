@@ -9,7 +9,7 @@ import {
   MasonryContainer,
   MasonryColumn,
 } from "../styles.js";
-import { SavedPatternRenderer } from "./PatternRenderers.js";
+import { PatternRenderer } from "./PatternRenderer.js";
 import { convertToColumns } from "../helpers.js";
 
 const Masonry = (props) => {
@@ -44,8 +44,8 @@ export const SavedPatternsModal = (props) => {
         <AutoSizerContainer style={{ height: "100%" }}>
           <Masonry>
             {savedPatterns.map((pattern, i) => (
-              <SavedPatternRenderer
-                key={i}
+              <PatternRenderer
+                patternKey={i}
                 pattern={pattern}
                 toggleSavedPattern={toggleSavedPattern}
                 isPatternSaved={isPatternSaved}
