@@ -193,6 +193,8 @@ export const modalStyles = {
     overflow: "hidden",
     border: "4px solid black",
     padding: "0",
+    maxWidth: "1275px",
+    margin: "auto",
   },
 };
 
