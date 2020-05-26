@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useEventListener } from "react";
+import React, { useState } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import Modal from "react-modal";
@@ -73,36 +73,27 @@ const SavedPatternRenderer = (props) => {
 
 export const MasonryDiv = styled.div`
   display: grid;
-  grid-auto-flow: column;
-  grid-gap: ${(props) => props.gap};
+  grid-auto-rows: 1px;
+  grid-template-columns: 33% 33% 33%;
 `;
 
 export const Col = styled.div`
   display: grid;
-  grid-gap: ${(props) => props.gap};
 `;
 
 const fillCols = (children, cols) => {
   children.forEach((child, i) => cols[i % cols.length].push(child));
 };
 
-function Masonry({ children, gap, ...rest }) {
-  const ref = useRef();
+function Masonry({ children }) {
   const cols = [...Array(3)].map(() => []);
 
   fillCols(children, cols);
 
-  // const resizeHandler = () =>
-  //   setNumCols(Math.ceil(ref.current.offsetWidth / minWidth));
-  // useEffect(resizeHandler, []);
-  // useEventListener(`resize`, resizeHandler);
-
   return (
-    <MasonryDiv ref={ref} gap={gap} {...rest}>
+    <MasonryDiv>
       {[...Array(3)].map((_, index) => (
-        <Col key={index} gap={gap}>
-          {cols[index]}
-        </Col>
+        <Col key={index}>{cols[index]}</Col>
       ))}
     </MasonryDiv>
   );
@@ -146,7 +137,10 @@ const App = () => {
             <Masonry>
               {savedPatterns.map((pattern) => (
                 <SavedPatternRenderer
-                  style={{ minHeight: `${pattern.label.split("m")[1]}px` }}
+                  style={{
+                    display: "grid",
+                    minHeight: `${pattern.label.split("m")[1]}px`,
+                  }}
                   pattern={pattern}
                   toggleSavedPattern={toggleSavedPattern}
                   isPatternSaved={isPatternSaved}
