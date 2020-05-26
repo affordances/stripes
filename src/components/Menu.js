@@ -5,9 +5,9 @@ import {
   Swatch,
   SwatchContainer,
   Header,
-  PatternCount,
+  // PatternCount,
   Button,
-  PatternCountContainer,
+  // PatternCountContainer,
   MenuContainer,
   MenuRow,
   selectStyles,
@@ -24,7 +24,7 @@ export const Menu = (props) => {
     setPickedColors,
     stripeCount,
     magnitudeOptions,
-    patternCount,
+    // patternCount,
     anyChoicesMade,
     allChoicesMade,
     updatePickedColors,
@@ -111,10 +111,10 @@ export const Menu = (props) => {
         </Button>
         <Button onClick={openModal}>SAVED</Button>
       </MenuRow>
-      <PatternCountContainer>
+      {/* <PatternCountContainer>
         <Header>Patterns generated</Header>
         <PatternCount>{patternCount}</PatternCount>
-      </PatternCountContainer>
+      </PatternCountContainer> */}
     </MenuContainer>
   );
 };

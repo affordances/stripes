@@ -1,4 +1,5 @@
 import React from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import {
   Stripe,
@@ -30,7 +31,11 @@ export const PatternRenderer = (props) => {
         <PatternLabel>
           <PatternLabelText>{currentPattern.label}</PatternLabelText>
           <PatternLabelText onClick={() => toggleSavedPattern(currentPattern)}>
-            {isPatternSaved(currentPattern) ? "UNSAVE" : "SAVE"}
+            {isPatternSaved(currentPattern) ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            )}
           </PatternLabelText>
         </PatternLabel>
         <Pattern>

@@ -67,8 +67,9 @@ export const SwatchContainer = styled.div`
 export const Swatch = styled.div`
   background: ${(props) => props.color};
   border: 5px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
-  width: 25px;
-  height: 25px;
+  min-width: 25px;
+  min-height: 50px;
+  flex: 1;
   cursor: pointer;
 `;
 
@@ -123,6 +124,7 @@ export const PatternLabelText = styled.h6`
   font-weight: 400;
   margin: 0 0 5px 0;
   padding: 0;
+  cursor: pointer;
 `;
 
 export const Pattern = styled.div`
@@ -162,13 +164,37 @@ export const EmptyStateText = styled.div`
   font-size: 24px;
 `;
 
+export const ModalButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 4px solid black;
+  padding: 15px;
+`;
+
+export const ModalInnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
 export const MasonryContainer = styled.div`
   display: grid;
   grid-auto-rows: 1px;
   grid-template-columns: 1fr 1fr 1fr;
+  overflow: auto;
+  height: 100%;
 `;
 
 export const MasonryColumn = styled.div``;
+
+export const modalStyles = {
+  content: {
+    overflow: "hidden",
+    border: "4px solid black",
+    padding: "0",
+  },
+};
 
 export const selectStyles = {
   container: (provided, _) => ({
