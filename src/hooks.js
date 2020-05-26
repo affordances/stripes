@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
 import { colors, colorSequences, numbersToLetters } from "./config.js";
-
 import {
   createMagnitudeOptions,
   createNumberPalindromes,

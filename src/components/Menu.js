@@ -11,9 +11,9 @@ import {
   MenuContainer,
   MenuRow,
   selectStyles,
-} from "./styles.js";
-import { colors, stripeOptions } from "./config.js";
-import { createMagnitudeOptions } from "./helpers.js";
+} from "../styles.js";
+import { colors, stripeOptions } from "../config.js";
+import { createMagnitudeOptions } from "../helpers.js";
 
 export const Menu = (props) => {
   const {
