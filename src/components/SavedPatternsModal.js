@@ -1,36 +1,24 @@
 import React from "react";
 import Modal from "react-modal";
-import styled from "styled-components";
 
 import {
   AutoSizerContainer,
   EmptyStateText,
   EmptyStateContainer,
   Button,
+  MasonryContainer,
+  MasonryColumn,
 } from "../styles.js";
 import { SavedPatternRenderer } from "./PatternRenderers.js";
-
-export const MasonryContainer = styled.div`
-  display: grid;
-  grid-auto-rows: 1px;
-  grid-template-columns: 1fr 1fr 1fr;
-`;
-
-export const MasonryColumn = styled.div``;
-
-const fillColumns = (children, columns) => {
-  children.forEach((child, i) => columns[i % columns.length].push(child));
-};
+import { convertToColumns } from "../helpers.js";
 
 const Masonry = (props) => {
   const { children } = props;
-  const columns = [...Array(3)].map(() => []);
-
-  fillColumns(children, columns);
+  const columns = convertToColumns(children);
 
   return (
     <MasonryContainer>
-      {[...Array(3)].map((_, index) => (
+      {columns.map((_, index) => (
         <MasonryColumn key={index}>{columns[index]}</MasonryColumn>
       ))}
     </MasonryContainer>

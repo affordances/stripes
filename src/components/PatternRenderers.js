@@ -12,9 +12,10 @@ import {
 export const PatternRenderer = (props) => {
   const { columnIndex, data, rowIndex, style, ...otherProps } = props;
   const currentPattern = data.patterns[rowIndex][columnIndex];
+
   return currentPattern ? (
-    <PatternContainer style={style} key={rowIndex}>
-      <PatternAndLabel {...otherProps}>
+    <PatternContainer style={style} key={rowIndex} {...otherProps}>
+      <PatternAndLabel>
         <PatternLabel>
           <PatternLabelText>{currentPattern.label}</PatternLabelText>
           <PatternLabelText
@@ -37,6 +38,7 @@ export const PatternRenderer = (props) => {
 
 export const SavedPatternRenderer = (props) => {
   const { pattern, toggleSavedPattern, isPatternSaved, ...otherProps } = props;
+
   return pattern ? (
     <PatternContainer {...otherProps}>
       <PatternAndLabel>

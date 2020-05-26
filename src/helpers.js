@@ -32,7 +32,7 @@ export const createNumberPalindromes = (stripes, magnitude) => {
   return results;
 };
 
-export const convertTo2D = (array) => {
+export const convertToRows = (array) => {
   let result = [];
   let i = 0;
 
@@ -41,6 +41,10 @@ export const convertTo2D = (array) => {
     i += 3;
   }
   return result;
+};
+
+export const convertToColumns = (array) => {
+  return [0, 1, 2].map((x) => array.filter((_, i) => i % 3 === x));
 };
 
 export const getRowHeight = (patterns) => {

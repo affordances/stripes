@@ -4,7 +4,7 @@ import { colors, colorSequences, numbersToLetters } from "./config.js";
 import {
   createMagnitudeOptions,
   createNumberPalindromes,
-  convertTo2D,
+  convertToRows,
 } from "./helpers.js";
 
 export const useStripes = () => {
@@ -61,7 +61,7 @@ export const useStripes = () => {
       }
     }
 
-    const converted = convertTo2D(results);
+    const converted = convertToRows(results);
 
     if (randomMode.current) {
       setPatternCount(1);

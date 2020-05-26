@@ -162,6 +162,14 @@ export const EmptyStateText = styled.div`
   font-size: 24px;
 `;
 
+export const MasonryContainer = styled.div`
+  display: grid;
+  grid-auto-rows: 1px;
+  grid-template-columns: 1fr 1fr 1fr;
+`;
+
+export const MasonryColumn = styled.div``;
+
 export const selectStyles = {
   container: (provided, _) => ({
     ...provided,
