@@ -49,7 +49,7 @@ export const SavedPatternsModal = (props) => {
           <Masonry>
             {savedPatterns.map((pattern, i) => (
               <PatternRenderer
-                patternKey={i}
+                key={i}
                 pattern={pattern}
                 toggleSavedPattern={toggleSavedPattern}
                 isPatternSaved={isPatternSaved}

@@ -23,10 +23,8 @@ export const PatternRenderer = (props) => {
     ? props.data.isPatternSaved
     : props.isPatternSaved;
 
-  const i = props.data ? props.rowIndex : props.patternKey;
-
   return currentPattern ? (
-    <PatternContainer key={i} {...props}>
+    <PatternContainer {...props}>
       <PatternAndLabel>
         <PatternLabel>
           <PatternLabelText>{currentPattern.label}</PatternLabelText>
