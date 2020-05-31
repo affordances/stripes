@@ -124,7 +124,6 @@ export const PatternLabelText = styled.h6`
   font-weight: 400;
   margin: 0 0 5px 0;
   padding: 0;
-  cursor: pointer;
 `;
 
 export const Pattern = styled.div`
@@ -133,8 +132,21 @@ export const Pattern = styled.div`
 `;
 
 export const Stripe = styled.div`
-  background: ${(props) => props.color};
+  background: ${(props) => props.background};
   height: 10px;
+`;
+
+export const HiddenDownloadContainer = styled.div`
+  display: none;
+`;
+
+export const DownloadPattern = styled.div`
+  width: 3000px;
+`;
+
+export const DownloadStripe = styled.div`
+  background: ${(props) => props.background};
+  height: 60px;
 `;
 
 export const PatternCountContainer = styled.div`

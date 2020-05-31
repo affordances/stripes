@@ -9,29 +9,25 @@ import {
   PatternLabel,
   PatternContainer,
   PatternLabelText,
+  DownloadPattern,
+  DownloadStripe,
+  HiddenDownloadContainer,
 } from "../styles.js";
 
 export const PatternRenderer = (props) => {
   const ref = useRef(null);
 
-  const onClickHandler = () => {
+  const onClickHandler = (pattern) => {
     return domtoimage
       .toPng(ref.current, {
-        height: 1000,
+        height: pattern.magnitude * 60,
         width: 3000,
-        style: {
-          transform: "scale(5)",
-          transformOrigin: "top left",
-          height: "1000px",
-          width: "3000px",
-        },
       })
       .then((dataUrl) => {
-        console.log(ref.current);
-        // const link = document.createElement("a");
-        // link.download = "pattern.png";
-        // link.href = dataUrl;
-        // link.click();
+        const link = document.createElement("a");
+        link.download = `${pattern.label.split(", ").join("-")}.png`;
+        link.href = dataUrl;
+        link.click();
       })
       .catch((error) => {
         console.error(error);
@@ -51,11 +47,14 @@ export const PatternRenderer = (props) => {
     : props.isPatternSaved;
 
   return currentPattern ? (
-    <PatternContainer {...props} onClick={() => onClickHandler()}>
+    <PatternContainer {...props}>
       <PatternAndLabel>
         <PatternLabel>
           <PatternLabelText>{currentPattern.label}</PatternLabelText>
-          <PatternLabelText onClick={() => toggleSavedPattern(currentPattern)}>
+          <PatternLabelText
+            style={{ cursor: "pointer" }}
+            onClick={() => toggleSavedPattern(currentPattern)}
+          >
             {isPatternSaved(currentPattern) ? (
               <FaHeart color="red" />
             ) : (
@@ -63,11 +62,24 @@ export const PatternRenderer = (props) => {
             )}
           </PatternLabelText>
         </PatternLabel>
-        <Pattern ref={ref}>
+        <HiddenDownloadContainer>
+          <DownloadPattern ref={ref}>
+            {currentPattern.pattern.flatMap(({ count, color }, i) =>
+              new Array(count)
+                .fill(0)
+                .map((_, j) => (
+                  <DownloadStripe background={color.value} key={i + "," + j} />
+                ))
+            )}
+          </DownloadPattern>
+        </HiddenDownloadContainer>
+        <Pattern onClick={() => onClickHandler(currentPattern)}>
           {currentPattern.pattern.flatMap(({ count, color }, i) =>
             new Array(count)
               .fill(0)
-              .map((_, j) => <Stripe color={color.value} key={i + "," + j} />)
+              .map((_, j) => (
+                <Stripe background={color.value} key={i + "," + j} />
+              ))
           )}
         </Pattern>
       </PatternAndLabel>

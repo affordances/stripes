@@ -47,10 +47,8 @@ export const convertToColumns = (array) => {
   return [0, 1, 2].map((x) => array.filter((_, i) => i % 3 === x));
 };
 
-export const getRowHeight = (patterns) => {
-  const patternHeight = patterns.length
-    ? patterns[0][0].pattern.reduce((acc, p) => acc + p.count, 0)
-    : 0;
+export const getRowHeight = (pattern) => {
+  const patternHeight = pattern.length ? pattern[0][0].magnitude : 0;
   return patternHeight > 0 ? patternHeight * 10 + 47 : 0;
 };
 

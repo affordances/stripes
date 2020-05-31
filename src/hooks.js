@@ -57,6 +57,7 @@ export const useStripes = () => {
             "/"
           )}, ${sequences[j].map((num) => numbersToLetters[num]).join("")}`,
           pattern,
+          magnitude,
         });
       }
     }
