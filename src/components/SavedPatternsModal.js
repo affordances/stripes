@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import Modal from "react-modal";
+import domtoimage from "dom-to-image";
+// import html2canvas from "html2canvas";
 
 import {
   EmptyStateText,
@@ -30,6 +32,28 @@ const Masonry = (props) => {
 Modal.setAppElement(document.getElementById("root"));
 
 export const SavedPatternsModal = (props) => {
+  const patternToSave = useRef(null);
+
+  console.log(domtoimage);
+
+  const onClickHandler = () => {
+    return domtoimage
+      .toPng(patternToSave.current, {
+        height: 1000,
+        width: 3000,
+        style: { height: "1000px", width: "3000px" },
+      })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "pattern.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const {
     modalIsOpen,
     toggleModal,
@@ -38,6 +62,7 @@ export const SavedPatternsModal = (props) => {
     toggleSavedPattern,
     isPatternSaved,
   } = props;
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -50,6 +75,8 @@ export const SavedPatternsModal = (props) => {
             {savedPatterns.map((pattern, i) => (
               <PatternRenderer
                 key={i}
+                onClick={onClickHandler}
+                ref={patternToSave}
                 pattern={pattern}
                 toggleSavedPattern={toggleSavedPattern}
                 isPatternSaved={isPatternSaved}

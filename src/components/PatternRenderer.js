@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import {
@@ -10,7 +10,7 @@ import {
   PatternLabelText,
 } from "../styles.js";
 
-export const PatternRenderer = (props) => {
+export const PatternRenderer = forwardRef((props, ref) => {
   const currentPattern = props.data
     ? props.data.patterns[props.rowIndex][props.columnIndex]
     : props.pattern;
@@ -24,7 +24,10 @@ export const PatternRenderer = (props) => {
     : props.isPatternSaved;
 
   return currentPattern ? (
-    <PatternContainer {...props}>
+    <PatternContainer
+      {...props}
+      onClick={props.onClick ? () => props.onClick() : () => {}}
+    >
       <PatternAndLabel>
         <PatternLabel>
           <PatternLabelText>{currentPattern.label}</PatternLabelText>
@@ -36,7 +39,7 @@ export const PatternRenderer = (props) => {
             )}
           </PatternLabelText>
         </PatternLabel>
-        <Pattern>
+        <Pattern ref={ref}>
           {currentPattern.pattern.flatMap(({ count, color }, i) =>
             new Array(count)
               .fill(0)
@@ -46,4 +49,4 @@ export const PatternRenderer = (props) => {
       </PatternAndLabel>
     </PatternContainer>
   ) : null;
-};
+});
