@@ -12,12 +12,13 @@ import {
   DownloadPattern,
   DownloadStripe,
   HiddenDownloadContainer,
+  DownloadText,
 } from "../styles.js";
 
 export const PatternRenderer = (props) => {
   const ref = useRef(null);
 
-  const onClickHandler = (pattern) => {
+  const downloadHandler = (pattern) => {
     return domtoimage
       .toPng(ref.current, {
         height: pattern.magnitude * 60,
@@ -73,7 +74,11 @@ export const PatternRenderer = (props) => {
             )}
           </DownloadPattern>
         </HiddenDownloadContainer>
-        <Pattern onClick={() => onClickHandler(currentPattern)}>
+        <Pattern
+          style={{ cursor: "pointer" }}
+          onClick={() => downloadHandler(currentPattern)}
+        >
+          <DownloadText>CLICK TO DOWNLOAD</DownloadText>
           {currentPattern.pattern.flatMap(({ count, color }, i) =>
             new Array(count)
               .fill(0)

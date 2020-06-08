@@ -41,7 +41,7 @@ export const PatternsContainer = (props) => {
     </AutoSizerContainer>
   ) : (
     <EmptyStateContainer>
-      <EmptyStateText>Make some patterns!</EmptyStateText>
+      <EmptyStateText>MAKE SOME PATTERNS</EmptyStateText>
     </EmptyStateContainer>
   );
 };

@@ -59,7 +59,7 @@ export const SavedPatternsModal = (props) => {
           </Masonry>
         ) : (
           <EmptyStateContainer>
-            <EmptyStateText>Make some patterns!</EmptyStateText>
+            <EmptyStateText>YOU HAVE NO SAVED PATTERNS</EmptyStateText>
           </EmptyStateContainer>
         )}
         <ModalButtonsContainer>

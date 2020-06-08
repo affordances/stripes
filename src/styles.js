@@ -126,9 +126,32 @@ export const PatternLabelText = styled.h6`
   padding: 0;
 `;
 
+export const DownloadText = styled.div`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.5s ease;
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+  color: #f6f7f4;
+  font-weight: bold;
+  font-size: 12px;
+`;
+
 export const Pattern = styled.div`
   border: 1px solid black;
   width: 100%;
+  position: relative;
+
+  &:hover {
+    ${DownloadText} {
+      display: flex;
+    }
+  }
 `;
 
 export const Stripe = styled.div`
@@ -174,6 +197,7 @@ export const EmptyStateContainer = styled.div`
 export const EmptyStateText = styled.div`
   font-weight: 500;
   font-size: 24px;
+  font-weight: bold;
 `;
 
 export const ModalButtonsContainer = styled.div`
