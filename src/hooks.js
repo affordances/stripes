@@ -5,6 +5,10 @@ import {
   createMagnitudeOptions,
   createNumberPalindromes,
   convertToRows,
+  getRandomColorCount,
+  getRandomElFromArray,
+  getRandomStripeCount,
+  getRandomMagnitude,
 } from "./helpers.js";
 
 export const useStripes = () => {
@@ -32,16 +36,16 @@ export const useStripes = () => {
   const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
   const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
 
-  const getColor = (color) => {
-    return color === 0
-      ? { label: "white", value: "#f6f7f4" }
-      : pickedColors[(color - 1).toString()];
-  };
-
   const getLabel = (seq, pal) => {
     return `${stripeCountValue}m${magnitude}, ${pal.join("/")}, ${seq
       .map((num) => numbersToLetters[num])
       .join("")}`;
+  };
+
+  const getColor = (color) => {
+    return color === 0
+      ? { label: "white", value: "#f6f7f4" }
+      : pickedColors[(color - 1).toString()];
   };
 
   const getPattern = (seq, pal) => {
@@ -84,21 +88,12 @@ export const useStripes = () => {
   };
 
   const updatePickedColors = (newColor) => {
-    let newPickedColors = pickedColors.map((color) => ({ ...color }));
-
-    if (pickedColors.find((color) => color.value === newColor.value)) {
-      newPickedColors = pickedColors.filter(
-        (color) => color.value !== newColor.value
-      );
-    } else {
-      if (
-        pickedColors.length === stripeCountValue ||
-        pickedColors.length === 3
-      ) {
-        newPickedColors.pop();
-      }
-      newPickedColors.push(newColor);
-    }
+    const maxColors = Math.max(stripeCountValue, 3);
+    const newPickedColors = pickedColors.find(
+      (color) => color.value === newColor.value
+    )
+      ? pickedColors.filter((color) => color.value !== newColor.value)
+      : pickedColors.slice(0, maxColors - 1).concat(newColor);
 
     setPickedColors(newPickedColors);
   };
@@ -113,26 +108,21 @@ export const useStripes = () => {
   };
 
   const random = () => {
-    const randomStripeCount = Math.floor(Math.random() * 9) + 1;
+    const randomStripeCount = getRandomStripeCount();
     const options = createMagnitudeOptions(randomStripeCount);
-    const colorCount =
-      randomStripeCount % 2 === 0
-        ? 2
-        : Math.floor(Math.random() * Math.min(randomStripeCount, 3)) + 1;
-    let results = [];
-    let i = 0;
-    while (i < colorCount) {
-      const colorIdx = Math.floor(Math.random() * colors.length);
-      if (!results.includes(colors[colorIdx])) {
-        results.push(colors[colorIdx]);
-        i++;
-      }
-    }
+    const colorCount = getRandomColorCount(randomStripeCount);
+
+    const results = Array(colorCount)
+      .fill(0)
+      .reduce((colAcc) => {
+        const freeColors = colors.filter((color) => !colAcc.includes(color));
+        const newColor = getRandomElFromArray(freeColors);
+        return colAcc.concat(newColor);
+      }, []);
+
     setStripeCount({ value: randomStripeCount, label: randomStripeCount });
     setMagnitudeOptions(options);
-    setMagnitude(
-      Number(options[Math.floor(Math.random() * options.length)].value)
-    );
+    setMagnitude(getRandomMagnitude(options));
     setPickedColors(results);
     randomMode.current = true;
   };

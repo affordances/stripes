@@ -1,4 +1,4 @@
-import { maxMagnitude, lettersToNumbers } from "./config.js";
+import { maxMagnitude, lettersToNumbers, maxStripeCount } from "./config.js";
 
 export const createMagnitudeOptions = (start) => {
   let options = [];
@@ -51,4 +51,22 @@ export const splitter = (arr) => {
   return arr.map((arr2) =>
     arr2.split("").map((letter) => lettersToNumbers[letter])
   );
+};
+
+export const getRandomElFromArray = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
+export const getRandomColorCount = (randomStripeCount) => {
+  return randomStripeCount % 2 === 0
+    ? 2
+    : Math.floor(Math.random() * Math.min(randomStripeCount, 3)) + 1;
+};
+
+export const getRandomStripeCount = () => {
+  return Math.floor(Math.random() * maxStripeCount) + 1;
+};
+
+export const getRandomMagnitude = (options) => {
+  return Number(options[Math.floor(Math.random() * options.length)].value);
 };

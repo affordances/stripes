@@ -1,4 +1,5 @@
 export const maxMagnitude = 16;
+export const maxStripeCount = 9;
 
 export const colors = [
   { label: "maroon", value: "#7c252a" },
