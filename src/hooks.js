@@ -9,6 +9,8 @@ import {
   getRandomElFromArray,
   getRandomStripeCount,
   getRandomMagnitude,
+  getColor,
+  getRandomPattern,
 } from "./helpers.js";
 
 export const useStripes = () => {
@@ -42,21 +44,11 @@ export const useStripes = () => {
       .join("")}`;
   };
 
-  const getColor = (color) => {
-    return color === 0
-      ? { label: "white", value: "#f6f7f4" }
-      : pickedColors[(color - 1).toString()];
-  };
-
   const getPattern = (seq, pal) => {
     return seq.map((color, i) => ({
-      color: getColor(color),
+      color: getColor(color, pickedColors),
       count: pal[i],
     }));
-  };
-
-  const getRandomPattern = (patterns) => {
-    return [[patterns[Math.floor(Math.random() * patterns.length)]]];
   };
 
   const createPatterns = () => {

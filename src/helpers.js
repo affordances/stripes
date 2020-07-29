@@ -70,3 +70,13 @@ export const getRandomStripeCount = () => {
 export const getRandomMagnitude = (options) => {
   return Number(options[Math.floor(Math.random() * options.length)].value);
 };
+
+export const getColor = (color, pickedColors) => {
+  return color === 0
+    ? { label: "white", value: "#f6f7f4" }
+    : pickedColors[(color - 1).toString()];
+};
+
+export const getRandomPattern = (patterns) => {
+  return [[patterns[Math.floor(Math.random() * patterns.length)]]];
+};
