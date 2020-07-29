@@ -33,14 +33,9 @@ export const createNumberPalindromes = (stripes, magnitude) => {
 };
 
 export const convertToRows = (array) => {
-  let result = [];
-  let i = 0;
-
-  while (i < array.length) {
-    result.push(array.slice(i, i + 3));
-    i += 3;
-  }
-  return result;
+  return array.reduce((a, _, i) => {
+    return i % 3 === 0 ? a.concat([array.slice(i, i + 3)]) : a;
+  }, []);
 };
 
 export const convertToColumns = (array) => {

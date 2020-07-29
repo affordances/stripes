@@ -32,41 +32,51 @@ export const useStripes = () => {
   const anyChoicesMade = stripeCountValue || magnitude || isColorCountValid;
   const allChoicesMade = stripeCountValue && magnitude && isColorCountValid;
 
+  const getColor = (color) => {
+    return color === 0
+      ? { label: "white", value: "#f6f7f4" }
+      : pickedColors[(color - 1).toString()];
+  };
+
+  const getLabel = (seq, pal) => {
+    return `${stripeCountValue}m${magnitude}, ${pal.join("/")}, ${seq
+      .map((num) => numbersToLetters[num])
+      .join("")}`;
+  };
+
+  const getPattern = (seq, pal) => {
+    return seq.map((color, i) => ({
+      color: getColor(color),
+      count: pal[i],
+    }));
+  };
+
+  const getRandomPattern = (patterns) => {
+    return [[patterns[Math.floor(Math.random() * patterns.length)]]];
+  };
+
   const createPatterns = () => {
     const numberPalindromes = createNumberPalindromes(
       stripeCountValue,
       magnitude
     );
-    const sequences = colorSequences[stripeCountValue][pickedColors.length];
-    const results = [];
-
-    for (let i = 0; i < numberPalindromes.length; i++) {
-      for (let j = 0; j < sequences.length; j++) {
-        let pattern = sequences[j].map((color) => {
-          if (color === 0) {
-            return { color: { label: "white", value: "#f6f7f4" } };
-          } else {
-            return { color: pickedColors[(color - 1).toString()] };
-          }
-        });
-        for (let k = 0; k < numberPalindromes[i].length; k++) {
-          pattern[k]["count"] = numberPalindromes[i][k];
-        }
-        results.push({
-          label: `${stripeCountValue}m${magnitude}, ${numberPalindromes[i].join(
-            "/"
-          )}, ${sequences[j].map((num) => numbersToLetters[num]).join("")}`,
-          pattern,
+    const selectedColorSequences =
+      colorSequences[stripeCountValue][pickedColors.length];
+    const results = numberPalindromes.flatMap((pal) =>
+      selectedColorSequences.map((seq) => {
+        return {
+          label: getLabel(seq, pal),
+          pattern: getPattern(seq, pal),
           magnitude,
-        });
-      }
-    }
+        };
+      })
+    );
 
     const converted = convertToRows(results);
 
     if (randomMode.current) {
       setPatternCount(1);
-      setPatterns([[results[Math.floor(Math.random() * results.length)]]]);
+      setPatterns(getRandomPattern(results));
     } else {
       setPatternCount(results.length);
       setPatterns(converted);
