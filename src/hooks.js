@@ -80,7 +80,7 @@ export const useStripes = () => {
   };
 
   const updatePickedColors = (newColor) => {
-    const maxColors = Math.max(stripeCountValue, 3);
+    const maxColors = Math.min(stripeCountValue, 3);
     const newPickedColors = pickedColors.find(
       (color) => color.value === newColor.value
     )
@@ -145,24 +145,25 @@ export const useLocalStorage = () => {
   const key = "Saved Patterns";
 
   const toggleSavedPattern = (pattern) => {
+    const savedPatternsCopy = [...savedPatterns];
     const stringifiedPattern = JSON.stringify(pattern);
-    const stringifiedSavedPatterns = savedPatterns.map(JSON.stringify);
+    const stringifiedSavedPatterns = savedPatternsCopy.map(JSON.stringify);
     const patternIdx = stringifiedSavedPatterns.indexOf(stringifiedPattern);
 
     const newSavedPatterns =
       patternIdx === -1
-        ? savedPatterns.concat(pattern)
-        : savedPatterns.splice(patternIdx, 1);
+        ? savedPatternsCopy.concat(pattern)
+        : savedPatternsCopy.filter((_, i) => i !== patternIdx);
 
-    const stringifiedNewSavedPatterns = JSON.stringify(newSavedPatterns);
-    localStorage.setItem(key, stringifiedNewSavedPatterns);
+    localStorage.setItem(key, JSON.stringify(newSavedPatterns));
     setSavedPatterns(newSavedPatterns);
   };
 
   const isPatternSaved = (pattern) => {
     return (
       savedPatterns.find(
-        (x) => JSON.stringify(x) === JSON.stringify(pattern)
+        (savedPattern) =>
+          JSON.stringify(savedPattern) === JSON.stringify(pattern)
       ) !== undefined
     );
   };
