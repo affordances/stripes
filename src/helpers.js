@@ -1,19 +1,29 @@
-import { maxMagnitude, lettersToNumbers, maxStripeCount } from "./config.js";
+import { maxMagnitude, maxStripeCount, lettersToNumbers } from "./config.js";
+
+function* everyNum(first, last) {
+  let i = first;
+  while (i <= last) {
+    yield i;
+    i++;
+  }
+}
+
+    for (let i = start; i <= maxMagnitude; i += 2) {
+function* everyOtherNum(first, last) {
+  let i = first;
+  while (i <= last) {
+    yield i;
+    i += 2;
+  }
+}
 
 export const createMagnitudeOptions = (start) => {
-  let options = [];
-  start = Number(start);
-
-  if (start % 2 === 0) {
-    for (let i = start; i <= maxMagnitude; i += 2) {
-      options.push({ value: i, label: i });
-    }
-  } else {
-    for (let i = start; i <= maxMagnitude; i++) {
-      options.push({ value: i, label: i });
-    }
-  }
-  return options;
+  const minMagnitude = Number(start);
+  const nums =
+    minMagnitude % 2 === 0
+      ? [...everyOtherNum(minMagnitude, maxMagnitude)]
+      : [...everyNum(minMagnitude, maxMagnitude)];
+  return nums.map((num) => ({ value: num, label: num }));
 };
 
 export const createNumberPalindromes = (stripes, magnitude) => {
@@ -47,12 +57,6 @@ export const getRowHeight = (pattern) => {
   return patternHeight > 0 ? patternHeight * 10 + 47 : 0;
 };
 
-export const splitter = (arr) => {
-  return arr.map((arr2) =>
-    arr2.split("").map((letter) => lettersToNumbers[letter])
-  );
-};
-
 export const getRandomElFromArray = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -79,4 +83,11 @@ export const getColor = (color, pickedColors) => {
 
 export const getRandomPattern = (patterns) => {
   return [[patterns[Math.floor(Math.random() * patterns.length)]]];
+};
+
+// used to create colorSequences
+export const splitter = (arr) => {
+  return arr.map((arr2) =>
+    arr2.split("").map((letter) => lettersToNumbers[letter])
+  );
 };
