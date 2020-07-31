@@ -8,7 +8,6 @@ function* everyNum(first, last) {
   }
 }
 
-    for (let i = start; i <= maxMagnitude; i += 2) {
 function* everyOtherNum(first, last) {
   let i = first;
   while (i <= last) {
