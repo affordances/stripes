@@ -2,28 +2,40 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100%;
-  max-width: 1275px;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
-  padding: 20px 20px 0 20px;
+  padding: 24px 24px 0 24px;
   margin: auto;
   overflow: auto;
 `;
 
+export const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+`;
+
 export const Title = styled.h1`
-  font-size: 40px;
+  font-size: 25px;
+  line-height: 32px;
   font-weight: 700;
-  text-align: center;
-  margin: 0 0 20px 0;
+  margin: 0 0 24px 0;
   color: black;
+`;
+
+export const ButtonsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  width: 280px;
+  margin: 0 24px 0 0;
 `;
 
 export const MenuRow = styled.div`
@@ -31,30 +43,33 @@ export const MenuRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  margin: 0 0 20px 0;
+  margin: 0 0 24px 0;
 `;
 
 export const SelectContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex: 1;
+  width: 200px;
+  margin-bottom: 24px;
 `;
 
 export const Header = styled.h2`
-  font-size: 24px;
+  font-size: 16px;
+  line-height: 20px;
   font-weight: 700;
-  margin: 0 0 5px 0;
+  margin: 0 0 8px 0;
   padding: 0;
   color: black;
+  text-decoration: underline;
 `;
 
-export const SwatchContainer = styled.div`
+export const SwatchesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: wrap;
   width: 100%;
-  margin: 0 0 20px 0;
+  height: 200px;
+  margin: 0 0 24px 0;
 
   ${(props) =>
     props.disabled &&
@@ -67,22 +82,20 @@ export const SwatchContainer = styled.div`
 export const Swatch = styled.div`
   background: ${(props) => props.color};
   border: 5px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
-  min-width: 25px;
-  min-height: 50px;
-  flex: 1;
+  width: 96px;
+  height: 24px;
   cursor: pointer;
 `;
 
 export const Button = styled.button`
-  flex: 1;
   color: black;
   background: #f6f7f4;
-  border: 4px solid black;
-  border-radius: 4px;
-  padding: 15px;
+  box-shadow: 4px 4px black;
+  border: 2px solid black;
+  padding: 8px;
   text-align: center;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
 
   ${(props) =>
@@ -97,12 +110,18 @@ export const AutoSizerContainer = styled.div`
   flex: 1;
 `;
 
+export const ButtonsAndPatternsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 export const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 15px;
+  padding: 16px;
 
   ${(props) => props}
 `;
@@ -122,7 +141,7 @@ export const PatternLabel = styled.div`
 
 export const PatternLabelText = styled.h6`
   font-weight: 400;
-  margin: 0 0 5px 0;
+  margin: 0 0 4px 0;
   padding: 0;
 `;
 
@@ -156,7 +175,7 @@ export const Pattern = styled.div`
 
 export const Stripe = styled.div`
   background: ${(props) => props.background};
-  height: 10px;
+  height: 6px;
 `;
 
 export const HiddenDownloadContainer = styled.div`
@@ -169,7 +188,7 @@ export const DownloadPattern = styled.div`
 
 export const DownloadStripe = styled.div`
   background: ${(props) => props.background};
-  height: 60px;
+  height: 64px;
 `;
 
 export const PatternCountContainer = styled.div`
@@ -183,7 +202,7 @@ export const PatternCountContainer = styled.div`
 export const PatternCount = styled.p`
   font-weight: 500;
   font-size: 24px;
-  margin: 0 0 5px 0;
+  margin: 0 0 8px 0;
   padding: 0;
 `;
 
@@ -195,9 +214,9 @@ export const EmptyStateContainer = styled.div`
 `;
 
 export const EmptyStateText = styled.div`
-  font-weight: 500;
-  font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
 `;
 
 export const ModalButtonsContainer = styled.div`
@@ -205,7 +224,7 @@ export const ModalButtonsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-top: 4px solid black;
-  padding: 15px;
+  padding: 16px;
 `;
 
 export const ModalInnerContainer = styled.div`
@@ -229,7 +248,7 @@ export const modalStyles = {
     overflow: "hidden",
     border: "4px solid black",
     padding: "0",
-    maxWidth: "1275px",
+    maxWidth: "1280px",
     margin: "auto",
   },
 };
@@ -241,7 +260,9 @@ export const selectStyles = {
   }),
   control: (provided, _) => ({
     ...provided,
-    border: "4px solid black",
+    border: "2px solid black",
+    borderRadius: "0",
+    boxShadow: "4px 4px black",
     cursor: "pointer",
   }),
   dropdownIndicator: (provided, _) => ({
@@ -250,23 +271,30 @@ export const selectStyles = {
   }),
   indicatorSeparator: (provided, _) => ({
     ...provided,
-    width: "4px",
-    backgroundColor: "black",
+    display: "none",
+    // width: "4px",
+    // backgroundColor: "black",
   }),
   option: (provided, _) => ({
     ...provided,
     cursor: "pointer",
     color: "black",
+    // textAlign: "right",
     fontSize: "24px",
   }),
   placeholder: (provided, _) => ({
     ...provided,
     color: "black",
-    fontSize: "24px",
+    fontSize: "16px",
   }),
   singleValue: (provided, _) => ({
     ...provided,
     color: "black",
     fontSize: "24px",
+  }),
+  valueContainer: (provided, _) => ({
+    ...provided,
+    // justifyContent: "flex-end",
+    // padding: "0",
   }),
 };

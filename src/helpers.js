@@ -53,7 +53,7 @@ export const convertToColumns = (array) => {
 
 export const getRowHeight = (pattern) => {
   const patternHeight = pattern.length ? pattern[0][0].magnitude : 0;
-  return patternHeight > 0 ? patternHeight * 10 + 47 : 0;
+  return patternHeight > 0 ? patternHeight * 6 + 40 : 0;
 };
 
 export const getRandomElFromArray = (arr) => {

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 
 import "./index.css";
-import { Container, Title } from "./styles.js";
+import {
+  Button,
+  ButtonsRow,
+  Container,
+  InnerContainer,
+  ButtonsAndPatternsContainer,
+  Title,
+} from "./styles.js";
 import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./components/Menu.js";
 import { SavedPatternsModal } from "./components/SavedPatternsModal.js";
@@ -9,7 +16,7 @@ import { PatternsContainer } from "./components/PatternsContainer.js";
 
 const App = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { patterns, magnitude, ...props } = useStripes();
+  const { patterns, magnitude, random, ...props } = useStripes();
   const useLocalStorageProps = useLocalStorage();
   const { toggleSavedPattern, isPatternSaved } = useLocalStorageProps;
 
@@ -24,13 +31,21 @@ const App = () => {
         modalIsOpen={modalIsOpen}
         {...useLocalStorageProps}
       />
-      <Title>MATHIEU'S ATHLETIC STRIPE PATTERN GENERATOR</Title>
-      <Menu magnitude={magnitude} openModal={toggleModal} {...props} />
-      <PatternsContainer
-        patterns={patterns}
-        toggleSavedPattern={toggleSavedPattern}
-        isPatternSaved={isPatternSaved}
-      />
+      <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
+      <InnerContainer>
+        <Menu magnitude={magnitude} {...props} />
+        <ButtonsAndPatternsContainer>
+          <ButtonsRow>
+            <Button onClick={random}>RANDOM Patterns</Button>
+            <Button onClick={toggleModal}>VIEW Saved</Button>
+          </ButtonsRow>
+          <PatternsContainer
+            patterns={patterns}
+            toggleSavedPattern={toggleSavedPattern}
+            isPatternSaved={isPatternSaved}
+          />
+        </ButtonsAndPatternsContainer>
+      </InnerContainer>
     </Container>
   );
 };

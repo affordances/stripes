@@ -67,7 +67,7 @@ export const SavedPatternsModal = (props) => {
             disabled={!savedPatterns.length}
             onClick={clearSavedPatterns}
             style={{
-              margin: "0 20px 0 0",
+              margin: "0 24px 0 0",
             }}
           >
             CLEAR ALL

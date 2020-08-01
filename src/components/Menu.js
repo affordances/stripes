@@ -3,7 +3,7 @@ import Select from "react-select";
 import {
   SelectContainer,
   Swatch,
-  SwatchContainer,
+  SwatchesContainer,
   Header,
   // PatternCount,
   Button,
@@ -29,44 +29,43 @@ export const Menu = (props) => {
     allChoicesMade,
     updatePickedColors,
     reset,
-    random,
     stripeCountValue,
     pickedColors,
     createPatterns,
-    openModal,
   } = props;
 
   return (
     <MenuContainer>
-      <MenuRow>
-        <SelectContainer style={{ marginRight: "20px" }}>
-          <Header>STRIPES</Header>
-          <Select
-            styles={selectStyles}
-            value={stripeCount}
-            options={stripeOptions}
-            onChange={(option) => {
-              setStripeCount(option);
-              setMagnitude(null);
-              setPickedColors([]);
-              setMagnitudeOptions(createMagnitudeOptions(option.value));
-            }}
-          />
-        </SelectContainer>
-        <SelectContainer>
-          <Header>MAGNITUDE</Header>
-          <Select
-            styles={selectStyles}
-            isDisabled={!magnitudeOptions}
-            options={magnitudeOptions}
-            value={magnitude && { value: magnitude, label: magnitude }}
-            onChange={(option) => {
-              setMagnitude(Number(option.value));
-            }}
-          />
-        </SelectContainer>
-      </MenuRow>
-      <SwatchContainer disabled={!(stripeCountValue && magnitude)}>
+      {/* <MenuRow> */}
+      <SelectContainer>
+        <Header>Stripes</Header>
+        <Select
+          styles={selectStyles}
+          value={stripeCount}
+          options={stripeOptions}
+          onChange={(option) => {
+            setStripeCount(option);
+            setMagnitude(null);
+            setPickedColors([]);
+            setMagnitudeOptions(createMagnitudeOptions(option.value));
+          }}
+        />
+      </SelectContainer>
+      <SelectContainer>
+        <Header>Magnitude</Header>
+        <Select
+          styles={selectStyles}
+          isDisabled={!magnitudeOptions}
+          options={magnitudeOptions}
+          value={magnitude && { value: magnitude, label: magnitude }}
+          onChange={(option) => {
+            setMagnitude(Number(option.value));
+          }}
+        />
+      </SelectContainer>
+      {/* </MenuRow> */}
+      <Header>Color Selection</Header>
+      <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
         {colors.map((color, i) => {
           return (
             <Swatch
@@ -81,36 +80,36 @@ export const Menu = (props) => {
             />
           );
         })}
-      </SwatchContainer>
-      <MenuRow>
-        <Button
-          onClick={createPatterns}
-          disabled={!allChoicesMade}
-          style={{
-            margin: "0 20px 0 0",
-          }}
-        >
-          CREATE PATTERNS
-        </Button>
-        <Button
-          onClick={random}
-          style={{
-            margin: "0 20px 0 0",
-          }}
-        >
-          RANDOM PATTERN
-        </Button>
-        <Button
-          onClick={reset}
-          disabled={!anyChoicesMade}
-          style={{
-            margin: "0 20px 0 0",
-          }}
-        >
-          RESET
-        </Button>
-        <Button onClick={openModal}>SAVED</Button>
-      </MenuRow>
+      </SwatchesContainer>
+      {/* <MenuRow> */}
+      <Button
+        onClick={createPatterns}
+        disabled={!allChoicesMade}
+        style={{
+          margin: "0 0 24px 0",
+        }}
+      >
+        MAKE Patterns
+      </Button>
+      {/* <Button
+        onClick={random}
+        style={{
+          margin: "0 20px 0 0",
+        }}
+      >
+        RANDOM PATTERN
+      </Button> */}
+      <Button
+        onClick={reset}
+        disabled={!anyChoicesMade}
+        // style={{
+        //   margin: "0 20px 0 0",
+        // }}
+      >
+        RESET Selections
+      </Button>
+      {/* <Button onClick={openModal}>SAVED</Button> */}
+      {/* </MenuRow> */}
       {/* <PatternCountContainer>
         <Header>Patterns generated</Header>
         <PatternCount>{patternCount}</PatternCount>
