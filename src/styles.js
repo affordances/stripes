@@ -49,7 +49,7 @@ export const MenuRow = styled.div`
 export const SelectContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 144px;
   margin-bottom: 24px;
 `;
 
@@ -66,10 +66,11 @@ export const Header = styled.h2`
 export const SwatchesContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
   height: 200px;
-  margin: 0 0 24px 0;
+  margin: 0 0 16px 0;
 
   ${(props) =>
     props.disabled &&
@@ -81,8 +82,8 @@ export const SwatchesContainer = styled.div`
 
 export const Swatch = styled.div`
   background: ${(props) => props.color};
-  border: 5px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
-  width: 96px;
+  border: 2px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
+  width: 80px;
   height: 24px;
   cursor: pointer;
 `;
@@ -97,6 +98,7 @@ export const Button = styled.button`
   text-decoration: none;
   font-size: 16px;
   font-weight: 700;
+  width: fit-content;
 
   ${(props) =>
     !props.disabled &&
@@ -162,7 +164,8 @@ export const DownloadText = styled.div`
 `;
 
 export const Pattern = styled.div`
-  border: 1px solid black;
+  border: 2px solid black;
+  box-shadow: 4px 4px black;
   width: 100%;
   position: relative;
 
@@ -264,6 +267,7 @@ export const selectStyles = {
     borderRadius: "0",
     boxShadow: "4px 4px black",
     cursor: "pointer",
+    height: "16px",
   }),
   dropdownIndicator: (provided, _) => ({
     ...provided,
@@ -280,7 +284,8 @@ export const selectStyles = {
     cursor: "pointer",
     color: "black",
     // textAlign: "right",
-    fontSize: "24px",
+    fontSize: "16px",
+    fontWeight: "700",
   }),
   placeholder: (provided, _) => ({
     ...provided,
@@ -290,7 +295,10 @@ export const selectStyles = {
   singleValue: (provided, _) => ({
     ...provided,
     color: "black",
-    fontSize: "24px",
+    fontSize: "16px",
+    fontWeight: "700",
+    margin: "0",
+    padding: "4px 8px",
   }),
   valueContainer: (provided, _) => ({
     ...provided,
