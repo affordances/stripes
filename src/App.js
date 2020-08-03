@@ -8,6 +8,8 @@ import {
   InnerContainer,
   ButtonsAndPatternsContainer,
   Title,
+  IndicatorsContainer,
+  Indicator,
 } from "./styles.js";
 import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./components/Menu.js";
@@ -16,7 +18,14 @@ import { PatternsContainer } from "./components/PatternsContainer.js";
 
 const App = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { patterns, magnitude, random, ...props } = useStripes();
+  const {
+    patterns,
+    magnitude,
+    pickedColors,
+    random,
+    stripeCountValue,
+    ...props
+  } = useStripes();
   const useLocalStorageProps = useLocalStorage();
   const { toggleSavedPattern, isPatternSaved } = useLocalStorageProps;
 
@@ -33,12 +42,26 @@ const App = () => {
       />
       <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
       <InnerContainer>
-        <Menu magnitude={magnitude} {...props} />
+        <Menu
+          magnitude={magnitude}
+          stripeCountValue={stripeCountValue}
+          pickedColors={pickedColors}
+          {...props}
+        />
         <ButtonsAndPatternsContainer>
           <ButtonsRow>
             <Button onClick={random}>RANDOM Patterns</Button>
             <Button onClick={toggleModal}>VIEW Saved</Button>
           </ButtonsRow>
+          <IndicatorsContainer>
+            <Indicator style={{ width: "168px", paddingRight: "auto" }}>
+              Stripes: {stripeCountValue || 0}
+            </Indicator>
+            <Indicator style={{ width: "200px", paddingRight: "auto" }}>
+              Magnitude: {magnitude || 0}
+            </Indicator>
+            <Indicator>Colors: {pickedColors.length}</Indicator>
+          </IndicatorsContainer>
           <PatternsContainer
             patterns={patterns}
             toggleSavedPattern={toggleSavedPattern}

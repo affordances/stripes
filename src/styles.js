@@ -80,12 +80,40 @@ export const SwatchesContainer = styled.div`
   `}
 `;
 
+export const Check = styled.div`
+  color: white;
+  visibility: hidden;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+`;
+
 export const Swatch = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   background: ${(props) => props.color};
-  border: 2px solid ${(props) => (props.isPicked ? `limegreen` : `#f6f7f4`)};
   width: 80px;
-  height: 24px;
+  height: 16px;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    transition: 0.2s;
+  }
+
+  &:active {
+    opacity: 1;
+  }
+
+  ${(props) =>
+    props.isPicked &&
+    `
+      ${Check} {
+        visibility: visible;
+      }
+  `};
 `;
 
 export const Button = styled.button`
@@ -99,6 +127,26 @@ export const Button = styled.button`
   font-size: 16px;
   font-weight: 700;
   width: fit-content;
+  margin: 0 0 24px 0;
+  letter-spacing: 1px;
+
+  /* &:hover {
+    background: black;
+    color: white;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+  } */
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+    transition: 0.1s;
+  }
+
+  &:focus {
+    outline: none;
+    /* border: 2px solid blue; */
+  }
 
   ${(props) =>
     !props.disabled &&
@@ -116,6 +164,23 @@ export const ButtonsAndPatternsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+export const IndicatorsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-top: 4px solid black;
+  padding-top: 16px;
+  margin-right: auto;
+`;
+
+export const Indicator = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
 `;
 
 export const PatternContainer = styled.div`
@@ -165,7 +230,7 @@ export const DownloadText = styled.div`
 
 export const Pattern = styled.div`
   border: 2px solid black;
-  box-shadow: 4px 4px black;
+  /* box-shadow: 4px 4px black; */
   width: 100%;
   position: relative;
 
@@ -271,12 +336,6 @@ export const selectStyles = {
     minHeight: "24px",
     alignItems: "unset",
     padding: "0 8px",
-    "&:hover": {
-      borderColor: "red",
-      boxShadow: "4px 4px red",
-      color: "red",
-      caretColor: "red",
-    },
   }),
   input: (provided, _) => ({
     ...provided,
@@ -302,9 +361,6 @@ export const selectStyles = {
     ...provided,
     color: "inherit",
     padding: "0",
-    "&:hover": {
-      color: "inherit",
-    },
   }),
   indicatorSeparator: (provided, _) => ({
     ...provided,

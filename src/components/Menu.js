@@ -5,12 +5,12 @@ import {
   Swatch,
   SwatchesContainer,
   Header,
-  // PatternCount,
+  Check,
   Button,
-  // PatternCountContainer,
   MenuContainer,
-  MenuRow,
   selectStyles,
+  // PatternCount,
+  // PatternCountContainer,
 } from "../styles.js";
 import { colors, stripeOptions } from "../config.js";
 import { createMagnitudeOptions } from "../helpers.js";
@@ -24,7 +24,6 @@ export const Menu = (props) => {
     setPickedColors,
     stripeCount,
     magnitudeOptions,
-    // patternCount,
     anyChoicesMade,
     allChoicesMade,
     updatePickedColors,
@@ -32,11 +31,11 @@ export const Menu = (props) => {
     stripeCountValue,
     pickedColors,
     createPatterns,
+    // patternCount,
   } = props;
 
   return (
     <MenuContainer>
-      {/* <MenuRow> */}
       <SelectContainer>
         <Header>Stripes</Header>
         <Select
@@ -63,7 +62,6 @@ export const Menu = (props) => {
           }}
         />
       </SelectContainer>
-      {/* </MenuRow> */}
       <Header>Color Selection</Header>
       <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
         {colors.map((color, i) => {
@@ -77,39 +75,18 @@ export const Menu = (props) => {
                   (pickedColor) => pickedColor.value === color.value
                 )
               }
-            />
+            >
+              <Check>✔</Check>
+            </Swatch>
           );
         })}
       </SwatchesContainer>
-      {/* <MenuRow> */}
-      <Button
-        onClick={createPatterns}
-        disabled={!allChoicesMade}
-        style={{
-          margin: "0 0 24px 0",
-        }}
-      >
+      <Button onClick={createPatterns} disabled={!allChoicesMade}>
         MAKE Patterns
       </Button>
-      {/* <Button
-        onClick={random}
-        style={{
-          margin: "0 20px 0 0",
-        }}
-      >
-        RANDOM PATTERN
-      </Button> */}
-      <Button
-        onClick={reset}
-        disabled={!anyChoicesMade}
-        // style={{
-        //   margin: "0 20px 0 0",
-        // }}
-      >
+      <Button onClick={reset} disabled={!anyChoicesMade}>
         RESET Selections
       </Button>
-      {/* <Button onClick={openModal}>SAVED</Button> */}
-      {/* </MenuRow> */}
       {/* <PatternCountContainer>
         <Header>Patterns generated</Header>
         <PatternCount>{patternCount}</PatternCount>

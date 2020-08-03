@@ -19,6 +19,7 @@ body {
   background: #f6f7f4;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
+  letter-spacing: 1px;
 }
 
 #root {
