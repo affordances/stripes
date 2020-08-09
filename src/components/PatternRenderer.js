@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaArrowDown } from "react-icons/fa";
 import domtoimage from "dom-to-image";
 
 import {
@@ -12,7 +12,8 @@ import {
   DownloadPattern,
   DownloadStripe,
   HiddenDownloadContainer,
-  DownloadText,
+  DownloadIcons,
+  DownloadIconsContainer,
 } from "../styles.js";
 
 export const PatternRenderer = (props) => {
@@ -54,16 +55,6 @@ export const PatternRenderer = (props) => {
           <PatternLabelText title={currentPattern.label}>
             {currentPattern.label}
           </PatternLabelText>
-          {/* <PatternLabelText
-            style={{ cursor: "pointer" }}
-            onClick={() => toggleSavedPattern(currentPattern)}
-          >
-            {isPatternSaved(currentPattern) ? (
-              <FaHeart color="red" />
-            ) : (
-              <FaRegHeart />
-            )}
-          </PatternLabelText> */}
         </PatternLabel>
         <HiddenDownloadContainer>
           <DownloadPattern ref={ref}>
@@ -76,11 +67,30 @@ export const PatternRenderer = (props) => {
             )}
           </DownloadPattern>
         </HiddenDownloadContainer>
-        <Pattern
-          style={{ cursor: "pointer" }}
-          onClick={() => downloadHandler(currentPattern)}
-        >
-          <DownloadText>CLICK TO DOWNLOAD</DownloadText>
+        <Pattern>
+          <DownloadIconsContainer>
+            <DownloadIcons>
+              <FaArrowDown
+                style={{ cursor: "pointer", marginRight: "8px" }}
+                title="Download pattern"
+                onClick={() => downloadHandler(currentPattern)}
+              />
+              {isPatternSaved(currentPattern) ? (
+                <FaHeart
+                  color="red"
+                  title="Unsave pattern"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleSavedPattern(currentPattern)}
+                />
+              ) : (
+                <FaRegHeart
+                  style={{ cursor: "pointer" }}
+                  title="Save pattern"
+                  onClick={() => toggleSavedPattern(currentPattern)}
+                />
+              )}
+            </DownloadIcons>
+          </DownloadIconsContainer>
           {currentPattern.pattern.flatMap(({ count, color }, i) =>
             new Array(count)
               .fill(0)

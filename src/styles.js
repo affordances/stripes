@@ -132,13 +132,6 @@ export const Button = styled.button`
   margin: 0 0 24px 0;
   letter-spacing: 1px;
 
-  /* &:hover {
-    background: black;
-    color: white;
-    border-bottom: 2px solid white;
-    border-right: 2px solid white;
-  } */
-
   &:active {
     transform: translate(4px, 4px);
     box-shadow: none;
@@ -147,7 +140,6 @@ export const Button = styled.button`
 
   &:focus {
     outline: none;
-    /* border: 2px solid blue; */
   }
 
   ${(props) =>
@@ -185,12 +177,50 @@ export const Indicator = styled.div`
   font-weight: 700;
 `;
 
+export const DownloadIconsContainer = styled.div`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  /* background: rgba(0, 0, 0, 0.08);
+  opacity: 1; */
+  height: 100%;
+  width: 100%;
+`;
+
+export const DownloadIcons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #f6f7f4;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  padding: 4px;
+  border: 2px solid black;
+`;
+
 export const PatternContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   padding: 8px;
+
+  transition: 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    z-index: 99;
+
+    ${DownloadIconsContainer} {
+      display: flex;
+    }
+  }
 
   ${(props) => props}
 `;
@@ -218,33 +248,10 @@ export const PatternLabelText = styled.h6`
   text-overflow: ellipsis;
 `;
 
-export const DownloadText = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  z-index: 5;
-  background: rgba(0, 0, 0, 0.5);
-  transition: 0.5s ease;
-  opacity: 1;
-  height: 100%;
-  width: 100%;
-  color: #f6f7f4;
-  font-weight: bold;
-  font-size: 12px;
-`;
-
 export const Pattern = styled.div`
   border: 2px solid black;
-  /* box-shadow: 4px 4px black; */
   width: 100%;
   position: relative;
-
-  &:hover {
-    ${DownloadText} {
-      display: flex;
-    }
-  }
 `;
 
 export const Stripe = styled.div`
