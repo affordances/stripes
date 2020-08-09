@@ -8,7 +8,6 @@ import {
   PatternAndLabel,
   PatternLabel,
   PatternContainer,
-  PatternLabelText,
   DownloadPattern,
   DownloadStripe,
   HiddenDownloadContainer,
@@ -51,10 +50,8 @@ export const PatternRenderer = (props) => {
   return currentPattern ? (
     <PatternContainer {...props}>
       <PatternAndLabel>
-        <PatternLabel>
-          <PatternLabelText title={currentPattern.label}>
-            {currentPattern.label}
-          </PatternLabelText>
+        <PatternLabel title={currentPattern.label}>
+          {currentPattern.label}
         </PatternLabel>
         <HiddenDownloadContainer>
           <DownloadPattern ref={ref}>

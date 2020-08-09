@@ -182,7 +182,6 @@ export const DownloadIconsContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 100;
   /* background: rgba(0, 0, 0, 0.08);
   opacity: 1; */
   height: 100%;
@@ -210,12 +209,10 @@ export const PatternContainer = styled.div`
   align-items: center;
   width: 100%;
   padding: 8px;
-
   transition: 0.2s;
 
   &:hover {
-    transform: scale(1.05);
-    z-index: 99;
+    transform: scale(1.05) perspective(1px) translateZ(0);
 
     ${DownloadIconsContainer} {
       display: flex;
@@ -232,14 +229,10 @@ export const PatternAndLabel = styled.div`
 `;
 
 export const PatternLabel = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   width: 100%;
+  font-size: 11px;
+  line-height: 16px;
   height: 16px;
-`;
-
-export const PatternLabelText = styled.h6`
   font-weight: 400;
   margin: 0 0 4px 0;
   padding: 0;
