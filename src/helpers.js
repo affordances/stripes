@@ -25,16 +25,16 @@ export const createMagnitudeOptions = (start) => {
   return nums.map((num) => ({ value: num, label: num }));
 };
 
-export const createNumberPalindromes = (stripes, magnitude) => {
+export const createNumberPalindromes = (arrLength, arrSum) => {
   let results = [];
 
-  if (stripes === 1 && magnitude > 0) {
-    results.push([magnitude]);
-  } else if (stripes === 2 && magnitude % 2 === 0 && magnitude > 0) {
-    results.push([magnitude / 2, magnitude / 2]);
-  } else if (2 < stripes && stripes <= magnitude) {
-    for (let i = 1; i <= magnitude / 2; i++) {
-      const middles = createNumberPalindromes(stripes - 2, magnitude - 2 * i);
+  if (arrLength === 1 && arrSum > 0) {
+    results.push([arrSum]);
+  } else if (arrLength === 2 && arrSum % 2 === 0 && arrSum > 0) {
+    results.push([arrSum / 2, arrSum / 2]);
+  } else if (2 < arrLength && arrLength <= arrSum) {
+    for (let i = 1; i <= arrSum / 2; i++) {
+      const middles = createNumberPalindromes(arrLength - 2, arrSum - 2 * i);
       middles.forEach((middle) => results.push([i].concat(middle, [i])));
     }
   }
@@ -51,9 +51,9 @@ export const convertToColumns = (array) => {
   return [0, 1, 2].map((x) => array.filter((_, i) => i % 3 === x));
 };
 
-export const getRowHeight = (pattern) => {
-  const patternHeight = pattern.length ? pattern[0][0].magnitude : 0;
-  return patternHeight > 0 ? patternHeight * 6 + 40 : 0;
+export const getRowHeight = (patterns) => {
+  const patternHeight = patterns.length ? patterns[0][0].magnitude : 0;
+  return patternHeight > 0 ? patternHeight * 8 + 36 : 0;
 };
 
 export const getRandomElFromArray = (arr) => {

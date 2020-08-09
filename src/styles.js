@@ -29,12 +29,15 @@ export const ButtonsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0 8px;
+  padding-right: 4px;
+  border-bottom: 4px solid black;
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 280px;
+  width: 256px;
   margin: 0 24px 0 0;
 `;
 
@@ -66,10 +69,8 @@ export const Header = styled.h2`
 export const SwatchesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  height: 200px;
   margin: 0 0 16px 0;
 
   ${(props) =>
@@ -96,6 +97,7 @@ export const Swatch = styled.div`
   background: ${(props) => props.color};
   width: 80px;
   height: 16px;
+  margin: 0 8px 8px 0;
   cursor: pointer;
 
   &:hover {
@@ -158,6 +160,7 @@ export const Button = styled.button`
 
 export const AutoSizerContainer = styled.div`
   flex: 1;
+  margin-top: -8px;
 `;
 
 export const ButtonsAndPatternsContainer = styled.div`
@@ -170,8 +173,7 @@ export const IndicatorsContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-top: 4px solid black;
-  padding-top: 16px;
+  padding: 16px 8px 24px;
   margin-right: auto;
 `;
 
@@ -188,7 +190,7 @@ export const PatternContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 16px;
+  padding: 8px;
 
   ${(props) => props}
 `;
@@ -204,12 +206,16 @@ export const PatternLabel = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  height: 16px;
 `;
 
 export const PatternLabelText = styled.h6`
   font-weight: 400;
   margin: 0 0 4px 0;
   padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const DownloadText = styled.div`
@@ -243,7 +249,7 @@ export const Pattern = styled.div`
 
 export const Stripe = styled.div`
   background: ${(props) => props.background};
-  height: 6px;
+  height: 8px;
 `;
 
 export const HiddenDownloadContainer = styled.div`
@@ -256,7 +262,7 @@ export const DownloadPattern = styled.div`
 
 export const DownloadStripe = styled.div`
   background: ${(props) => props.background};
-  height: 64px;
+  height: 48px;
 `;
 
 export const PatternCountContainer = styled.div`

@@ -21,7 +21,7 @@ export const PatternRenderer = (props) => {
   const downloadHandler = (pattern) => {
     return domtoimage
       .toPng(ref.current, {
-        height: pattern.magnitude * 60,
+        height: pattern.magnitude * 48,
         width: 3000,
       })
       .then((dataUrl) => {
@@ -51,8 +51,10 @@ export const PatternRenderer = (props) => {
     <PatternContainer {...props}>
       <PatternAndLabel>
         <PatternLabel>
-          <PatternLabelText>{currentPattern.label}</PatternLabelText>
-          <PatternLabelText
+          <PatternLabelText title={currentPattern.label}>
+            {currentPattern.label}
+          </PatternLabelText>
+          {/* <PatternLabelText
             style={{ cursor: "pointer" }}
             onClick={() => toggleSavedPattern(currentPattern)}
           >
@@ -61,7 +63,7 @@ export const PatternRenderer = (props) => {
             ) : (
               <FaRegHeart />
             )}
-          </PatternLabelText>
+          </PatternLabelText> */}
         </PatternLabel>
         <HiddenDownloadContainer>
           <DownloadPattern ref={ref}>
