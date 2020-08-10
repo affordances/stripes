@@ -182,8 +182,7 @@ export const DownloadIconsContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  /* background: rgba(0, 0, 0, 0.08);
-  opacity: 1; */
+  background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
 `;
@@ -193,14 +192,32 @@ export const DownloadIcons = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background: #f6f7f4;
   color: black;
-  font-weight: bold;
   font-size: 16px;
   line-height: 20px;
-  font-weight: 700;
   padding: 4px;
   border: 2px solid black;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.2s;
+
+  &:hover {
+    background: #f6f7f4;
+    opacity: 0.95;
+  }
+
+  &:active {
+    background: #f6f7f4;
+    opacity: 1;
+  }
 `;
 
 export const PatternContainer = styled.div`
@@ -209,11 +226,8 @@ export const PatternContainer = styled.div`
   align-items: center;
   width: 100%;
   padding: 8px;
-  transition: 0.2s;
 
   &:hover {
-    transform: scale(1.05) perspective(1px) translateZ(0);
-
     ${DownloadIconsContainer} {
       display: flex;
     }

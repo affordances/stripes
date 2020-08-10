@@ -13,6 +13,7 @@ import {
   HiddenDownloadContainer,
   DownloadIcons,
   DownloadIconsContainer,
+  IconContainer,
 } from "../styles.js";
 
 export const PatternRenderer = (props) => {
@@ -67,24 +68,27 @@ export const PatternRenderer = (props) => {
         <Pattern>
           <DownloadIconsContainer>
             <DownloadIcons>
-              <FaArrowDown
-                style={{ cursor: "pointer", marginRight: "8px" }}
+              <IconContainer
+                style={{ marginRight: "24px" }}
                 title="Download pattern"
                 onClick={() => downloadHandler(currentPattern)}
-              />
+              >
+                <FaArrowDown />
+              </IconContainer>
               {isPatternSaved(currentPattern) ? (
-                <FaHeart
-                  color="red"
+                <IconContainer
                   title="Unsave pattern"
-                  style={{ cursor: "pointer" }}
                   onClick={() => toggleSavedPattern(currentPattern)}
-                />
+                >
+                  <FaHeart color="red" />
+                </IconContainer>
               ) : (
-                <FaRegHeart
-                  style={{ cursor: "pointer" }}
+                <IconContainer
                   title="Save pattern"
                   onClick={() => toggleSavedPattern(currentPattern)}
-                />
+                >
+                  <FaRegHeart />
+                </IconContainer>
               )}
             </DownloadIcons>
           </DownloadIconsContainer>
