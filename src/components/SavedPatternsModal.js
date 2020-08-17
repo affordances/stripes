@@ -59,20 +59,20 @@ export const SavedPatternsModal = (props) => {
           </Masonry>
         ) : (
           <EmptyStateContainer>
-            <EmptyStateText>YOU HAVE NO SAVED PATTERNS</EmptyStateText>
+            <EmptyStateText>You have no saved patterns</EmptyStateText>
           </EmptyStateContainer>
         )}
         <ModalButtonsContainer>
           <Button
+            style={{ margin: "0" }}
             disabled={!savedPatterns.length}
             onClick={clearSavedPatterns}
-            style={{
-              margin: "0 24px 0 0",
-            }}
           >
-            CLEAR ALL
+            CLEAR All
           </Button>
-          <Button onClick={toggleModal}>CLOSE</Button>
+          <Button style={{ margin: "0" }} onClick={toggleModal}>
+            CLOSE
+          </Button>
         </ModalButtonsContainer>
       </ModalInnerContainer>
     </Modal>

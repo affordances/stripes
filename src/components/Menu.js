@@ -9,8 +9,6 @@ import {
   Button,
   MenuContainer,
   selectStyles,
-  // PatternCount,
-  // PatternCountContainer,
 } from "../styles.js";
 import { colors, stripeOptions } from "../config.js";
 import { createMagnitudeOptions } from "../helpers.js";
@@ -31,7 +29,6 @@ export const Menu = (props) => {
     stripeCountValue,
     pickedColors,
     createPatterns,
-    // patternCount,
   } = props;
 
   return (
@@ -53,7 +50,19 @@ export const Menu = (props) => {
       <SelectContainer>
         <Header>Magnitude</Header>
         <Select
-          styles={selectStyles}
+          styles={
+            magnitudeOptions
+              ? selectStyles
+              : {
+                  ...selectStyles,
+                  container: (provided, _) => ({
+                    ...provided,
+                    width: "100%",
+                    pointerEvents: "none",
+                    opacity: "0.5",
+                  }),
+                }
+          }
           isDisabled={!magnitudeOptions}
           options={magnitudeOptions}
           value={magnitude && { value: magnitude, label: magnitude }}
@@ -87,10 +96,6 @@ export const Menu = (props) => {
       <Button onClick={reset} disabled={!anyChoicesMade}>
         RESET Selections
       </Button>
-      {/* <PatternCountContainer>
-        <Header>Patterns generated</Header>
-        <PatternCount>{patternCount}</PatternCount>
-      </PatternCountContainer> */}
     </MenuContainer>
   );
 };

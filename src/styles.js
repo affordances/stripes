@@ -29,9 +29,7 @@ export const ButtonsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0 8px;
   padding-right: 4px;
-  border-bottom: 4px solid black;
 `;
 
 export const MenuContainer = styled.div`
@@ -68,17 +66,18 @@ export const Header = styled.h2`
 
 export const SwatchesContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+  height: 168px;
   width: 100%;
   margin: 0 0 16px 0;
 
   ${(props) =>
     props.disabled &&
     `
-  pointer-events: none;
-  opacity: 0.5;
-  `}
+      pointer-events: none;
+      opacity: 0.5;
+    `}
 `;
 
 export const Check = styled.div`
@@ -143,16 +142,19 @@ export const Button = styled.button`
   }
 
   ${(props) =>
-    !props.disabled &&
-    `
-    background: white;
-    cursor: pointer;
-  `}
+    props.disabled
+      ? `
+          pointer-events: none;
+          opacity: 0.5;
+        `
+      : `
+          background: white;
+          cursor: pointer;
+        `}
 `;
 
 export const AutoSizerContainer = styled.div`
   flex: 1;
-  margin-top: -8px;
 `;
 
 export const ButtonsAndPatternsContainer = styled.div`
@@ -165,8 +167,9 @@ export const IndicatorsContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 16px 8px 24px;
-  margin-right: auto;
+  padding: 16px 8px;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
 `;
 
 export const Indicator = styled.div`
@@ -279,23 +282,9 @@ export const DownloadStripe = styled.div`
   height: 48px;
 `;
 
-export const PatternCountContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  flex: 1;
-`;
-
-export const PatternCount = styled.p`
-  font-weight: 500;
-  font-size: 24px;
-  margin: 0 0 8px 0;
-  padding: 0;
-`;
-
 export const EmptyStateContainer = styled.div`
-  flex: 1;
+  width: 100%;
+  height: 344px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -307,6 +296,12 @@ export const EmptyStateText = styled.div`
   line-height: 20px;
 `;
 
+export const ModalInnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
 export const ModalButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -315,29 +310,31 @@ export const ModalButtonsContainer = styled.div`
   padding: 16px;
 `;
 
-export const ModalInnerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-
 export const MasonryContainer = styled.div`
   display: grid;
   grid-auto-rows: 1px;
   grid-template-columns: 1fr 1fr 1fr;
   overflow: auto;
   height: 100%;
+  padding: 0 8px;
 `;
 
 export const MasonryColumn = styled.div``;
 
 export const modalStyles = {
+  overlay: {
+    backgroundColor: "rgb(246, 247, 244, 0.5)",
+  },
   content: {
     overflow: "hidden",
     border: "4px solid black",
+    boxShadow: "4px 4px black",
+    borderRadius: "0",
     padding: "0",
-    maxWidth: "1280px",
-    margin: "auto",
+    maxWidth: "1000px",
+    margin: "0 auto",
+    height: "430px",
+    background: "#f6f7f4",
   },
 };
 
@@ -368,6 +365,31 @@ export const selectStyles = {
     input: {
       height: "20px",
     },
+  }),
+  menu: (provided, _) => ({
+    ...provided,
+    borderRadius: "0",
+    margin: "8px 0 0 0",
+    padding: "0",
+  }),
+  menuList: (provided, _) => ({
+    ...provided,
+    borderRadius: "0",
+    margin: "0",
+    padding: "0",
+  }),
+  noOptionsMessage: (provided, _) => ({
+    ...provided,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "24px",
+    color: "inherit",
+    fontSize: "12px",
+    fontWeight: "700",
+    margin: "0",
+    padding: "0",
+    borderRadius: "0",
   }),
   indicatorContainer: (provided, _) => ({
     ...provided,

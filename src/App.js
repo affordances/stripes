@@ -24,6 +24,7 @@ const App = () => {
     pickedColors,
     random,
     stripeCountValue,
+    patternCount,
     ...props
   } = useStripes();
   const useLocalStorageProps = useLocalStorage();
@@ -60,7 +61,10 @@ const App = () => {
             <Indicator style={{ width: "200px", paddingRight: "auto" }}>
               Magnitude: {magnitude || 0}
             </Indicator>
-            <Indicator>Colors: {pickedColors.length}</Indicator>
+            <Indicator style={{ width: "168px", paddingRight: "auto" }}>
+              Colors: {pickedColors.length}
+            </Indicator>
+            <Indicator>Patterns: {patternCount}</Indicator>
           </IndicatorsContainer>
           <PatternsContainer
             patterns={patterns}
