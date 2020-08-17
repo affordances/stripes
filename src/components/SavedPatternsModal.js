@@ -58,7 +58,7 @@ export const SavedPatternsModal = (props) => {
             ))}
           </Masonry>
         ) : (
-          <EmptyStateContainer>
+          <EmptyStateContainer style={{ height: "100%" }}>
             <EmptyStateText>You have no saved patterns</EmptyStateText>
           </EmptyStateContainer>
         )}
