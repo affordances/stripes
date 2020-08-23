@@ -214,8 +214,7 @@ export const IconContainer = styled.div`
   transition: 0.2s;
 
   &:hover {
-    background: ${customWhite};
-    opacity: 0.7;
+    background-color: rgba(246, 247, 244, 0.7);
     border: 2px solid black;
   }
 
@@ -334,7 +333,7 @@ export const modalStyles = {
     borderRadius: "0",
     padding: "0",
     maxWidth: "1000px",
-    margin: "0 auto",
+    margin: "auto",
     height: "430px",
     background: customWhite,
   },

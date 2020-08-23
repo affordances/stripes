@@ -51,7 +51,7 @@ const App = () => {
         />
         <ButtonsAndPatternsContainer>
           <ButtonsRow>
-            <Button onClick={random}>RANDOM Patterns</Button>
+            <Button onClick={random}>RANDOM Pattern</Button>
             <Button onClick={toggleModal}>VIEW Saved</Button>
           </ButtonsRow>
           <IndicatorsContainer>
