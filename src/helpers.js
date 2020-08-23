@@ -1,5 +1,7 @@
 import { maxMagnitude, maxStripeCount, lettersToNumbers } from "./config.js";
 
+import { customWhite } from "./styles.js";
+
 function* everyNum(first, last) {
   let i = first;
   while (i <= last) {
@@ -76,7 +78,7 @@ export const getRandomMagnitude = (options) => {
 
 export const getColor = (color, pickedColors) => {
   return color === 0
-    ? { label: "white", value: "#f6f7f4" }
+    ? { label: "white", value: customWhite }
     : pickedColors[(color - 1).toString()];
 };
 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const customWhite = "#f6f7f4";
+
 export const Container = styled.div`
   height: 100%;
   max-width: 1000px;
@@ -81,7 +83,7 @@ export const SwatchesContainer = styled.div`
 `;
 
 export const Check = styled.div`
-  color: white;
+  color: ${customWhite};
   visibility: hidden;
   font-size: 11px;
   line-height: 16px;
@@ -119,7 +121,7 @@ export const Swatch = styled.div`
 
 export const Button = styled.button`
   color: black;
-  background: #f6f7f4;
+  background: ${customWhite};
   box-shadow: 4px 4px black;
   border: 2px solid black;
   padding: 8px;
@@ -148,7 +150,7 @@ export const Button = styled.button`
           opacity: 0.5;
         `
       : `
-          background: white;
+          background: ${customWhite};
           cursor: pointer;
         `}
 `;
@@ -185,7 +187,6 @@ export const DownloadIconsContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
 `;
@@ -202,23 +203,24 @@ export const IconContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: #f6f7f4;
+  background: ${customWhite};
   color: black;
   font-size: 16px;
   line-height: 20px;
   padding: 4px;
   border: 2px solid black;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 1;
   transition: 0.2s;
 
   &:hover {
-    background: #f6f7f4;
-    opacity: 0.95;
+    background: ${customWhite};
+    opacity: 0.7;
+    border: 2px solid black;
   }
 
   &:active {
-    background: #f6f7f4;
+    background: ${customWhite};
     opacity: 1;
   }
 `;
@@ -334,7 +336,7 @@ export const modalStyles = {
     maxWidth: "1000px",
     margin: "0 auto",
     height: "430px",
-    background: "#f6f7f4",
+    background: customWhite,
   },
 };
 
@@ -353,6 +355,7 @@ export const selectStyles = {
     minHeight: "24px",
     alignItems: "unset",
     padding: "0 8px",
+    backgroundColor: customWhite,
   }),
   input: (provided, _) => ({
     ...provided,
@@ -371,12 +374,14 @@ export const selectStyles = {
     borderRadius: "0",
     margin: "8px 0 0 0",
     padding: "0",
+    backgroundColor: customWhite,
   }),
   menuList: (provided, _) => ({
     ...provided,
     borderRadius: "0",
     margin: "0",
     padding: "0",
+    backgroundColor: customWhite,
   }),
   noOptionsMessage: (provided, _) => ({
     ...provided,
@@ -390,6 +395,7 @@ export const selectStyles = {
     margin: "0",
     padding: "0",
     borderRadius: "0",
+    backgroundColor: customWhite,
   }),
   indicatorContainer: (provided, _) => ({
     ...provided,
