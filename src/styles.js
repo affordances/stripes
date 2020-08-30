@@ -27,11 +27,27 @@ export const Title = styled.h1`
   color: black;
 `;
 
-export const ButtonsRow = styled.div`
+export const PatternCountAndButtonsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-right: 4px;
+  align-items: flex-end;
+  padding: 0 4px 0 8px;
+  border-bottom: 4px solid black;
+`;
+
+export const PatternCount = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+`;
+
+export const ButtonsGroup = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const MenuContainer = styled.div`
@@ -163,23 +179,6 @@ export const ButtonsAndPatternsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-export const IndicatorsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 16px 8px;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
-`;
-
-export const Indicator = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 700;
 `;
 
 export const DownloadIconsContainer = styled.div`

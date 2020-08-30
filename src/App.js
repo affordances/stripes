@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import "./index.css";
 import {
   Button,
-  ButtonsRow,
+  PatternCountAndButtonsRow,
   Container,
   InnerContainer,
   ButtonsAndPatternsContainer,
+  ButtonsGroup,
   Title,
-  IndicatorsContainer,
-  Indicator,
+  PatternCount,
 } from "./styles.js";
 import { useLocalStorage, useStripes } from "./hooks.js";
 import { Menu } from "./components/Menu.js";
@@ -50,22 +50,17 @@ const App = () => {
           {...props}
         />
         <ButtonsAndPatternsContainer>
-          <ButtonsRow>
-            <Button onClick={random}>RANDOM Pattern</Button>
-            <Button onClick={toggleModal}>VIEW Saved</Button>
-          </ButtonsRow>
-          <IndicatorsContainer>
-            <Indicator style={{ width: "168px", paddingRight: "auto" }}>
-              Stripes: {stripeCountValue || 0}
-            </Indicator>
-            <Indicator style={{ width: "200px", paddingRight: "auto" }}>
-              Magnitude: {magnitude || 0}
-            </Indicator>
-            <Indicator style={{ width: "168px", paddingRight: "auto" }}>
-              Colors: {pickedColors.length}
-            </Indicator>
-            <Indicator>Patterns: {patternCount}</Indicator>
-          </IndicatorsContainer>
+          <PatternCountAndButtonsRow>
+            <PatternCount>Patterns: {patternCount}</PatternCount>
+            <ButtonsGroup>
+              <Button style={{ margin: "0 16px 16px 0" }} onClick={random}>
+                RANDOM Pattern
+              </Button>
+              <Button style={{ marginBottom: "16px" }} onClick={toggleModal}>
+                VIEW Saved
+              </Button>
+            </ButtonsGroup>
+          </PatternCountAndButtonsRow>
           <PatternsContainer
             patterns={patterns}
             toggleSavedPattern={toggleSavedPattern}
