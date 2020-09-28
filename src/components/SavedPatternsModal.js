@@ -10,7 +10,7 @@ import {
   ModalInnerContainer,
   ModalButtonsContainer,
   modalStyles,
-} from "../styles.js";
+} from "../styles/desktopAndTabletStyles.js";
 import { PatternRenderer } from "./PatternRenderer.js";
 import { convertToColumns } from "../helpers.js";
 

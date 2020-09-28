@@ -9,7 +9,7 @@ import {
   Button,
   MenuContainer,
   selectStyles,
-} from "../styles.js";
+} from "../styles/desktopAndTabletStyles.js";
 import { colors, stripeOptions } from "../config.js";
 import { createMagnitudeOptions } from "../helpers.js";
 

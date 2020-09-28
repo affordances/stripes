@@ -14,7 +14,7 @@ import {
   DownloadIcons,
   DownloadIconsContainer,
   IconContainer,
-} from "../styles.js";
+} from "../styles/desktopAndTabletStyles.js";
 
 export const PatternRenderer = (props) => {
   const ref = useRef(null);

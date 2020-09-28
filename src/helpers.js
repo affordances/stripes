@@ -1,6 +1,6 @@
 import { maxMagnitude, maxStripeCount, lettersToNumbers } from "./config.js";
 
-import { customWhite } from "./styles.js";
+import { customWhite } from "./styles/desktopAndTabletStyles.js";
 
 function* everyNum(first, last) {
   let i = first;
