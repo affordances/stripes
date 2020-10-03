@@ -7,18 +7,21 @@ import {
   Container,
   TopHeader,
   TopHeaderButton,
+  SavedButtonIconAndText,
+  SavedButtonTextContainer,
+  SavedButtonText,
   InnerContainer,
   Title,
   SelectRowContainer,
   Header,
   SelectContainer,
-  selectStyles,
   SwatchesContainer,
   Swatch,
   Check,
   Button,
   ButtonsRow,
 } from "../styles/mobileStyles.js";
+import { selectStyles } from "../styles/desktopAndTabletStyles.js";
 import { colors, stripeOptions } from "../config.js";
 import { createMagnitudeOptions } from "../helpers.js";
 import "../index.css";
@@ -71,7 +74,13 @@ export const MobileView = (props) => {
           Home
         </TopHeaderButton>
         <TopHeaderButton ontouchstart="" onClick={() => setDisplaySaved(true)}>
-          <FaRegHeart />
+          <SavedButtonIconAndText>
+            <FaRegHeart />
+            <SavedButtonTextContainer>
+              <SavedButtonText>VIEW</SavedButtonText>
+              <SavedButtonText>Saved</SavedButtonText>
+            </SavedButtonTextContainer>
+          </SavedButtonIconAndText>
         </TopHeaderButton>
       </TopHeader>
       {displaySaved ? (

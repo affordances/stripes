@@ -19,8 +19,8 @@ export const TopHeader = styled.div`
 `;
 
 export const Header = styled.h2`
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 700;
   margin: 0 0 8px 0;
   padding: 0;
@@ -55,6 +55,25 @@ export const TopHeaderButton = styled.button`
         `}
 `;
 
+export const SavedButtonIconAndText = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const SavedButtonTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  align-items: flex-start;
+`;
+
+export const SavedButtonText = styled.div`
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+`;
+
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,14 +85,14 @@ export const Title = styled.h1`
   font-size: 25px;
   line-height: 32px;
   font-weight: 700;
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
   color: black;
 `;
 
 export const SelectRowContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   width: 100%;
 `;
 
@@ -85,13 +104,10 @@ export const SelectContainer = styled.div`
 
 export const SwatchesContainer = styled.div`
   display: flex;
-  /* flex-direction: row; */
-  /* justify-content: flex-start; */
   align-content: flex-start;
   flex-flow: row wrap;
-  /* height: 168px; */
-  /* width: 100%; */
-  margin: 0 0 16px 0;
+  justify-content: space-between;
+  margin: 0 0 8px 0;
 
   ${(props) =>
     props.disabled &&
@@ -394,104 +410,3 @@ export const Button = styled.button`
 //     background: customWhite,
 //   },
 // };
-
-export const selectStyles = {
-  container: (provided, _) => ({
-    ...provided,
-    width: "100%",
-  }),
-  control: (provided, _) => ({
-    ...provided,
-    border: "2px solid black",
-    borderRadius: "0",
-    boxShadow: "4px 4px black",
-    cursor: "pointer",
-    height: "24px",
-    minHeight: "24px",
-    alignItems: "unset",
-    padding: "0 8px",
-    backgroundColor: customWhite,
-  }),
-  input: (provided, _) => ({
-    ...provided,
-    height: "20px",
-    color: "inherit",
-    fontSize: "12px",
-    fontWeight: "700",
-    margin: "0",
-    padding: "0",
-    input: {
-      height: "20px",
-    },
-  }),
-  menu: (provided, _) => ({
-    ...provided,
-    borderRadius: "0",
-    margin: "8px 0 0 0",
-    padding: "0",
-    backgroundColor: customWhite,
-  }),
-  menuList: (provided, _) => ({
-    ...provided,
-    borderRadius: "0",
-    margin: "0",
-    padding: "0",
-    backgroundColor: customWhite,
-  }),
-  noOptionsMessage: (provided, _) => ({
-    ...provided,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "24px",
-    color: "inherit",
-    fontSize: "12px",
-    fontWeight: "700",
-    margin: "0",
-    padding: "0",
-    borderRadius: "0",
-    backgroundColor: customWhite,
-  }),
-  indicatorContainer: (provided, _) => ({
-    ...provided,
-    padding: "0",
-  }),
-  indicatorsContainer: (provided, _) => ({
-    ...provided,
-    height: "20px",
-  }),
-  dropdownIndicator: (provided, _) => ({
-    ...provided,
-    color: "inherit",
-    padding: "0",
-  }),
-  indicatorSeparator: (provided, _) => ({
-    ...provided,
-    display: "none",
-  }),
-  option: (provided, _) => ({
-    ...provided,
-    cursor: "pointer",
-    color: "black",
-    fontSize: "12px",
-    fontWeight: "700",
-  }),
-  placeholder: (provided, _) => ({
-    ...provided,
-    color: "inherit",
-    fontSize: "12px",
-  }),
-  singleValue: (provided, _) => ({
-    ...provided,
-    color: "black",
-    fontSize: "12px",
-    fontWeight: "700",
-    margin: "0",
-  }),
-  valueContainer: (provided, _) => ({
-    ...provided,
-    padding: "0",
-    position: "unset",
-    height: "20px",
-  }),
-};
