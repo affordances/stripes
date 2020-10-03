@@ -1,12 +1,32 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import { FaHeart, FaRegHeart, FaRandom, FaTimes } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
-import { Container, Header, Button } from "../styles/mobileStyles.js";
-import { Menu } from "./Menu.js";
-// import { SavedPatternsModal } from "./SavedPatternsModal.js";
-import { PatternsContainer } from "./PatternsContainer.js";
+import {
+  Container,
+  TopHeader,
+  TopHeaderButton,
+  InnerContainer,
+  Title,
+  SelectRowContainer,
+  Header,
+  SelectContainer,
+  selectStyles,
+  SwatchesContainer,
+  Swatch,
+  Check,
+  Button,
+  ButtonsRow,
+} from "../styles/mobileStyles.js";
+import { colors, stripeOptions } from "../config.js";
+import { createMagnitudeOptions } from "../helpers.js";
 import "../index.css";
 
 export const MobileView = (props) => {
+  const isGalaxyFold = useMediaQuery({
+    query: "(max-device-width: 280px)",
+  });
   const [displaySaved, setDisplaySaved] = useState(false);
   const {
     patterns,
@@ -19,58 +39,128 @@ export const MobileView = (props) => {
     isPatternSaved,
     savedPatterns,
     clearSavedPatterns,
-    ...otherProps
+    stripeCount,
+    setStripeCount,
+    setMagnitude,
+    setPickedColors,
+    setMagnitudeOptions,
+    magnitudeOptions,
+    updatePickedColors,
+    createPatterns,
+    allChoicesMade,
+    reset,
+    anyChoicesMade,
   } = props;
+
+  const selectStylesOverride = isGalaxyFold
+    ? {
+        ...selectStyles,
+        placeholder: (provided, _) => ({
+          ...provided,
+          color: "inherit",
+          fontSize: "12px",
+          display: "none",
+        }),
+      }
+    : selectStyles;
 
   return (
     <Container>
-      <Header>
-        <Button ontouchstart="" onClick={() => setDisplaySaved(false)}>
+      <TopHeader>
+        <TopHeaderButton ontouchstart="" onClick={() => setDisplaySaved(false)}>
           Home
-        </Button>
-        <Button ontouchstart="" onClick={() => setDisplaySaved(true)}>
-          Saved
-        </Button>
-      </Header>
+        </TopHeaderButton>
+        <TopHeaderButton ontouchstart="" onClick={() => setDisplaySaved(true)}>
+          <FaRegHeart />
+        </TopHeaderButton>
+      </TopHeader>
       {displaySaved ? (
-        <div>saved</div>
+        <InnerContainer>
+          <Title>Saved Patterns</Title>
+        </InnerContainer>
       ) : (
-        <div>Mathieu's Athletic Stripe Pattern Generator</div>
+        <InnerContainer>
+          <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
+          <SelectRowContainer>
+            <SelectContainer style={{ paddingRight: "16px" }}>
+              <Header>Stripes</Header>
+              <Select
+                styles={selectStylesOverride}
+                value={stripeCount}
+                options={stripeOptions}
+                onChange={(option) => {
+                  setStripeCount(option);
+                  setMagnitude(null);
+                  setPickedColors([]);
+                  setMagnitudeOptions(createMagnitudeOptions(option.value));
+                }}
+              />
+            </SelectContainer>
+            <SelectContainer style={{ paddingLeft: "16px" }}>
+              <Header>Magnitude</Header>
+              <Select
+                styles={
+                  magnitudeOptions
+                    ? selectStylesOverride
+                    : {
+                        ...selectStylesOverride,
+                        container: (provided, _) => ({
+                          ...provided,
+                          width: "100%",
+                          pointerEvents: "none",
+                          opacity: "0.5",
+                        }),
+                      }
+                }
+                isDisabled={!magnitudeOptions}
+                options={magnitudeOptions}
+                value={magnitude && { value: magnitude, label: magnitude }}
+                onChange={(option) => {
+                  setMagnitude(Number(option.value));
+                }}
+              />
+            </SelectContainer>
+          </SelectRowContainer>
+          <Header>Color Selection</Header>
+          <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
+            {colors.map((color, i) => {
+              return (
+                <Swatch
+                  key={i}
+                  color={color.value}
+                  onClick={() => updatePickedColors(color)}
+                  isPicked={
+                    !!pickedColors.find(
+                      (pickedColor) => pickedColor.value === color.value
+                    )
+                  }
+                >
+                  <Check>✔</Check>
+                </Swatch>
+              );
+            })}
+          </SwatchesContainer>
+          <ButtonsRow>
+            <Button
+              style={{ marginRight: "16px", flex: "3" }}
+              onClick={createPatterns}
+              disabled={!allChoicesMade}
+            >
+              MAKE
+            </Button>
+            <Button
+              style={{ marginRight: "16px", flex: "1" }}
+              onClick={reset}
+              disabled={!anyChoicesMade}
+            >
+              <FaTimes style={{ position: "relative", top: "2px" }} />
+            </Button>
+            <Button style={{ flex: "1" }} onClick={random}>
+              <FaRandom style={{ position: "relative", top: "2px" }} />
+            </Button>
+          </ButtonsRow>
+        </InnerContainer>
       )}
-      {/* <SavedPatternsModal
-        toggleModal={toggleModal}
-        modalIsOpen={modalIsOpen}
-        clearSavedPatterns={clearSavedPatterns}
-        savedPatterns={savedPatterns}
-        toggleSavedPattern={toggleSavedPattern}
-        isPatternSaved={isPatternSaved}
-      /> */}
-      {/* <InnerContainer>
-        <Menu
-          magnitude={magnitude}
-          stripeCountValue={stripeCountValue}
-          pickedColors={pickedColors}
-          {...otherProps}
-        />
-        <ButtonsAndPatternsContainer>
-          <PatternCountAndButtonsRow>
-            <PatternCount>Patterns: {patternCount}</PatternCount>
-            <ButtonsGroup>
-              <Button style={{ margin: "0 16px 16px 0" }} onClick={random}>
-                RANDOM Pattern
-              </Button>
-              <Button style={{ marginBottom: "16px" }} onClick={toggleModal}>
-                VIEW Saved
-              </Button>
-            </ButtonsGroup>
-          </PatternCountAndButtonsRow>
-          <PatternsContainer
-            patterns={patterns}
-            toggleSavedPattern={toggleSavedPattern}
-            isPatternSaved={isPatternSaved}
-          />
-        </ButtonsAndPatternsContainer>
-      </InnerContainer> */}
     </Container>
   );
 };

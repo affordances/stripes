@@ -5,19 +5,30 @@ export const customWhite = "#f6f7f4";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
-export const Header = styled.div`
+export const TopHeader = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  height: 64px;
+  height: 56px;
   justify-content: space-between;
   border-bottom: 4px solid black;
   padding: 0 8px;
 `;
 
-export const Button = styled.button`
+export const Header = styled.h2`
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  padding: 0;
+  color: black;
+  text-decoration: underline;
+`;
+
+export const TopHeaderButton = styled.button`
   color: black;
   background: ${customWhite};
   border: none;
@@ -44,20 +55,130 @@ export const Button = styled.button`
         `}
 `;
 
-// export const InnerContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   width: 100%;
-//   height: 100%;
-// `;
+export const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px 48px;
+  overflow-y: auto;
+`;
 
-// export const Title = styled.h1`
-//   font-size: 25px;
-//   line-height: 32px;
-//   font-weight: 700;
-//   margin: 0 0 24px 0;
-//   color: black;
-// `;
+export const Title = styled.h1`
+  font-size: 25px;
+  line-height: 32px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: black;
+`;
+
+export const SelectRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 24px;
+  width: 100%;
+`;
+
+export const SelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+`;
+
+export const SwatchesContainer = styled.div`
+  display: flex;
+  /* flex-direction: row; */
+  /* justify-content: flex-start; */
+  align-content: flex-start;
+  flex-flow: row wrap;
+  /* height: 168px; */
+  /* width: 100%; */
+  margin: 0 0 16px 0;
+
+  ${(props) =>
+    props.disabled &&
+    `
+      pointer-events: none;
+      opacity: 0.5;
+    `}
+`;
+
+export const Check = styled.div`
+  color: ${customWhite};
+  visibility: hidden;
+  font-size: 25px;
+  line-height: 32px;
+  font-weight: 700;
+`;
+
+export const Swatch = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: ${(props) => props.color};
+  width: 20%;
+  height: 34px;
+  margin: 0 8px 8px 0;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    transition: 0.2s;
+  }
+
+  &:active {
+    opacity: 1;
+  }
+
+  ${(props) =>
+    props.isPicked &&
+    `
+      ${Check} {
+        visibility: visible;
+      }
+  `};
+`;
+
+export const ButtonsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const Button = styled.button`
+  color: black;
+  background: ${customWhite};
+  box-shadow: 4px 4px black;
+  border: 2px solid black;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  letter-spacing: 1px;
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+    transition: 0.1s;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  ${(props) =>
+    props.disabled
+      ? `
+          pointer-events: none;
+          opacity: 0.5;
+        `
+      : `
+          background: ${customWhite};
+          cursor: pointer;
+        `}
+`;
 
 // export const PatternCountAndButtonsRow = styled.div`
 //   display: flex;
@@ -97,13 +218,6 @@ export const Button = styled.button`
 //   margin: 0 0 24px 0;
 // `;
 
-// export const SelectContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 144px;
-//   margin-bottom: 24px;
-// `;
-
 // export const Header = styled.h2`
 //   font-size: 16px;
 //   line-height: 20px;
@@ -112,59 +226,6 @@ export const Button = styled.button`
 //   padding: 0;
 //   color: black;
 //   text-decoration: underline;
-// `;
-
-// export const SwatchesContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   flex-wrap: wrap;
-//   height: 168px;
-//   width: 100%;
-//   margin: 0 0 16px 0;
-
-//   ${(props) =>
-//     props.disabled &&
-//     `
-//       pointer-events: none;
-//       opacity: 0.5;
-//     `}
-// `;
-
-// export const Check = styled.div`
-//   color: ${customWhite};
-//   visibility: hidden;
-//   font-size: 11px;
-//   line-height: 16px;
-//   font-weight: 700;
-// `;
-
-// export const Swatch = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: center;
-//   background: ${(props) => props.color};
-//   width: 80px;
-//   height: 16px;
-//   margin: 0 8px 8px 0;
-//   cursor: pointer;
-
-//   &:hover {
-//     opacity: 0.8;
-//     transition: 0.2s;
-//   }
-
-//   &:active {
-//     opacity: 1;
-//   }
-
-//   ${(props) =>
-//     props.isPicked &&
-//     `
-//       ${Check} {
-//         visibility: visible;
-//       }
-//   `};
 // `;
 
 // export const AutoSizerContainer = styled.div`
@@ -334,103 +395,103 @@ export const Button = styled.button`
 //   },
 // };
 
-// export const selectStyles = {
-//   container: (provided, _) => ({
-//     ...provided,
-//     width: "100%",
-//   }),
-//   control: (provided, _) => ({
-//     ...provided,
-//     border: "2px solid black",
-//     borderRadius: "0",
-//     boxShadow: "4px 4px black",
-//     cursor: "pointer",
-//     height: "24px",
-//     minHeight: "24px",
-//     alignItems: "unset",
-//     padding: "0 8px",
-//     backgroundColor: customWhite,
-//   }),
-//   input: (provided, _) => ({
-//     ...provided,
-//     height: "20px",
-//     color: "inherit",
-//     fontSize: "12px",
-//     fontWeight: "700",
-//     margin: "0",
-//     padding: "0",
-//     input: {
-//       height: "20px",
-//     },
-//   }),
-//   menu: (provided, _) => ({
-//     ...provided,
-//     borderRadius: "0",
-//     margin: "8px 0 0 0",
-//     padding: "0",
-//     backgroundColor: customWhite,
-//   }),
-//   menuList: (provided, _) => ({
-//     ...provided,
-//     borderRadius: "0",
-//     margin: "0",
-//     padding: "0",
-//     backgroundColor: customWhite,
-//   }),
-//   noOptionsMessage: (provided, _) => ({
-//     ...provided,
-//     display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     height: "24px",
-//     color: "inherit",
-//     fontSize: "12px",
-//     fontWeight: "700",
-//     margin: "0",
-//     padding: "0",
-//     borderRadius: "0",
-//     backgroundColor: customWhite,
-//   }),
-//   indicatorContainer: (provided, _) => ({
-//     ...provided,
-//     padding: "0",
-//   }),
-//   indicatorsContainer: (provided, _) => ({
-//     ...provided,
-//     height: "20px",
-//   }),
-//   dropdownIndicator: (provided, _) => ({
-//     ...provided,
-//     color: "inherit",
-//     padding: "0",
-//   }),
-//   indicatorSeparator: (provided, _) => ({
-//     ...provided,
-//     display: "none",
-//   }),
-//   option: (provided, _) => ({
-//     ...provided,
-//     cursor: "pointer",
-//     color: "black",
-//     fontSize: "12px",
-//     fontWeight: "700",
-//   }),
-//   placeholder: (provided, _) => ({
-//     ...provided,
-//     color: "inherit",
-//     fontSize: "12px",
-//   }),
-//   singleValue: (provided, _) => ({
-//     ...provided,
-//     color: "black",
-//     fontSize: "12px",
-//     fontWeight: "700",
-//     margin: "0",
-//   }),
-//   valueContainer: (provided, _) => ({
-//     ...provided,
-//     padding: "0",
-//     position: "unset",
-//     height: "20px",
-//   }),
-// };
+export const selectStyles = {
+  container: (provided, _) => ({
+    ...provided,
+    width: "100%",
+  }),
+  control: (provided, _) => ({
+    ...provided,
+    border: "2px solid black",
+    borderRadius: "0",
+    boxShadow: "4px 4px black",
+    cursor: "pointer",
+    height: "24px",
+    minHeight: "24px",
+    alignItems: "unset",
+    padding: "0 8px",
+    backgroundColor: customWhite,
+  }),
+  input: (provided, _) => ({
+    ...provided,
+    height: "20px",
+    color: "inherit",
+    fontSize: "12px",
+    fontWeight: "700",
+    margin: "0",
+    padding: "0",
+    input: {
+      height: "20px",
+    },
+  }),
+  menu: (provided, _) => ({
+    ...provided,
+    borderRadius: "0",
+    margin: "8px 0 0 0",
+    padding: "0",
+    backgroundColor: customWhite,
+  }),
+  menuList: (provided, _) => ({
+    ...provided,
+    borderRadius: "0",
+    margin: "0",
+    padding: "0",
+    backgroundColor: customWhite,
+  }),
+  noOptionsMessage: (provided, _) => ({
+    ...provided,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "24px",
+    color: "inherit",
+    fontSize: "12px",
+    fontWeight: "700",
+    margin: "0",
+    padding: "0",
+    borderRadius: "0",
+    backgroundColor: customWhite,
+  }),
+  indicatorContainer: (provided, _) => ({
+    ...provided,
+    padding: "0",
+  }),
+  indicatorsContainer: (provided, _) => ({
+    ...provided,
+    height: "20px",
+  }),
+  dropdownIndicator: (provided, _) => ({
+    ...provided,
+    color: "inherit",
+    padding: "0",
+  }),
+  indicatorSeparator: (provided, _) => ({
+    ...provided,
+    display: "none",
+  }),
+  option: (provided, _) => ({
+    ...provided,
+    cursor: "pointer",
+    color: "black",
+    fontSize: "12px",
+    fontWeight: "700",
+  }),
+  placeholder: (provided, _) => ({
+    ...provided,
+    color: "inherit",
+    fontSize: "12px",
+  }),
+  singleValue: (provided, _) => ({
+    ...provided,
+    color: "black",
+    fontSize: "12px",
+    fontWeight: "700",
+    margin: "0",
+  }),
+  valueContainer: (provided, _) => ({
+    ...provided,
+    padding: "0",
+    position: "unset",
+    height: "20px",
+  }),
+};
