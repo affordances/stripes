@@ -228,7 +228,7 @@ export const PatternContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 8px;
+  padding: ${(props) => (props.isMobile ? "0" : "8px")};
 
   &:hover {
     ${DownloadIconsContainer} {

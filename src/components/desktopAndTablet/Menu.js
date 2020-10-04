@@ -9,9 +9,9 @@ import {
   Button,
   MenuContainer,
   selectStyles,
-} from "../styles/desktopAndTabletStyles.js";
-import { colors, stripeOptions } from "../config.js";
-import { createMagnitudeOptions } from "../helpers.js";
+} from "../../styles/desktopAndTabletStyles.js";
+import { colors, stripeOptions } from "../../config.js";
+import { createMagnitudeOptions } from "../../helpers.js";
 
 export const Menu = (props) => {
   const {

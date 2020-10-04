@@ -78,6 +78,7 @@ export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 48px;
+  height: 100%;
   overflow-y: auto;
 `;
 

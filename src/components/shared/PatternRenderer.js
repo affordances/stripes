@@ -14,7 +14,7 @@ import {
   DownloadIcons,
   DownloadIconsContainer,
   IconContainer,
-} from "../styles/desktopAndTabletStyles.js";
+} from "../../styles/desktopAndTabletStyles.js";
 
 export const PatternRenderer = (props) => {
   const ref = useRef(null);
@@ -51,7 +51,7 @@ export const PatternRenderer = (props) => {
     : props.isPatternSaved;
 
   return currentPattern ? (
-    <PatternContainer {...props}>
+    <PatternContainer isMobile={props.data.isMobile} {...props}>
       <PatternAndLabel>
         <PatternLabel title={currentPattern.label}>
           {currentPattern.label}

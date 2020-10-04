@@ -10,9 +10,9 @@ import {
   ModalInnerContainer,
   ModalButtonsContainer,
   modalStyles,
-} from "../styles/desktopAndTabletStyles.js";
-import { PatternRenderer } from "./PatternRenderer.js";
-import { convertToColumns } from "../helpers.js";
+} from "../../styles/desktopAndTabletStyles.js";
+import { PatternRenderer } from "../shared/PatternRenderer.js";
+import { convertToColumns } from "../../helpers.js";
 
 const Masonry = (props) => {
   const { children } = props;

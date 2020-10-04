@@ -6,9 +6,9 @@ import {
   AutoSizerContainer,
   EmptyStateText,
   EmptyStateContainer,
-} from "../styles/desktopAndTabletStyles.js";
-import { PatternRenderer } from "./PatternRenderer.js";
-import { getRowHeight } from "../helpers.js";
+} from "../../styles/desktopAndTabletStyles.js";
+import { PatternRenderer } from "../shared/PatternRenderer.js";
+import { getRowHeight } from "../../helpers.js";
 
 export const PatternsContainer = (props) => {
   const { patterns, toggleSavedPattern, isPatternSaved } = props;

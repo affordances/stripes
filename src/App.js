@@ -2,8 +2,8 @@ import React from "react";
 import { useMediaQuery } from "react-responsive";
 
 import { useLocalStorage, useStripes } from "./hooks.js";
-import { DesktopAndTabletView } from "./components/DesktopAndTabletView.js";
-import { MobileView } from "./components/MobileView.js";
+import { DesktopAndTabletView } from "./components/desktopAndTablet/DesktopAndTabletView.js";
+import { MobileView } from "./components/mobile/MobileView.js";
 import "./index.css";
 
 const App = () => {
