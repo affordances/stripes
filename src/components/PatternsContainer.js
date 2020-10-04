@@ -22,6 +22,7 @@ export const PatternsContainer = (props) => {
           return (
             <Grid
               itemData={{
+                isMobile: false,
                 patterns,
                 toggleSavedPattern,
                 isPatternSaved,

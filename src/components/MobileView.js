@@ -94,6 +94,7 @@ export const MobileView = (props) => {
           {patterns.length > 0 ? (
             <List
               itemData={{
+                isMobile: true,
                 patterns,
                 toggleSavedPattern,
                 isPatternSaved,

@@ -37,7 +37,9 @@ export const PatternRenderer = (props) => {
   };
 
   const currentPattern = props.data
-    ? props.data.patterns[props.rowIndex][props.columnIndex]
+    ? !props.data.isMobile
+      ? props.data.patterns[props.rowIndex][props.columnIndex]
+      : props.data.patterns[0][0]
     : props.pattern;
 
   const toggleSavedPattern = props.data
