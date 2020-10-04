@@ -92,20 +92,25 @@ export const MobileView = (props) => {
       ) : (
         <InnerContainer>
           {patterns.length > 0 ? (
-            <List
-              itemData={{
-                isMobile: true,
-                patterns,
-                toggleSavedPattern,
-                isPatternSaved,
-              }}
-              height={500}
-              itemCount={patterns.length}
-              itemSize={100}
-              width={"100%"}
-            >
-              {PatternRenderer}
-            </List>
+            <>
+              <Button style={{ flex: "1" }} onClick={random}>
+                <FaRandom style={{ position: "relative", top: "2px" }} />
+              </Button>
+              <List
+                itemData={{
+                  isMobile: true,
+                  patterns,
+                  toggleSavedPattern,
+                  isPatternSaved,
+                }}
+                height={500}
+                itemCount={patterns.length}
+                itemSize={100}
+                width={"100%"}
+              >
+                {PatternRenderer}
+              </List>
+            </>
           ) : (
             <>
               <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
