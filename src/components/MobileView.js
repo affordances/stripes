@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { FaHeart, FaRegHeart, FaRandom, FaTimes } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
+import { FixedSizeList as List } from "react-window";
 
 import {
   Container,
@@ -24,6 +25,7 @@ import {
 import { selectStyles } from "../styles/desktopAndTabletStyles.js";
 import { colors, stripeOptions } from "../config.js";
 import { createMagnitudeOptions } from "../helpers.js";
+import { PatternRenderer } from "./PatternRenderer.js";
 import "../index.css";
 
 export const MobileView = (props) => {
@@ -89,85 +91,103 @@ export const MobileView = (props) => {
         </InnerContainer>
       ) : (
         <InnerContainer>
-          <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
-          <SelectRowContainer>
-            <SelectContainer style={{ paddingRight: "16px" }}>
-              <Header>Stripes</Header>
-              <Select
-                styles={selectStylesOverride}
-                value={stripeCount}
-                options={stripeOptions}
-                onChange={(option) => {
-                  setStripeCount(option);
-                  setMagnitude(null);
-                  setPickedColors([]);
-                  setMagnitudeOptions(createMagnitudeOptions(option.value));
-                }}
-              />
-            </SelectContainer>
-            <SelectContainer style={{ paddingLeft: "16px" }}>
-              <Header>Magnitude</Header>
-              <Select
-                styles={
-                  magnitudeOptions
-                    ? selectStylesOverride
-                    : {
-                        ...selectStylesOverride,
-                        container: (provided, _) => ({
-                          ...provided,
-                          width: "100%",
-                          pointerEvents: "none",
-                          opacity: "0.5",
-                        }),
+          {patterns.length > 0 ? (
+            <List
+              itemData={{
+                patterns,
+                toggleSavedPattern,
+                isPatternSaved,
+              }}
+              height={500}
+              itemCount={patterns.length}
+              itemSize={100}
+              width={"100%"}
+            >
+              {PatternRenderer}
+            </List>
+          ) : (
+            <>
+              <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
+              <SelectRowContainer>
+                <SelectContainer style={{ paddingRight: "16px" }}>
+                  <Header>Stripes</Header>
+                  <Select
+                    styles={selectStylesOverride}
+                    value={stripeCount}
+                    options={stripeOptions}
+                    onChange={(option) => {
+                      setStripeCount(option);
+                      setMagnitude(null);
+                      setPickedColors([]);
+                      setMagnitudeOptions(createMagnitudeOptions(option.value));
+                    }}
+                  />
+                </SelectContainer>
+                <SelectContainer style={{ paddingLeft: "16px" }}>
+                  <Header>Magnitude</Header>
+                  <Select
+                    styles={
+                      magnitudeOptions
+                        ? selectStylesOverride
+                        : {
+                            ...selectStylesOverride,
+                            container: (provided, _) => ({
+                              ...provided,
+                              width: "100%",
+                              pointerEvents: "none",
+                              opacity: "0.5",
+                            }),
+                          }
+                    }
+                    isDisabled={!magnitudeOptions}
+                    options={magnitudeOptions}
+                    value={magnitude && { value: magnitude, label: magnitude }}
+                    onChange={(option) => {
+                      setMagnitude(Number(option.value));
+                    }}
+                  />
+                </SelectContainer>
+              </SelectRowContainer>
+              <Header>Color Selection</Header>
+              <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
+                {colors.map((color, i) => {
+                  return (
+                    <Swatch
+                      key={i}
+                      color={color.value}
+                      onClick={() => updatePickedColors(color)}
+                      isPicked={
+                        !!pickedColors.find(
+                          (pickedColor) => pickedColor.value === color.value
+                        )
                       }
-                }
-                isDisabled={!magnitudeOptions}
-                options={magnitudeOptions}
-                value={magnitude && { value: magnitude, label: magnitude }}
-                onChange={(option) => {
-                  setMagnitude(Number(option.value));
-                }}
-              />
-            </SelectContainer>
-          </SelectRowContainer>
-          <Header>Color Selection</Header>
-          <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
-            {colors.map((color, i) => {
-              return (
-                <Swatch
-                  key={i}
-                  color={color.value}
-                  onClick={() => updatePickedColors(color)}
-                  isPicked={
-                    !!pickedColors.find(
-                      (pickedColor) => pickedColor.value === color.value
-                    )
-                  }
+                    >
+                      <Check>✔</Check>
+                    </Swatch>
+                  );
+                })}
+              </SwatchesContainer>
+              <ButtonsRow>
+                <Button
+                  style={{ marginRight: "16px", flex: "3" }}
+                  onClick={createPatterns}
+                  disabled={!allChoicesMade}
                 >
-                  <Check>✔</Check>
-                </Swatch>
-              );
-            })}
-          </SwatchesContainer>
-          <ButtonsRow>
-            <Button
-              style={{ marginRight: "16px", flex: "3" }}
-              onClick={createPatterns}
-              disabled={!allChoicesMade}
-            >
-              MAKE
-            </Button>
-            <Button
-              style={{ marginRight: "16px", flex: "1" }}
-              onClick={reset}
-              disabled={!anyChoicesMade}
-            >
-              <FaTimes style={{ position: "relative", top: "2px" }} />
-            </Button>
-            <Button style={{ flex: "1" }} onClick={random}>
-              <FaRandom style={{ position: "relative", top: "2px" }} />
-            </Button>
-          </ButtonsRow>
+                  MAKE
+                </Button>
+                <Button
+                  style={{ marginRight: "16px", flex: "1" }}
+                  onClick={reset}
+                  disabled={!anyChoicesMade}
+                >
+                  <FaTimes style={{ position: "relative", top: "2px" }} />
+                </Button>
+                <Button style={{ flex: "1" }} onClick={random}>
+                  <FaRandom style={{ position: "relative", top: "2px" }} />
+                </Button>
+              </ButtonsRow>
+            </>
+          )}
         </InnerContainer>
       )}
     </Container>
