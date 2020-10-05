@@ -14,6 +14,7 @@ import {
 } from "./helpers.js";
 
 export const useStripes = () => {
+  const [mobileView, setMobileView] = useState("home");
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
   const [magnitudeOptions, setMagnitudeOptions] = useState(null);
@@ -77,6 +78,8 @@ export const useStripes = () => {
       setPatternCount(results.length);
       setPatterns(converted);
     }
+
+    setMobileView("patterns");
   };
 
   const updatePickedColors = (newColor) => {
@@ -97,6 +100,7 @@ export const useStripes = () => {
     setPickedColors([]);
     setPatterns([]);
     setPatternCount(0);
+    setMobileView("home");
   };
 
   const random = () => {
@@ -137,6 +141,8 @@ export const useStripes = () => {
     stripeCountValue,
     pickedColors,
     createPatterns,
+    mobileView,
+    setMobileView,
   };
 };
 

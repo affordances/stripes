@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import {
@@ -16,12 +16,10 @@ import { Saved } from "./Saved.js";
 import "../../index.css";
 
 export const MobileView = (props) => {
-  const [currentPage, setCurrentPage] = useState("home");
-
   const renderSwitch = (currentPage) => {
     switch (currentPage) {
       case "home":
-        return <Home {...props} setCurrentPage={setCurrentPage} />;
+        return <Home {...props} />;
       case "patterns":
         return <Patterns {...props} />;
       case "saved":
@@ -34,12 +32,15 @@ export const MobileView = (props) => {
   return (
     <Container>
       <TopHeader>
-        <TopHeaderButton ontouchstart="" onClick={() => setCurrentPage("home")}>
+        <TopHeaderButton
+          ontouchstart=""
+          onClick={() => props.setMobileView("home")}
+        >
           Home
         </TopHeaderButton>
         <TopHeaderButton
           ontouchstart=""
-          onClick={() => setCurrentPage("saved")}
+          onClick={() => props.setMobileView("saved")}
         >
           <SavedButtonIconAndText>
             <FaRegHeart />
@@ -50,7 +51,7 @@ export const MobileView = (props) => {
           </SavedButtonIconAndText>
         </TopHeaderButton>
       </TopHeader>
-      <InnerContainer>{renderSwitch(currentPage)}</InnerContainer>
+      <InnerContainer>{renderSwitch(props.mobileView)}</InnerContainer>
     </Container>
   );
 };

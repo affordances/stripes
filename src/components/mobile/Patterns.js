@@ -1,17 +1,33 @@
 import React from "react";
-import { FaRandom } from "react-icons/fa";
+import { FaRandom, FaTimes } from "react-icons/fa";
 import { FixedSizeList as List } from "react-window";
 
-import { Button } from "../../styles/mobileStyles.js";
+import { Button, ButtonsRow } from "../../styles/mobileStyles.js";
 
 import { PatternRenderer } from "../shared/PatternRenderer.js";
 
 export const Patterns = (props) => {
   return (
     <>
-      <Button onClick={props.random}>
-        <FaRandom style={{ position: "relative", top: "2px" }} />
-      </Button>
+      <ButtonsRow>
+        <Button
+          style={{ marginRight: "16px", flex: "3" }}
+          onClick={props.createPatterns}
+          disabled={!props.allChoicesMade}
+        >
+          MAKE
+        </Button>
+        <Button
+          style={{ marginRight: "16px", flex: "1" }}
+          onClick={props.reset}
+          disabled={!props.anyChoicesMade}
+        >
+          <FaTimes style={{ position: "relative", top: "2px" }} />
+        </Button>
+        <Button style={{ flex: "1" }} onClick={props.random}>
+          <FaRandom style={{ position: "relative", top: "2px" }} />
+        </Button>
+      </ButtonsRow>
       <List
         itemData={{
           isMobile: true,
