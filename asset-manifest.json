@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/stripes/static/css/main.315e2916.chunk.css",
-    "main.js": "/stripes/static/js/main.81f144e6.chunk.js",
-    "main.js.map": "/stripes/static/js/main.81f144e6.chunk.js.map",
+    "main.js": "/stripes/static/js/main.8b1c9d7f.chunk.js",
+    "main.js.map": "/stripes/static/js/main.8b1c9d7f.chunk.js.map",
     "runtime-main.js": "/stripes/static/js/runtime-main.cf93b053.js",
     "runtime-main.js.map": "/stripes/static/js/runtime-main.cf93b053.js.map",
     "static/js/2.fd65f6f2.chunk.js": "/stripes/static/js/2.fd65f6f2.chunk.js",
     "static/js/2.fd65f6f2.chunk.js.map": "/stripes/static/js/2.fd65f6f2.chunk.js.map",
     "index.html": "/stripes/index.html",
-    "precache-manifest.0d7e14945ba313c7fd29632021c03c5c.js": "/stripes/precache-manifest.0d7e14945ba313c7fd29632021c03c5c.js",
+    "precache-manifest.d6c503c0c0b416edda85f8c461ca665b.js": "/stripes/precache-manifest.d6c503c0c0b416edda85f8c461ca665b.js",
     "service-worker.js": "/stripes/service-worker.js",
     "static/css/main.315e2916.chunk.css.map": "/stripes/static/css/main.315e2916.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.cf93b053.js",
     "static/js/2.fd65f6f2.chunk.js",
     "static/css/main.315e2916.chunk.css",
-    "static/js/main.81f144e6.chunk.js"
+    "static/js/main.8b1c9d7f.chunk.js"
   ]
 }
