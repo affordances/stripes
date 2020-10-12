@@ -1,14 +1,15 @@
 import React from "react";
 import Select from "react-select";
+import { FaCheck } from "react-icons/fa";
 import {
   SelectContainer,
   Swatch,
   SwatchesContainer,
   Header,
-  Check,
   Button,
   MenuContainer,
   selectStyles,
+  customWhite,
 } from "../../styles/desktopAndTabletStyles.js";
 import { colors, stripeOptions } from "../../config.js";
 import { createMagnitudeOptions } from "../../helpers.js";
@@ -69,13 +70,10 @@ export const Menu = (props) => {
               key={i}
               color={color.value}
               onClick={() => props.updatePickedColors(color)}
-              isPicked={
-                !!props.pickedColors.find(
-                  (pickedColor) => pickedColor.value === color.value
-                )
-              }
             >
-              <Check>✔</Check>
+              {!!props.pickedColors.find(
+                (pickedColor) => pickedColor.value === color.value
+              ) && <FaCheck color={customWhite} size={12} />}
             </Swatch>
           );
         })}

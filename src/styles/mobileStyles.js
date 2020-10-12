@@ -108,7 +108,7 @@ export const SwatchesContainer = styled.div`
   align-content: flex-start;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
 
   ${(props) =>
     props.disabled &&
@@ -116,14 +116,6 @@ export const SwatchesContainer = styled.div`
       pointer-events: none;
       opacity: 0.5;
     `}
-`;
-
-export const Check = styled.div`
-  color: ${customWhite} !important;
-  visibility: hidden;
-  font-size: 25px;
-  line-height: 32px;
-  font-weight: 700;
 `;
 
 export const Swatch = styled.div`
@@ -145,14 +137,6 @@ export const Swatch = styled.div`
   &:active {
     opacity: 1;
   }
-
-  ${(props) =>
-    props.isPicked &&
-    `
-      ${Check} {
-        visibility: visible;
-      }
-  `};
 `;
 
 export const ButtonsRow = styled.div`

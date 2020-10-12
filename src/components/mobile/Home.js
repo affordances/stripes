@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import { FaRandom, FaTimes } from "react-icons/fa";
+import { FaRandom, FaTimes, FaCheck } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
 import {
@@ -10,11 +10,13 @@ import {
   SelectContainer,
   SwatchesContainer,
   Swatch,
-  Check,
   Button,
   ButtonsRow,
 } from "../../styles/mobileStyles.js";
-import { selectStyles } from "../../styles/desktopAndTabletStyles.js";
+import {
+  selectStyles,
+  customWhite,
+} from "../../styles/desktopAndTabletStyles.js";
 import { createMagnitudeOptions } from "../../helpers.js";
 import { colors, stripeOptions } from "../../config.js";
 
@@ -93,13 +95,10 @@ export const Home = (props) => {
               key={i}
               color={color.value}
               onClick={() => props.updatePickedColors(color)}
-              isPicked={
-                !!props.pickedColors.find(
-                  (pickedColor) => pickedColor.value === color.value
-                )
-              }
             >
-              <Check>✔</Check>
+              {!!props.pickedColors.find(
+                (pickedColor) => pickedColor.value === color.value
+              ) && <FaCheck color={customWhite} />}
             </Swatch>
           );
         })}

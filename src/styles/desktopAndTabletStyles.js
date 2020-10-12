@@ -98,14 +98,6 @@ export const SwatchesContainer = styled.div`
     `}
 `;
 
-export const Check = styled.div`
-  color: ${customWhite};
-  visibility: hidden;
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 700;
-`;
-
 export const Swatch = styled.div`
   display: flex;
   flex-direction: row;
@@ -125,14 +117,6 @@ export const Swatch = styled.div`
   &:active {
     opacity: 1;
   }
-
-  ${(props) =>
-    props.isPicked &&
-    `
-      ${Check} {
-        visibility: visible;
-      }
-  `};
 `;
 
 export const Button = styled.button`
