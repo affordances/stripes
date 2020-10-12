@@ -119,10 +119,7 @@ export const SwatchesContainer = styled.div`
 `;
 
 export const Check = styled.div`
-  -webkit-text-fill-color: ${customWhite};
-  -webkit-opacity: 1;
-  opacity: 1;
-  color: ${customWhite};
+  color: ${customWhite} !important;
   visibility: hidden;
   font-size: 25px;
   line-height: 32px;
