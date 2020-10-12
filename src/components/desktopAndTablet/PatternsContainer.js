@@ -11,8 +11,13 @@ import { PatternRenderer } from "../shared/PatternRenderer.js";
 import { getRowHeight } from "../../helpers.js";
 
 export const PatternsContainer = (props) => {
-  const { patterns, toggleSavedPattern, isPatternSaved } = props;
-  const rowHeight = getRowHeight(patterns);
+  const {
+    patterns,
+    toggleSavedPattern,
+    isPatternSaved,
+    isDesktopOrTablet,
+  } = props;
+  const rowHeight = getRowHeight(patterns, isDesktopOrTablet);
 
   return patterns.length > 0 ? (
     <AutoSizerContainer>

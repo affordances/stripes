@@ -77,7 +77,7 @@ export const SavedButtonText = styled.div`
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 48px;
+  padding: 16px 48px 0 48px;
   height: 100%;
   overflow-y: auto;
 `;
@@ -86,7 +86,7 @@ export const Title = styled.h1`
   font-size: 25px;
   line-height: 32px;
   font-weight: 700;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   color: black;
 `;
 
@@ -159,7 +159,10 @@ export const ButtonsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  height: 64px;
+  padding-bottom: 16px;
 `;
 
 export const Button = styled.button`

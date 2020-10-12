@@ -13,7 +13,7 @@ import {
   getRandomPattern,
 } from "./helpers.js";
 
-export const useStripes = () => {
+export const useStripes = (isDesktopOrTablet) => {
   const [mobileView, setMobileView] = useState("home");
   const [stripeCount, setStripeCount] = useState(null);
   const [magnitude, setMagnitude] = useState(null);
@@ -69,14 +69,14 @@ export const useStripes = () => {
       })
     );
 
-    const converted = convertToRows(results);
+    const formatted = isDesktopOrTablet ? convertToRows(results) : results;
 
     if (randomMode.current) {
       setPatternCount(1);
-      setPatterns(getRandomPattern(results));
+      setPatterns(getRandomPattern(results, isDesktopOrTablet));
     } else {
       setPatternCount(results.length);
-      setPatterns(converted);
+      setPatterns(formatted);
     }
 
     setMobileView("patterns");

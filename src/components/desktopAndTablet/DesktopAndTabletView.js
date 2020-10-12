@@ -27,6 +27,7 @@ export const DesktopAndTabletView = (props) => {
     isPatternSaved,
     savedPatterns,
     clearSavedPatterns,
+    isDesktopOrTablet,
     ...otherProps
   } = props;
 
@@ -44,7 +45,7 @@ export const DesktopAndTabletView = (props) => {
         toggleSavedPattern={toggleSavedPattern}
         isPatternSaved={isPatternSaved}
       />
-      <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
+      <Title>MATHIEU'S ATHLETIC STRIPE PATTERN GENERATOR</Title>
       <InnerContainer>
         <Menu
           magnitude={magnitude}
@@ -65,6 +66,7 @@ export const DesktopAndTabletView = (props) => {
             </ButtonsGroup>
           </PatternCountAndButtonsRow>
           <PatternsContainer
+            isDesktopOrTablet={isDesktopOrTablet}
             patterns={patterns}
             toggleSavedPattern={toggleSavedPattern}
             isPatternSaved={isPatternSaved}

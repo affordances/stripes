@@ -10,13 +10,21 @@ const App = () => {
   const isDesktopOrTablet = useMediaQuery({
     query: "(min-device-width: 768px)",
   });
-  const useStripesProps = useStripes();
+  const useStripesProps = useStripes(isDesktopOrTablet);
   const useLocalStorageProps = useLocalStorage();
 
   return isDesktopOrTablet ? (
-    <DesktopAndTabletView {...useStripesProps} {...useLocalStorageProps} />
+    <DesktopAndTabletView
+      isDesktopOrTablet={isDesktopOrTablet}
+      {...useStripesProps}
+      {...useLocalStorageProps}
+    />
   ) : (
-    <MobileView {...useStripesProps} {...useLocalStorageProps} />
+    <MobileView
+      isDesktopOrTablet={isDesktopOrTablet}
+      {...useStripesProps}
+      {...useLocalStorageProps}
+    />
   );
 };
 

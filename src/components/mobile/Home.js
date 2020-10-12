@@ -37,7 +37,7 @@ export const Home = (props) => {
 
   return (
     <>
-      <Title>Mathieu's Athletic Stripe Pattern Generator</Title>
+      <Title>MATHIEU'S ATHLETIC STRIPE PATTERN GENERATOR</Title>
       <SelectRowContainer>
         <SelectContainer style={{ paddingRight: "16px" }}>
           <Header>Stripes</Header>

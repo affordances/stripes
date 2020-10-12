@@ -53,8 +53,12 @@ export const convertToColumns = (array) => {
   return [0, 1, 2].map((x) => array.filter((_, i) => i % 3 === x));
 };
 
-export const getRowHeight = (patterns) => {
-  const patternHeight = patterns.length ? patterns[0][0].magnitude : 0;
+export const getRowHeight = (patterns, isDesktopOrTablet) => {
+  const patternHeight = patterns.length
+    ? isDesktopOrTablet
+      ? patterns[0][0].magnitude
+      : patterns[0].magnitude
+    : 0;
   return patternHeight > 0 ? patternHeight * 8 + 36 : 0;
 };
 
@@ -82,8 +86,9 @@ export const getColor = (color, pickedColors) => {
     : pickedColors[(color - 1).toString()];
 };
 
-export const getRandomPattern = (patterns) => {
-  return [[patterns[Math.floor(Math.random() * patterns.length)]]];
+export const getRandomPattern = (patterns, isDesktopOrTablet) => {
+  const random = patterns[Math.floor(Math.random() * patterns.length)];
+  return isDesktopOrTablet ? [[random]] : [random];
 };
 
 // used to create colorSequences
