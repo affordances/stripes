@@ -30,30 +30,22 @@ const Masonry = (props) => {
 Modal.setAppElement(document.getElementById("root"));
 
 export const SavedPatternsModal = (props) => {
-  const {
-    modalIsOpen,
-    toggleModal,
-    clearSavedPatterns,
-    savedPatterns,
-    toggleSavedPattern,
-    isPatternSaved,
-  } = props;
-
   return (
     <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={toggleModal}
+      isOpen={props.modalIsOpen}
+      onRequestClose={props.toggleModal}
       style={modalStyles}
     >
       <ModalInnerContainer>
-        {savedPatterns.length > 0 ? (
+        {props.savedPatterns.length > 0 ? (
           <Masonry>
-            {savedPatterns.map((pattern, i) => (
+            {props.savedPatterns.map((pattern, i) => (
               <PatternRenderer
                 key={i}
+                isMobile={false}
                 pattern={pattern}
-                toggleSavedPattern={toggleSavedPattern}
-                isPatternSaved={isPatternSaved}
+                toggleSavedPattern={props.toggleSavedPattern}
+                isPatternSaved={props.isPatternSaved}
               />
             ))}
           </Masonry>
@@ -65,12 +57,12 @@ export const SavedPatternsModal = (props) => {
         <ModalButtonsContainer>
           <Button
             style={{ margin: "0" }}
-            disabled={!savedPatterns.length}
-            onClick={clearSavedPatterns}
+            disabled={!props.savedPatterns.length}
+            onClick={props.clearSavedPatterns}
           >
             CLEAR All
           </Button>
-          <Button style={{ margin: "0" }} onClick={toggleModal}>
+          <Button style={{ margin: "0" }} onClick={props.toggleModal}>
             CLOSE
           </Button>
         </ModalButtonsContainer>

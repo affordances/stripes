@@ -199,3 +199,9 @@ export const Button = styled.button`
           cursor: pointer;
         `}
 `;
+
+export const SavedPatternsContainer = styled.div`
+  flex: 1;
+  overflow: auto;
+  border-top: 4px solid black;
+`;

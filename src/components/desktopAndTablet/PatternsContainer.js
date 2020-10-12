@@ -11,15 +11,9 @@ import { PatternRenderer } from "../shared/PatternRenderer.js";
 import { getRowHeight } from "../../helpers.js";
 
 export const PatternsContainer = (props) => {
-  const {
-    patterns,
-    toggleSavedPattern,
-    isPatternSaved,
-    isDesktopOrTablet,
-  } = props;
-  const rowHeight = getRowHeight(patterns, isDesktopOrTablet);
+  const rowHeight = getRowHeight(props.patterns, props.isDesktopOrTablet);
 
-  return patterns.length > 0 ? (
+  return props.patterns.length > 0 ? (
     <AutoSizerContainer>
       <AutoSizer>
         {({ height, width }) => {
@@ -28,12 +22,12 @@ export const PatternsContainer = (props) => {
             <Grid
               itemData={{
                 isMobile: false,
-                patterns,
-                toggleSavedPattern,
-                isPatternSaved,
+                patterns: props.patterns,
+                toggleSavedPattern: props.toggleSavedPattern,
+                isPatternSaved: props.isPatternSaved,
               }}
-              columnCount={patterns[0].length}
-              rowCount={patterns.length}
+              columnCount={props.patterns[0].length}
+              rowCount={props.patterns.length}
               columnWidth={columnWidth}
               height={height}
               rowHeight={rowHeight}

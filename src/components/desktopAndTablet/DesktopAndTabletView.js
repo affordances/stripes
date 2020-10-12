@@ -16,20 +16,6 @@ import { PatternsContainer } from "./PatternsContainer.js";
 
 export const DesktopAndTabletView = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const {
-    patterns,
-    magnitude,
-    pickedColors,
-    random,
-    stripeCountValue,
-    patternCount,
-    toggleSavedPattern,
-    isPatternSaved,
-    savedPatterns,
-    clearSavedPatterns,
-    isDesktopOrTablet,
-    ...otherProps
-  } = props;
 
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -40,24 +26,19 @@ export const DesktopAndTabletView = (props) => {
       <SavedPatternsModal
         toggleModal={toggleModal}
         modalIsOpen={modalIsOpen}
-        clearSavedPatterns={clearSavedPatterns}
-        savedPatterns={savedPatterns}
-        toggleSavedPattern={toggleSavedPattern}
-        isPatternSaved={isPatternSaved}
+        {...props}
       />
       <Title>MATHIEU'S ATHLETIC STRIPE PATTERN GENERATOR</Title>
       <InnerContainer>
-        <Menu
-          magnitude={magnitude}
-          stripeCountValue={stripeCountValue}
-          pickedColors={pickedColors}
-          {...otherProps}
-        />
+        <Menu {...props} />
         <ButtonsAndPatternsContainer>
           <PatternCountAndButtonsRow>
-            <PatternCount>Patterns: {patternCount}</PatternCount>
+            <PatternCount>Patterns: {props.patternCount}</PatternCount>
             <ButtonsGroup>
-              <Button style={{ margin: "0 16px 16px 0" }} onClick={random}>
+              <Button
+                style={{ margin: "0 16px 16px 0" }}
+                onClick={props.random}
+              >
                 RANDOM Pattern
               </Button>
               <Button style={{ marginBottom: "16px" }} onClick={toggleModal}>
@@ -66,10 +47,10 @@ export const DesktopAndTabletView = (props) => {
             </ButtonsGroup>
           </PatternCountAndButtonsRow>
           <PatternsContainer
-            isDesktopOrTablet={isDesktopOrTablet}
-            patterns={patterns}
-            toggleSavedPattern={toggleSavedPattern}
-            isPatternSaved={isPatternSaved}
+            isDesktopOrTablet={props.isDesktopOrTablet}
+            patterns={props.patterns}
+            toggleSavedPattern={props.toggleSavedPattern}
+            isPatternSaved={props.isPatternSaved}
           />
         </ButtonsAndPatternsContainer>
       </InnerContainer>

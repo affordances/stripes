@@ -43,7 +43,11 @@ export const MobileView = (props) => {
           onClick={() => props.setMobileView("saved")}
         >
           <SavedButtonIconAndText>
-            <FaRegHeart />
+            {props.savedPatterns.length > 0 ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            )}
             <SavedButtonTextContainer>
               <SavedButtonText>VIEW</SavedButtonText>
               <SavedButtonText>Saved</SavedButtonText>

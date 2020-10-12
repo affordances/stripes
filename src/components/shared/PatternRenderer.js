@@ -52,8 +52,10 @@ export const PatternRenderer = (props) => {
     ? props.data.isPatternSaved
     : props.isPatternSaved;
 
+  const isMobile = props.data ? props.data.isMobile : props.isMobile;
+
   return currentPattern ? (
-    <PatternContainer isMobile={props.data.isMobile} {...props}>
+    <PatternContainer isMobile={isMobile} {...props}>
       <PatternAndLabel>
         <PatternLabel title={currentPattern.label}>
           {currentPattern.label}

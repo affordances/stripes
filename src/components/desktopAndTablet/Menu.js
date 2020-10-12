@@ -14,36 +14,19 @@ import { colors, stripeOptions } from "../../config.js";
 import { createMagnitudeOptions } from "../../helpers.js";
 
 export const Menu = (props) => {
-  const {
-    magnitude,
-    setMagnitude,
-    setMagnitudeOptions,
-    setStripeCount,
-    setPickedColors,
-    stripeCount,
-    magnitudeOptions,
-    anyChoicesMade,
-    allChoicesMade,
-    updatePickedColors,
-    reset,
-    stripeCountValue,
-    pickedColors,
-    createPatterns,
-  } = props;
-
   return (
     <MenuContainer>
       <SelectContainer>
         <Header>Stripes</Header>
         <Select
           styles={selectStyles}
-          value={stripeCount}
+          value={props.stripeCount}
           options={stripeOptions}
           onChange={(option) => {
-            setStripeCount(option);
-            setMagnitude(null);
-            setPickedColors([]);
-            setMagnitudeOptions(createMagnitudeOptions(option.value));
+            props.setStripeCount(option);
+            props.setMagnitude(null);
+            props.setPickedColors([]);
+            props.setMagnitudeOptions(createMagnitudeOptions(option.value));
           }}
         />
       </SelectContainer>
@@ -51,7 +34,7 @@ export const Menu = (props) => {
         <Header>Magnitude</Header>
         <Select
           styles={
-            magnitudeOptions
+            props.magnitudeOptions
               ? selectStyles
               : {
                   ...selectStyles,
@@ -63,24 +46,31 @@ export const Menu = (props) => {
                   }),
                 }
           }
-          isDisabled={!magnitudeOptions}
-          options={magnitudeOptions}
-          value={magnitude && { value: magnitude, label: magnitude }}
+          isDisabled={!props.magnitudeOptions}
+          options={props.magnitudeOptions}
+          value={
+            props.magnitude && {
+              value: props.magnitude,
+              label: props.magnitude,
+            }
+          }
           onChange={(option) => {
-            setMagnitude(Number(option.value));
+            props.setMagnitude(Number(option.value));
           }}
         />
       </SelectContainer>
       <Header>Color Selection</Header>
-      <SwatchesContainer disabled={!(stripeCountValue && magnitude)}>
+      <SwatchesContainer
+        disabled={!(props.stripeCountValue && props.magnitude)}
+      >
         {colors.map((color, i) => {
           return (
             <Swatch
               key={i}
               color={color.value}
-              onClick={() => updatePickedColors(color)}
+              onClick={() => props.updatePickedColors(color)}
               isPicked={
-                !!pickedColors.find(
+                !!props.pickedColors.find(
                   (pickedColor) => pickedColor.value === color.value
                 )
               }
@@ -90,10 +80,10 @@ export const Menu = (props) => {
           );
         })}
       </SwatchesContainer>
-      <Button onClick={createPatterns} disabled={!allChoicesMade}>
+      <Button onClick={props.createPatterns} disabled={!props.allChoicesMade}>
         MAKE Patterns
       </Button>
-      <Button onClick={reset} disabled={!anyChoicesMade}>
+      <Button onClick={props.reset} disabled={!props.anyChoicesMade}>
         RESET Selections
       </Button>
     </MenuContainer>
