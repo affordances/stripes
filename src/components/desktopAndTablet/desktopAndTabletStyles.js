@@ -284,6 +284,7 @@ export const ModalInnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 `;
 
 export const ModalButtonsContainer = styled.div`
@@ -295,15 +296,17 @@ export const ModalButtonsContainer = styled.div`
 `;
 
 export const MasonryContainer = styled.div`
-  display: grid;
-  grid-auto-rows: 1px;
-  grid-template-columns: 1fr 1fr 1fr;
-  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
   height: 100%;
+  width: 100%;
   padding: 0 8px;
 `;
 
-export const MasonryColumn = styled.div``;
+export const MasonryColumn = styled.div`
+  width: calc(100% / 3);
+`;
 
 export const modalStyles = {
   overlay: {
@@ -317,7 +320,7 @@ export const modalStyles = {
     padding: "0",
     maxWidth: "1000px",
     margin: "auto",
-    height: "430px",
+    height: "432px",
     background: customWhite,
   },
 };

@@ -6,7 +6,7 @@ import {
   AutoSizerContainer,
   EmptyStateText,
   EmptyStateContainer,
-} from "../../styles/desktopAndTabletStyles.js";
+} from "./desktopAndTabletStyles.js";
 import { PatternRenderer } from "../shared/PatternRenderer.js";
 import { getRowHeight } from "../../helpers.js";
 

@@ -10,7 +10,7 @@ import {
   MenuContainer,
   selectStyles,
   customWhite,
-} from "../../styles/desktopAndTabletStyles.js";
+} from "./desktopAndTabletStyles.js";
 import { colors, stripeOptions } from "../../config.js";
 import { createMagnitudeOptions } from "../../helpers.js";
 

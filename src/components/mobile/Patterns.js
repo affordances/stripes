@@ -3,8 +3,8 @@ import { FaRandom, FaTimes } from "react-icons/fa";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
-import { Button, ButtonsRow } from "../../styles/mobileStyles.js";
-import { AutoSizerContainer } from "../../styles/desktopAndTabletStyles.js";
+import { Button, ButtonsRow } from "./mobileStyles.js";
+import { AutoSizerContainer } from "../desktopAndTablet/desktopAndTabletStyles.js";
 import { getRowHeight } from "../../helpers.js";
 
 import { PatternRenderer } from "../shared/PatternRenderer.js";

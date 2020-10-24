@@ -9,7 +9,7 @@ import {
   SavedButtonTextContainer,
   SavedButtonText,
   InnerContainer,
-} from "../../styles/mobileStyles.js";
+} from "./mobileStyles.js";
 import { Home } from "./Home.js";
 import { Patterns } from "./Patterns.js";
 import { Saved } from "./Saved.js";

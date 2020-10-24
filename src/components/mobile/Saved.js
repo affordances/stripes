@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Title, SavedPatternsContainer } from "../../styles/mobileStyles.js";
+import { Title, SavedPatternsContainer } from "./mobileStyles.js";
 
 import {
   EmptyStateText,
   EmptyStateContainer,
-} from "../../styles/desktopAndTabletStyles.js";
+} from "../desktopAndTablet/desktopAndTabletStyles.js";
 
 import { PatternRenderer } from "../shared/PatternRenderer.js";
 

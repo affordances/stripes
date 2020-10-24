@@ -9,7 +9,7 @@ import {
   ButtonsGroup,
   Title,
   PatternCount,
-} from "../../styles/desktopAndTabletStyles.js";
+} from "./desktopAndTabletStyles.js";
 import { Menu } from "./Menu.js";
 import { SavedPatternsModal } from "./SavedPatternsModal.js";
 import { PatternsContainer } from "./PatternsContainer.js";

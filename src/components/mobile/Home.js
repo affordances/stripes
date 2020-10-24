@@ -12,11 +12,11 @@ import {
   Swatch,
   Button,
   ButtonsRow,
-} from "../../styles/mobileStyles.js";
+} from "./mobileStyles.js";
 import {
   selectStyles,
   customWhite,
-} from "../../styles/desktopAndTabletStyles.js";
+} from "../desktopAndTablet/desktopAndTabletStyles.js";
 import { createMagnitudeOptions } from "../../helpers.js";
 import { colors, stripeOptions } from "../../config.js";
 
