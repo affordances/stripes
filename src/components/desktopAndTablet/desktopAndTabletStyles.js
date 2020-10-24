@@ -342,6 +342,12 @@ export const selectStyles = {
     alignItems: "unset",
     padding: "0 8px",
     backgroundColor: customWhite,
+    "&:hover": {
+      borderColor: "black",
+    },
+    "&:focus": {
+      borderColor: "black",
+    },
   }),
   input: (provided, _) => ({
     ...provided,
@@ -395,17 +401,24 @@ export const selectStyles = {
     ...provided,
     color: "inherit",
     padding: "0",
+    "&:hover": {
+      color: "black",
+    },
   }),
   indicatorSeparator: (provided, _) => ({
     ...provided,
     display: "none",
   }),
-  option: (provided, _) => ({
+  option: (provided, state) => ({
     ...provided,
+    backgroundColor: state.isSelected ? "gray" : null,
     cursor: "pointer",
-    color: "black",
+    color: state.isSelected ? "white" : "black",
     fontSize: "12px",
     fontWeight: "700",
+    "&:hover": {
+      backgroundColor: "lightgray",
+    },
   }),
   placeholder: (provided, _) => ({
     ...provided,
